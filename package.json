@@ -1,26 +1,18 @@
 {
   "name": "weweekly",
-  "version": "1.0.0",
-  "description": "Tech Newsletter Aggregator",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.9.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cuttlas/weweekly.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cuttlas/weweekly/issues"
-  },
-  "homepage": "https://github.com/cuttlas/weweekly#readme",
   "dependencies": {
-    "graphql": "^0.9.1",
-    "koa": "^1.2.5",
-    "koa-convert": "^1.2.0",
-    "koa-graphql": "^0.6.2",
-    "koa-mount": "^1.3.0"
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "start": "NODE_PATH=./src react-scripts start",
+    "build": "NODE_PATH=./src react-scripts build",
+    "test": "NODE_PATH=./src react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
