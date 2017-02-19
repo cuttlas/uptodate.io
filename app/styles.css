@@ -1,0 +1,10 @@
+.header {
+  height: 35%;
+  width: 80%;
+  background-color: blue;
+}
+
+.articles{
+  height: auto;
+  background-color: red;
+}
