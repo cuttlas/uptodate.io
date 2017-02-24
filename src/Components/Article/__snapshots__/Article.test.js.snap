@@ -1,0 +1,1 @@
+exports[`test does not render anything if no article is passed as prop 1`] = `null`;

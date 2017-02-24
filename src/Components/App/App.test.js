@@ -1,8 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import renderer from 'react-test-renderer';
+import { mount } from 'enzyme';
 import App from './App';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  mount(<App/>);
 });
+
+it('renders the whole tree correctly', () => {
+  const tree = renderer.create(<App/>).toJSON();
+  expect(tree).toMatchSnapshot();
+})
