@@ -18,6 +18,7 @@
     "request": "^2.79.0"
   },
   "scripts": {
+    "migrate": "knex migrate:latest --knexfile='api/knexfile.js'",
     "start": "NODE_PATH=./src react-scripts start",
     "build": "NODE_PATH=./src react-scripts build",
     "test": "NODE_PATH=./src react-scripts test --env=jsdom",

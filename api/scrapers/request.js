@@ -1,6 +1,6 @@
-import request from 'request';
+const request = require('request');
 
-export default function makeRequest(url) {
+module.exports = function makeRequest(url) {
   return new Promise((resolve, reject) => {
     request({
       url,

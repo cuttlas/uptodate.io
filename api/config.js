@@ -10,6 +10,9 @@ const config = {
 };
 
 switch (env) {
+  case 'test':
+    config.database.database= 'test';
+    break;
   case 'development':
     config.database.port= 3307;
     break;

@@ -1,9 +1,9 @@
 /*
-  javascriptweekly.com scrapper. Works from issue 188 forward (July 4, 2014).
+  javascriptweekly.com scrapper. Works from issue 187 forward (July 4, 2014).
 */
 
-import request from '../request';
-import cheerio from 'cheerio';
+const request = require('../request');
+const cheerio = require('cheerio');
 
 function sanitizeUrl(url) {
   return url
@@ -15,7 +15,7 @@ function sanitizeText(text) {
   return text.replace(/\n/g, '');
 }
 
-export default async function (issue) {
+module.exports = async function (issue) {
   const html = await request(`http://javascriptweekly.com/issues/${issue}`);
   const $ = cheerio.load(html);
 
@@ -27,9 +27,15 @@ export default async function (issue) {
 
     if (fontSize === '18px' || fontSize === '16px') {
       if (article.title) articles.push(article);
+
+      const title = $(this).find('a').first().text();
+      const url = $(this).find('a').first().attr('href');
+
+      if (!title || !url) throw new Error("Missing tittle or url");
+
       article = {
-        title: $(this).find('a').first().text(),
-        url: sanitizeUrl($(this).find('a').first().attr('href'))
+        title,
+        url: sanitizeUrl(url)
       }
     } else if (fontSize === '14px'){
       article.description = sanitizeText($(this).html());
