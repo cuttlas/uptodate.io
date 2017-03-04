@@ -6,7 +6,6 @@ const newsletterName = process.argv[2];
 const from = process.argv[3] || 1;
 const to = process.argv[4] || from;
 const scrapper = require(`./${newsletterName}/${newsletterName}`);
-const store = require('./store');
 const newslettersRepo = require('../repos/newsletters');
 const articlesRepo = require('../repos/articles');
 

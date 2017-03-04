@@ -1,7 +1,13 @@
 const env = process.env.NODE_ENV || 'development';
 const config = {
   port: 3000,
-  database: {
+  postgres: {
+    user: 'postgres',
+    password: 'root',
+    port: 5433,
+    database: 'weweekly'
+  },
+  mysql: {
     user: 'root',
     password: 'root',
     port: 3306,
@@ -11,10 +17,10 @@ const config = {
 
 switch (env) {
   case 'test':
-    config.database.database= 'test';
+    config.postgres.database= 'test';
     break;
   case 'development':
-    config.database.port= 3307;
+    config.mysql.port= 3307;
     break;
   case 'production':
 

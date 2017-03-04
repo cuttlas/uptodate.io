@@ -11,14 +11,23 @@
   },
   "dependencies": {
     "cheerio": "^0.22.0",
+    "graphql": "^0.9.1",
+    "join-monster": "^1.0.0-beta.3",
     "knex": "^0.12.7",
+    "koa": "next",
+    "koa-convert": "^1.2.0",
+    "koa-graphql": "^0.6.2",
+    "koa-mount": "^2.0.0",
     "mysql": "^2.13.0",
+    "pg": "^6.1.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "request": "^2.79.0"
   },
   "scripts": {
+    "run-api": "sudo nodemon ./api/server",
     "migrate": "knex migrate:latest --knexfile='api/knexfile.js'",
+    "seed": "knex seed:run --knexfile='api/knexfile.js'",
     "start": "NODE_PATH=./src react-scripts start",
     "build": "NODE_PATH=./src react-scripts build",
     "test": "NODE_PATH=./src react-scripts test --env=jsdom",

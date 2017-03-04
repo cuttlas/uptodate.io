@@ -21,8 +21,7 @@ exports.insert = async function insert(newArticle) {
     url: newArticle.url,
     description: newArticle.description,
     //author: newArticle.author,
-  });
-
+  }).returning('id');
   const articleId = res[0];
 
   return await knex('article_newsletter').insert({

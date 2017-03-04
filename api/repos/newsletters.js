@@ -1,6 +1,6 @@
 const knex = require('../knex');
 
-exports.get = function get() {
+exports.get = function get(args) {
   return knex('newsletters').select();
 }
 
