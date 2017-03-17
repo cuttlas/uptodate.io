@@ -1,193 +1,32 @@
 exports[`test renders the whole tree correctly 1`] = `
 <div
-  className="App">
+  className="jBvxsI">
   <div
-    className="App-header">
+    className="hJDZSI">
     <img
       alt="logo"
-      className="App-logo"
+      className="cgcuYj"
       src="logo.svg" />
     <h2>
       WeWeekly
     </h2>
   </div>
   <div
-    className="App-grid">
+    className="kKbVXW">
     <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
+      href="www.mock.com"
       target="_blank">
-       
       <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
+        className="fdsazY">
         <p
           className="Article-title">
-          JavaScript\'s Journey Through 2012
+          Mock Title
         </p>
         <p
           className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
+          Mock Description
         </p>
       </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2017
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
-    </a>
-    <a
-      href="http://developer.telerik.com/topics/web-development/javascripts-journey-2016/?utm_source=javascriptweekly&utm_medium=email"
-      target="_blank">
-       
-      <div
-        className="Article"
-        style={
-          Object {
-            "backgroundImage": "url(http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png)",
-          }
-        }>
-        <p
-          className="Article-title">
-          JavaScript\'s Journey Through 2016
-        </p>
-        <p
-          className="Article-description">
-          The team at Telerik looks back at their predictions for JavaScript in 2016 and then ahead at what we might expect for the language in 2017
-        </p>
-      </div>
-       
     </a>
   </div>
 </div>
