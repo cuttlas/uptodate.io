@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   background-color: rgba(255,0,0,0.5);
 `;
 
+const Title = styled.p``;
+const Description = styled.p``;
+
 const Article = ({article}) => {
   if (!article) return null;
   
@@ -22,8 +25,8 @@ const Article = ({article}) => {
   return (
   <a href={article.url} target="_blank"> 
     <WrapperWithBG>
-      <p className="Article-title">{article.title}</p>
-      <p className="Article-description">{article.description}</p>
+      <Title>{article.title}</Title>
+      <Description>{article.description}</Description>
     </WrapperWithBG> 
   </a>
   );

@@ -19,11 +19,11 @@ exports[`test renders the whole tree correctly 1`] = `
       <div
         className="fdsazY">
         <p
-          className="Article-title">
+          className="a">
           Mock Title
         </p>
         <p
-          className="Article-description">
+          className="a">
           Mock Description
         </p>
       </div>
