@@ -22,8 +22,11 @@ const articles = [{
 }];
 
 const articleNewsletter = [{
-  article_id: 1,
+  article_id: 2,
   newsletter_id: 1
+},{
+  article_id: 2,
+  newsletter_id: 2
 }]
 
 exports.initDB = function initDB() {

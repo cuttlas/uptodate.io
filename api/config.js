@@ -17,7 +17,8 @@ const config = {
 
 switch (env) {
   case 'test':
-    config.postgres.database= 'test';
+    config.mysql.database= 'test';
+    config.mysql.port= 3307;
     break;
   case 'development':
     config.mysql.port= 3307;

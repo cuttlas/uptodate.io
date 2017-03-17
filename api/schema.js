@@ -10,6 +10,8 @@ const {
   GraphQLSchema,
 } = graphql;
 
+const GraphQLDate = require('graphql-date');
+
 const articlesRepo = require('./repos/articles');
 const newslettersRepo = require('./repos/newsletters');
 
@@ -33,6 +35,7 @@ const ArticleType = new GraphQLObjectType({
     url: {type: GraphQLString},
     description: {type: GraphQLString},
     imgUrl: {type: GraphQLString, sqlColumn: 'img_url'},
+    date: {type: GraphQLDate},
     newsletters: {
       type: new GraphQLList(NewsletterType),
       junctionTable: 'article_newsletter',
@@ -59,7 +62,9 @@ const RootQuery = new GraphQLObjectType({
       args: {},
       resolve(parentValue, args, context, resolveInfo) {
         return joinMonster(resolveInfo, {}, sql => {
-          return knex.raw(sql).then(result => result[0]);
+          return knex.raw(sql).then(result => {
+            return result[0];
+          });
         }, { dialect: 'mysql' })
       }
     }

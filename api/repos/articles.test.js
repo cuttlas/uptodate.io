@@ -11,7 +11,7 @@ it('should return all articles when there is no filter', async () => {
   expect(articles).toEqual(testData.articles);
 })
 
-it('should find an article by url', async () => {
+it('should find an article by  url', async () => {
   const article = await articlesRepo.find({
     url: 'http://www.javascript2.com'
   });
@@ -37,7 +37,7 @@ it('should insert an article and an article_newsletter', async () => {
   await articlesRepo.insert(article);
   const insertedArticle = await knex('articles').select().where('url', article.url).then(res => res[0]);
   expect(insertedArticle.title).toBe('New Article');
-  const articleNewsletter = await knex('article_newsletter')
+  const articleNewsletter = await knex('article_newsletter')  
                                   .select().where('article_id', insertedArticle.id).then(res => res[0]);
   expect(articleNewsletter).toEqual({
     article_id: insertedArticle.id,
