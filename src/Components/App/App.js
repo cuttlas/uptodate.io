@@ -29,6 +29,8 @@ const Logo = styled.img`
 `;
 
 const Header = styled.div`
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
   height: 15%;
   display: flex;
   align-items: center;
@@ -36,6 +38,7 @@ const Header = styled.div`
 `;
 
 const Grid = styled.div`
+  margin-top: 25px;
   display: flex;
   flex-wrap:wrap;
   justify-content: center;
@@ -43,6 +46,9 @@ const Grid = styled.div`
 
 
 class App extends Component {
+  static propTypes = {
+    data: React.PropTypes.object
+  }
 
   render() {
     const { articles } = this.props.data;
@@ -54,7 +60,7 @@ class App extends Component {
           <h2>WeWeekly</h2>
         </Header>
         <Grid>
-          {articles && articles.map((article, key) => <Article className="Article" article={article} key={key}/>)}
+          {articles && articles.map((article, key) => <Article className="Article" article={article} key={key} />)}
         </Grid>
       </Container>
     );

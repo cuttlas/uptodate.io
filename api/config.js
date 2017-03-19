@@ -17,11 +17,11 @@ const config = {
 
 switch (env) {
   case 'test':
-    config.mysql.database= 'test';
-    config.mysql.port= 3307;
+    config.mysql.database = 'test';
+    // config.mysql.port= 3307;
     break;
   case 'development':
-    config.mysql.port= 3307;
+    // config.mysql.port= 3307;
     break;
   case 'production':
 

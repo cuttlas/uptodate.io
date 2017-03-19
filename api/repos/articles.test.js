@@ -2,9 +2,8 @@ const articlesRepo = require('./articles');
 const knex = require('../knex');
 const testData = require('../testData');
 
-beforeEach(() => {
-  return testData.initDB();
-})
+beforeEach(() => testData.initDB())
+afterAll(() => testData.destroyDB());
 
 it('should return all articles when there is no filter', async () => {
   const articles = await articlesRepo.get();
@@ -37,8 +36,8 @@ it('should insert an article and an article_newsletter', async () => {
   await articlesRepo.insert(article);
   const insertedArticle = await knex('articles').select().where('url', article.url).then(res => res[0]);
   expect(insertedArticle.title).toBe('New Article');
-  const articleNewsletter = await knex('article_newsletter')  
-                                  .select().where('article_id', insertedArticle.id).then(res => res[0]);
+  const articleNewsletter = await knex('article_newsletter')
+    .select().where('article_id', insertedArticle.id).then(res => res[0]);
   expect(articleNewsletter).toEqual({
     article_id: insertedArticle.id,
     newsletter_id: 2

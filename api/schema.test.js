@@ -2,9 +2,8 @@ const schema = require('./schema');
 const testData = require('./testData');
 const graphql = require('graphql').graphql;
 
-beforeEach(() => {
-  return testData.initDB();
-})
+beforeEach(() => testData.initDB())
+afterAll(() => testData.destroyDB());
 
 it('should return all articles when there is not filter', async () => {
   const query = `{
@@ -34,8 +33,8 @@ it('should return all articles when there is not filter', async () => {
       date: "2017-01-03T23:00:00.000Z",
       imgUrl: null,
       newsletters: [
-        {id: 1, name: 'javascriptWeekly'},
-        {id: 2, name: 'reactNewsletter'} 
+        { id: 1, name: 'javascriptWeekly' },
+        { id: 2, name: 'reactNewsletter' }
       ]
     });
   } catch (e) {
