@@ -21,6 +21,7 @@
     "koa-graphql": "^0.6.2",
     "koa-mount": "^2.0.0",
     "mysql": "^2.13.0",
+    "normalize-url": "^1.9.1",
     "pg": "^6.1.2",
     "react": "^15.4.2",
     "react-apollo": "^1.0.0-rc.2",
@@ -30,9 +31,10 @@
     "styled-components": "2.0.0-7"
   },
   "scripts": {
-    "api": "node ./api/server",
-    "migrate": "knex migrate:latest --knexfile='api/knexfile.js'",
-    "seed": "knex seed:run --knexfile='api/knexfile.js'",
+    "api": "node ./src/api/server",
+    "migrate": "knex migrate:latest --knexfile='src/api/knexfile.js'",
+    "seed": "knex seed:run --knexfile='src/api/knexfile.js'",
+    "scrap": "node ./api/scrapers/runner",
     "start": "NODE_PATH=./src react-scripts start",
     "build": "NODE_PATH=./src react-scripts build",
     "test": "NODE_PATH=./src react-scripts test --env=jsdom",

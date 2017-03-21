@@ -18,15 +18,15 @@ exports[`test renders the whole tree correctly 1`] = `
       href="www.mock.com"
       target="_blank">
       <div
-        className="sc-gzVnrw eubehX sc-bdVaJa bQlgCT">
+        className="sc-gzVnrw eubehX sc-bdVaJa ekjwVT">
         <div
-          className="Article-overlay elsgrT">
+          className="Article-overlay iclOJA">
           <p
-            className="Article-title gNRPnQ">
+            className="Article-title leClUn">
             Mock Title
           </p>
           <p
-            className="Article-description izEpQL"
+            className="Article-description ggtoTs"
             dangerouslySetInnerHTML={
               Object {
                 "__html": "Mock Description",

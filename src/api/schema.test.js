@@ -1,11 +1,11 @@
-const schema = require('./schema');
-const testData = require('./testData');
-const graphql = require('graphql').graphql;
+const schema = require("./schema");
+const testData = require("./testData");
+const graphql = require("graphql").graphql;
+const setupDB = require("./setupDb");
 
-beforeEach(() => testData.initDB())
-afterAll(() => testData.destroyDB());
+beforeEach(() => setupDB.populateDB());
 
-it('should return all articles when there is not filter', async () => {
+it("should return all articles when there is not filter", async () => {
   const query = `{
     articles {
       id
@@ -19,7 +19,7 @@ it('should return all articles when there is not filter', async () => {
         name
       }
     }
-  }`
+  }`;
 
   try {
     const res = await graphql(schema, query);
@@ -33,11 +33,11 @@ it('should return all articles when there is not filter', async () => {
       date: "2017-01-03T23:00:00.000Z",
       imgUrl: null,
       newsletters: [
-        { id: 1, name: 'javascriptWeekly' },
-        { id: 2, name: 'reactNewsletter' }
+        { id: 1, name: "javascriptWeekly" },
+        { id: 2, name: "reactNewsletter" }
       ]
     });
   } catch (e) {
     console.log(e);
   }
-})
+});
