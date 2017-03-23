@@ -28,7 +28,7 @@ exports.insert = async function insert(newArticle) {
     await knex("articles").where("id", oldArticle.id).update(update);
 
     /*
-      We create a newsletter relation if we don't already have it. We may already have it if
+      We create a newsletter relation if we don't have it already. We may already have it if
       we are scraping an issue we had already scrapped to obtain more info.
      */
     const articleNewsletter = await knex("article_newsletter").select().where({
