@@ -94,12 +94,13 @@ it("should update an existing article with extra info from different newsletters
     title: "New Article",
     date: new Date(2017, 0, 1),
     url: "http://www.newarticle.com",
+    description: "Bla bla bla",
     newsletterId: 1
   };
   const article2 = {
-    title: "New Article",
+    title: "New Article 232",
     author: "John",
-    description: "Bla bla bla",
+    description: "Bla bla",
     url: "http://newarticle.com/",
     newsletterId: 2
   };
@@ -112,7 +113,7 @@ it("should update an existing article with extra info from different newsletters
     .where("url", "http://newarticle.com")
     .then(res => res[0]);
 
-  expect(article.title).toEqual("New Article");
+  expect(article.title).toEqual("New Article 232");
   expect(article.date).toEqual(new Date(2017, 0, 1));
   expect(article.author).toEqual("John");
   expect(article.description).toEqual("Bla bla bla");

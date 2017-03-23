@@ -8,6 +8,9 @@ exports.get = function(url) {
         headers: {
           "User-Agent": "Chrome 15.0.874 / Mac OS X 10.8.1",
           "Accept-Language": "en-gb"
+        },
+        agentOptions: {
+          rejectUnauthorized: false
         }
       },
       (err, res, body) => {
@@ -28,7 +31,10 @@ exports.head = function(url) {
           "User-Agent": "Chrome 15.0.874 / Mac OS X 10.8.1",
           "Accept-Language": "en-gb"
         },
-        followRedirects: true
+        followRedirects: true,
+        agentOptions: {
+          rejectUnauthorized: false
+        }
       },
       (err, res) => {
         if (err) return reject(err);

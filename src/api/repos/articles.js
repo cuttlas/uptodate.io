@@ -20,9 +20,18 @@ exports.insert = async function insert(newArticle) {
 
   // An article with the same url already exists. We save extra info it may have.
   if (oldArticle) {
+    // we take the title and descriptions of the new article, if they are longer.
+    const getLength = text => (text && text.length) || 0;
+
     const update = {
+      title: getLength(newArticle.title) > getLength(oldArticle.title)
+        ? newArticle.title
+        : oldArticle.title,
       date: newArticle.date || oldArticle.date,
-      description: newArticle.description || oldArticle.description,
+      description: getLength(newArticle.description) >
+        getLength(oldArticle.description)
+        ? newArticle.description
+        : oldArticle.description,
       author: newArticle.author || oldArticle.author
     };
     await knex("articles").where("id", oldArticle.id).update(update);

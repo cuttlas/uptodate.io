@@ -37,8 +37,3 @@ const articlesRepo = require("../repos/articles");
     }
   }
 })();
-
-module.exports = {
-  insert,
-  scrap
-};
