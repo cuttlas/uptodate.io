@@ -18,7 +18,7 @@ exports[`test renders the whole tree correctly 1`] = `
       href="www.mock.com"
       target="_blank">
       <div
-        className="sc-gzVnrw eubehX sc-bdVaJa ekjwVT">
+        className="sc-bdVaJa dcJUZD">
         <div
           className="Article-overlay iclOJA">
           <p

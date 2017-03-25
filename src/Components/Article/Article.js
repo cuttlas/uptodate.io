@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Box = styled.div`
   margin: 5px;
   width: 310px;
   height: 280px;
   position: relative;
+  background-image: url(${props => props.bgImg});
 
   &:hover > .Article-overlay {
     height: 100%;
@@ -69,20 +70,18 @@ Article.propTypes = {
 function Article({ article }) {
   if (!article) return null;
 
-  const ArticleBG = styled(Wrapper)`
-    background-image: url(https://cdn-images-1.medium.com/max/1024/1*bcZz-qb_DNpvrNNwQBhQmQ.jpeg)
-  `;
+  const bgImg = "https://cdn-images-1.medium.com/max/1024/1*bcZz-qb_DNpvrNNwQBhQmQ.jpeg";
 
   return (
     <Link href={article.url} target="_blank">
-      <ArticleBG>
+      <Box bgImg={bgImg}>
         <TextOverlay>
           <Title>{article.title}</Title>
           <Description
             dangerouslySetInnerHTML={{ __html: article.description }}
           />
         </TextOverlay>
-      </ArticleBG>
+      </Box>
     </Link>
   );
 }

@@ -20,7 +20,7 @@ it("should find an article by  url", async () => {
 
 it("should return undefined when there is no article with that url", async () => {
   const article = await articlesRepo.find({
-    url: "http://www.javascript3.com"
+    url: "http://www.waefawefawefawf.com"
   });
 
   expect(article).toEqual(undefined);

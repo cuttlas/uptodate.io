@@ -1,5 +1,5 @@
 /*
-  reactjsNewsletter.com scrapper.
+  reactjsNewsletter.com scrapper. Works from issue 1
 */
 
 const request = require("../request");
