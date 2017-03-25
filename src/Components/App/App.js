@@ -47,10 +47,8 @@ const Header = styled.div`
 `;
 
 const InfiniteGrid = styled(InfiniteScroll)`
-  margin-top: 25px;
-  display: flex;
-  flex-wrap:wrap;
-  justify-content: center;
+  margin-top: 5px;
+  text-align: left;
 `;
 
 class App extends Component {
