@@ -29,7 +29,6 @@ it("should return the 10 first articles with all fields", async () => {
   const articles = res.data.articles.edges;
 
   expect(articles.length).toEqual(10);
-
   expect(articles.find(art => art.node.id == 2)).toEqual({
     node: {
       id: 2,
@@ -68,7 +67,6 @@ it("should paginate correctly", async () => {
   expect(res.data.articles.edges.length).toEqual(6);
 
   const endCursor = res.data.articles.pageInfo.endCursor;
-
   const nextPageQuery = `{
     articles(first: 6, after: "${endCursor}") {
       pageInfo {
@@ -89,7 +87,6 @@ it("should paginate correctly", async () => {
 
   expect(res.data.articles.pageInfo.hasNextPage).toEqual(false);
   expect(articles.length).toEqual(4);
-
   expect(articles.find(art => art.node.id == 7)).toEqual({
     node: {
       id: 7,
