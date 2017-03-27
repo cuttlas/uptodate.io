@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const hover = () =>
+const expandOnHover = () =>
   `&:hover > .Article-overlay {
     height: 100%;
   }
@@ -29,17 +29,17 @@ const Box = styled.div`
   @media (min-width:801px)  { 
     width: 32.6vw;
     height: 28vw;
-    ${hover()}
+    ${expandOnHover}
   }
-  @media (min-width:1025px) { 
+  @media (min-width:1100px) { 
     width: 24.5vw;
     height: 22vw;
-    ${hover()}
+    ${expandOnHover}
   }
-  @media (min-width:1281px) {
+  @media (min-width:1481px) {
     width: 19.6vw;
     height: 18vw; 
-    ${hover()}
+    ${expandOnHover}
   }  
 `;
 
@@ -64,6 +64,7 @@ const TextOverlay = styled.div.withConfig({ componentId: "Article-overlay" })`
 const Title = styled.p.withConfig({ componentId: "Article-title" })`
   height: 15%;
   padding: 0px 15px 0px 15px;
+  font-size: 0.85em;
   font-weight: bold;
   text-align: left;
   transition: height 0.40s ease 0.20s;

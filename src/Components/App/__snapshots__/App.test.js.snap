@@ -1,32 +1,40 @@
 exports[`test renders the whole tree correctly 1`] = `
 <div
-  className="sc-htpNat dEQUjC">
+  className="sc-bZQynM bOrPFB">
   <div
-    className="sc-ifAKCX dsKbuV">
+    className="sc-htpNat ghGhCM">
     <img
       alt="logo"
-      className="sc-bxivhb dBqngZ"
+      className="sc-bxivhb fCpta"
       src="logo.svg" />
-    <h2>
-      WeWeekly
-    </h2>
+    <a
+      className="sc-EHOje eBbdTR"
+      href="http://undefined:4000/connect/twitter"
+      target="_blank">
+      <p>
+         Log In 
+      </p>
+       
+      <img
+        className="sc-ifAKCX kEYhHh" />
+    </a>
   </div>
   <div
-    className="sc-EHOje jwKvwv">
+    className="sc-gzVnrw hxWJUE">
     <a
       className="sc-bwzfXH dJuWjI"
       href="www.mock.com"
       target="_blank">
       <div
-        className="sc-bdVaJa dcJUZD">
+        className="sc-bdVaJa YyvBA">
         <div
-          className="Article-overlay iclOJA">
+          className="Article-overlay eHUKna">
           <p
-            className="Article-title leClUn">
+            className="Article-title hbZVTZ">
             Mock Title
           </p>
           <p
-            className="Article-description ggtoTs"
+            className="Article-description dcdLcC"
             dangerouslySetInnerHTML={
               Object {
                 "__html": "Mock Description",

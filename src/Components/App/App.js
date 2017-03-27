@@ -3,8 +3,8 @@ import { gql, graphql } from "react-apollo";
 import InfiniteScroll from "react-infinite-scroller";
 import styled from "styled-components";
 
-import logo from "logo.svg";
 import Article from "Components/Article/Article";
+import Header from "Components/Header/Header";
 
 const query = gql`query getArticles ($cursor: String) {
   articles(first: 10, after: $cursor) {
@@ -29,26 +29,10 @@ const query = gql`query getArticles ($cursor: String) {
   }
 }`;
 
-const Container = styled.div`
-  text-align: center;
-`;
-
-const Logo = styled.img`
-  height: 80px;
-`;
-
-const Header = styled.div`
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: white;
-  height: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+const Container = styled.div``;
 
 const InfiniteGrid = styled(InfiniteScroll)`
   margin-top: 5px;
-  text-align: left;
 `;
 
 class App extends Component {
@@ -61,10 +45,7 @@ class App extends Component {
 
     return (
       <Container>
-        <Header>
-          <Logo src={logo} alt="logo" />
-          <h2>WeWeekly</h2>
-        </Header>
+        <Header />
         <InfiniteGrid
           loadMore={fetchArticles}
           hasMore={hasMore}
@@ -72,7 +53,7 @@ class App extends Component {
         >
           {articles &&
             articles.map((article, key) => (
-              <Article className="Article" article={article} key={key} />
+              <Article article={article} key={key} />
             ))}
         </InfiniteGrid>
       </Container>
