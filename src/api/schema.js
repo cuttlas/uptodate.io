@@ -6,6 +6,7 @@ const joinMonster = require("join-monster").default;
 const {
   GraphQLObjectType,
   GraphQLString,
+  GraphQLBoolean,
   GraphQLInt,
   GraphQLList,
   GraphQLSchema
@@ -15,6 +16,35 @@ const GraphQLDate = require("graphql-date");
 
 const articlesRepo = require("./repos/articles");
 const newslettersRepo = require("./repos/newsletters");
+const usersRepo = require("./repos/users");
+
+const UserType = new GraphQLObjectType({
+  name: "User",
+  sqlTable: "users",
+  uniqueKey: "id",
+  fields: () => ({
+    id: { type: GraphQLInt },
+    nickname: { type: GraphQLString },
+    forLater: {
+      type: new GraphQLList(ArticleType),
+      junctionTable: "for_later",
+      sqlJoins: [
+        (userTable, joinTable) => `${userTable}.id = ${joinTable}.user_id`,
+        (joinTable, articleTable) =>
+          `${joinTable}.article_id = ${articleTable}.id`
+      ]
+    },
+    favourites: {
+      type: new GraphQLList(ArticleType),
+      junctionTable: "favourites",
+      sqlJoins: [
+        (userTable, joinTable) => `${userTable}.id = ${joinTable}.user_id`,
+        (joinTable, articleTable) =>
+          `${joinTable}.article_id = ${articleTable}.id`
+      ]
+    }
+  })
+});
 
 const NewsletterType = new GraphQLObjectType({
   name: "Newsletter",
@@ -37,6 +67,11 @@ const ArticleType = new GraphQLObjectType({
     description: { type: GraphQLString },
     imgUrl: { type: GraphQLString, sqlColumn: "img_url" },
     date: { type: GraphQLDate },
+    readLater: {
+      type: GraphQLBoolean,
+      sqlExpr: (table, args) =>
+        `(SELECT COUNT(*) FROM article_newsletter an WHERE an.newsletter_id = 1) = 0`
+    },
     newsletters: {
       type: new GraphQLList(NewsletterType),
       junctionTable: "article_newsletter",
@@ -57,6 +92,13 @@ const { connectionType: ArticleConnection } = gqlUtils.connectionDefinitions({
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
+    user: {
+      type: UserType,
+      resolve(parentValue, args, context, resolveInfo) {
+        const user = context.state.user;
+        return user;
+      }
+    },
     article: {
       type: ArticleType,
       args: { url: { type: GraphQLString } },
@@ -73,6 +115,8 @@ const RootQuery = new GraphQLObjectType({
         gqlUtils.connectionArgs
       ),
       resolve(parentValue, args, context, resolveInfo) {
+        const user = context.state.user;
+
         return joinMonster(
           resolveInfo,
           {},
@@ -88,6 +132,83 @@ const RootQuery = new GraphQLObjectType({
   })
 });
 
+const ResponseType = new GraphQLObjectType({
+  name: "Response",
+  fields: {
+    error: { type: GraphQLString }
+  }
+});
+
+const RootMutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: () => ({
+    addFavourite: {
+      type: ResponseType,
+      args: {
+        articleId: {
+          type: GraphQLInt
+        }
+      },
+      async resolve(parentValue, args, context) {
+        const user = context.state.user;
+
+        await usersRepo.addFavourite({
+          userId: user.id,
+          articleId: args.articleId
+        });
+      }
+    },
+    addForLater: {
+      type: ResponseType,
+      args: {
+        articleId: {
+          type: GraphQLInt
+        }
+      },
+      async resolve(parentValue, args, context) {
+        const user = context.state.user || { id: 1 };
+        await usersRepo.addForLater({
+          userId: user.id,
+          articleId: args.articleId
+        });
+        return user;
+      }
+    },
+    removeFavourite: {
+      type: ResponseType,
+      args: {
+        articleId: {
+          type: GraphQLInt
+        }
+      },
+      async resolve(parentValue, args, context) {
+        const user = context.state.user || { id: 1 };
+        await usersRepo.removeFavourite({
+          userId: user.id,
+          articleId: args.articleId
+        });
+      }
+    },
+    removeForLater: {
+      type: ResponseType,
+      args: {
+        articleId: {
+          type: GraphQLInt
+        }
+      },
+      async resolve(parentValue, args, context) {
+        const user = context.state.user || { id: 1 };
+        await usersRepo.removeForLater({
+          userId: user.id,
+          articleId: args.articleId
+        });
+        return user;
+      }
+    }
+  })
+});
+
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: RootMutation
 });

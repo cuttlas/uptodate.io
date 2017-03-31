@@ -3,10 +3,14 @@ import { gql, graphql } from "react-apollo";
 import InfiniteScroll from "react-infinite-scroller";
 import styled from "styled-components";
 
-import Article from "Components/Article/Article";
-import Header from "Components/Header/Header";
+import Article from "components/Article/Article";
+import Header from "components/Header/Header";
 
 const query = gql`query getArticles ($cursor: String) {
+  user {
+    id
+    nickname
+  }
   articles(first: 10, after: $cursor) {
     pageInfo {
       hasNextPage
@@ -19,6 +23,7 @@ const query = gql`query getArticles ($cursor: String) {
         imgUrl
         url
         date
+        readLater
         description
         newsletters {
           id

@@ -2,18 +2,18 @@ const userRepo = require("../repos/users");
 const config = require("../../config");
 
 exports.twitter = async function() {
-  const nick = this.query["raw[screen_name]"];
+  const nickname = this.query["raw[screen_name]"];
   const twitterId = this.query["raw[user_id]"];
   const token = this.query.access_token;
 
   try {
     const user = await userRepo.find({
-      nick
+      nickname
     });
 
     if (!user) {
       await userRepo.insert({
-        nick,
+        nickname,
         twitterId,
         token
       });

@@ -10,6 +10,7 @@ const config = require("../config");
 
 const app = new Koa();
 const schema = require("./schema");
+const userRepo = require("./repos/users");
 
 const Grant = require("grant-koa");
 const grant = new Grant(config.oauth);
@@ -23,6 +24,20 @@ const authHandlers = require("./handlers/auth");
 router.get("/twitter", authHandlers.twitter);
 
 app.use(convert(cors()));
+
+app.use(async (context, next) => {
+  const token = context.request.header.authorization;
+
+  if (token) {
+    const user = await userRepo.find({ password: token });
+
+    if (user) {
+      context.state.user = user;
+    }
+  }
+
+  await next();
+});
 
 app.use(
   mount(
