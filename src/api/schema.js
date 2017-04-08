@@ -1,7 +1,6 @@
 const graphql = require("graphql");
 const gqlUtils = require("graphql-relay");
 const knex = require("./knex");
-const joinMonster = require("join-monster").default;
 
 const {
   GraphQLObjectType,
@@ -20,36 +19,38 @@ const usersRepo = require("./repos/users");
 
 const UserType = new GraphQLObjectType({
   name: "User",
-  sqlTable: "users",
-  uniqueKey: "id",
   fields: () => ({
     id: { type: GraphQLInt },
     nickname: { type: GraphQLString },
     forLater: {
       type: new GraphQLList(ArticleType),
-      junctionTable: "for_later",
-      sqlJoins: [
-        (userTable, joinTable) => `${userTable}.id = ${joinTable}.user_id`,
-        (joinTable, articleTable) =>
-          `${joinTable}.article_id = ${articleTable}.id`
-      ]
+      args: {
+        q: { type: GraphQLString }
+      },
+      async resolve(parentValue, args) {
+        return await articlesRepo.getForLater({
+          userId: parentValue.id,
+          q: args.q
+        });
+      }
     },
     favourites: {
       type: new GraphQLList(ArticleType),
-      junctionTable: "favourites",
-      sqlJoins: [
-        (userTable, joinTable) => `${userTable}.id = ${joinTable}.user_id`,
-        (joinTable, articleTable) =>
-          `${joinTable}.article_id = ${articleTable}.id`
-      ]
+      args: {
+        q: { type: GraphQLString }
+      },
+      async resolve(parentValue, args) {
+        return await articlesRepo.getFavourites({
+          userId: parentValue.id,
+          q: args.q
+        });
+      }
     }
   })
 });
 
 const NewsletterType = new GraphQLObjectType({
   name: "Newsletter",
-  sqlTable: "newsletters",
-  uniqueKey: "id",
   fields: {
     id: { type: GraphQLInt },
     name: { type: GraphQLString }
@@ -58,29 +59,23 @@ const NewsletterType = new GraphQLObjectType({
 
 const ArticleType = new GraphQLObjectType({
   name: "Article",
-  sqlTable: "articles",
-  uniqueKey: "id",
   fields: {
     id: { type: GraphQLInt },
     title: { type: GraphQLString },
     url: { type: GraphQLString },
     description: { type: GraphQLString },
-    imgUrl: { type: GraphQLString, sqlColumn: "img_url" },
+    imgUrl: { type: GraphQLString },
     date: { type: GraphQLDate },
     readLater: {
-      type: GraphQLBoolean,
-      sqlExpr: (table, args) =>
-        `(SELECT COUNT(*) FROM article_newsletter an WHERE an.newsletter_id = 1) = 0`
+      type: GraphQLBoolean
     },
     newsletters: {
       type: new GraphQLList(NewsletterType),
-      junctionTable: "article_newsletter",
-      sqlJoins: [
-        (articleTable, joinTable) =>
-          `${articleTable}.id = ${joinTable}.article_id`,
-        (joinTable, newsletterTable) =>
-          `${joinTable}.newsletter_id = ${newsletterTable}.id`
-      ]
+      async resolve(parentValue, args) {
+        return await newslettersRepo.getByArticle({
+          articleId: parentValue.id
+        });
+      }
     }
   }
 });
@@ -95,38 +90,23 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       resolve(parentValue, args, context, resolveInfo) {
-        const user = context.state.user;
-        return user;
-      }
-    },
-    article: {
-      type: ArticleType,
-      args: { url: { type: GraphQLString } },
-      resolve(parentValue, args, context, resolveInfo) {
-        return joinMonster(resolveInfo, {}, sql => knex.raw, {
-          dialect: "mysql"
-        });
+        return context.state.user;
       }
     },
     articles: {
       type: ArticleConnection,
       args: Object.assign(
-        { url: { type: GraphQLString } },
+        { q: { type: GraphQLString } },
         gqlUtils.connectionArgs
       ),
-      resolve(parentValue, args, context, resolveInfo) {
+      async resolve(parentValue, args, context, resolveInfo) {
         const user = context.state.user;
+        const data = await articlesRepo.get({
+          q: args.q
+        });
+        const articles = gqlUtils.connectionFromArray(data, args);
 
-        return joinMonster(
-          resolveInfo,
-          {},
-          sql => {
-            return knex.raw(sql).then(result => {
-              return result[0];
-            });
-          },
-          { dialect: "mysql" }
-        ).then(data => gqlUtils.connectionFromArray(data, args));
+        return articles;
       }
     }
   })
@@ -150,7 +130,8 @@ const RootMutation = new GraphQLObjectType({
         }
       },
       async resolve(parentValue, args, context) {
-        const user = context.state.user || { id: 1 };
+        const user = context.state.user;
+        if (!user) return { error: "Invalid User" };
 
         try {
           await usersRepo.addFavourite({
@@ -171,12 +152,18 @@ const RootMutation = new GraphQLObjectType({
         }
       },
       async resolve(parentValue, args, context) {
-        const user = context.state.user || { id: 1 };
-        await usersRepo.addForLater({
-          userId: user.id,
-          articleId: args.articleId
-        });
-        return user;
+        const user = context.state.user;
+        if (!user) return { error: "Invalid User" };
+
+        try {
+          await usersRepo.addForLater({
+            userId: user.id,
+            articleId: args.articleId
+          });
+          return {};
+        } catch (e) {
+          return { error: e.message };
+        }
       }
     },
     removeFavourite: {
@@ -187,11 +174,18 @@ const RootMutation = new GraphQLObjectType({
         }
       },
       async resolve(parentValue, args, context) {
-        const user = context.state.user || { id: 1 };
-        await usersRepo.removeFavourite({
-          userId: user.id,
-          articleId: args.articleId
-        });
+        const user = context.state.user;
+        if (!user) return { error: "Invalid User" };
+
+        try {
+          await usersRepo.removeFavourite({
+            userId: user.id,
+            articleId: args.articleId
+          });
+          return {};
+        } catch (e) {
+          return { error: e.message };
+        }
       }
     },
     removeForLater: {
@@ -202,12 +196,18 @@ const RootMutation = new GraphQLObjectType({
         }
       },
       async resolve(parentValue, args, context) {
-        const user = context.state.user || { id: 1 };
-        await usersRepo.removeForLater({
-          userId: user.id,
-          articleId: args.articleId
-        });
-        return user;
+        const user = context.state.user;
+        if (!user) return { error: "Invalid User" };
+
+        try {
+          await usersRepo.removeForLater({
+            userId: user.id,
+            articleId: args.articleId
+          });
+          return {};
+        } catch (e) {
+          return { error: e.message };
+        }
       }
     }
   })

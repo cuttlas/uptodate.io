@@ -30,7 +30,6 @@ app.use(async (context, next) => {
 
   if (token) {
     const user = await userRepo.find({ password: token });
-
     if (user) {
       context.state.user = user;
     }

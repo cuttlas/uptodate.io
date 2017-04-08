@@ -2,8 +2,15 @@ const normalizeUrl = require("normalize-url");
 
 const knex = require("../knex");
 
-exports.get = function get() {
-  return knex("articles").select();
+exports.get = function get({ q }) {
+  const query = knex("articles").select();
+
+  if (q)
+    query
+      .where("title", "LIKE", `%${q}%`)
+      .orWhere("description", "LIKE", `%${q}%`);
+
+  return query;
 };
 
 exports.find = function find({ url }) {
@@ -12,6 +19,34 @@ exports.find = function find({ url }) {
   if (url) query.where("url", url);
 
   return query.limit(1).then(res => res && res[0]);
+};
+
+exports.getFavourites = function({ userId, q }) {
+  const query = knex("articles")
+    .join("favourites", "articles.id", "favourites.article_id")
+    .select();
+
+  query.where("favourites.user_id", userId);
+  if (q)
+    query
+      .where("articles.title", "LIKE", `%${q}%`)
+      .orWhere("articles.description", "LIKE", `%${q}%`);
+
+  return query;
+};
+
+exports.getForLater = function({ userId, q }) {
+  const query = knex("articles")
+    .join("for_later", "articles.id", "for_later.article_id")
+    .select();
+
+  query.where("for_later.user_id", userId);
+  if (q)
+    query
+      .where("articles.title", "LIKE", `%${q}%`)
+      .orWhere("articles.description", "LIKE", `%${q}%`);
+
+  return query;
 };
 
 exports.insert = async function insert(newArticle) {
