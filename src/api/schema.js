@@ -150,12 +150,17 @@ const RootMutation = new GraphQLObjectType({
         }
       },
       async resolve(parentValue, args, context) {
-        const user = context.state.user;
+        const user = context.state.user || { id: 1 };
 
-        await usersRepo.addFavourite({
-          userId: user.id,
-          articleId: args.articleId
-        });
+        try {
+          await usersRepo.addFavourite({
+            userId: user.id,
+            articleId: args.articleId
+          });
+          return {};
+        } catch (e) {
+          return { error: e.message };
+        }
       }
     },
     addForLater: {
