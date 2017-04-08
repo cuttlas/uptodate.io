@@ -49,6 +49,30 @@ exports.getForLater = function({ userId, q }) {
   return query;
 };
 
+exports.isForLater = async function({ articleId, userId }) {
+  const query = knex("for_later")
+    .where({
+      article_id: articleId,
+      user_id: userId
+    })
+    .select()
+    .limit(1);
+  const res = await query;
+  return res.length > 0;
+};
+
+exports.isFavourite = async function({ articleId, userId }) {
+  const query = knex("favourites")
+    .where({
+      article_id: articleId,
+      user_id: userId
+    })
+    .select()
+    .limit(1);
+  const res = await query;
+  return res.length > 0;
+};
+
 exports.insert = async function insert(newArticle) {
   const url = normalizeUrl(newArticle.url);
   const oldArticle = await exports.find({ url });

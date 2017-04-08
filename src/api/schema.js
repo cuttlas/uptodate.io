@@ -66,8 +66,29 @@ const ArticleType = new GraphQLObjectType({
     description: { type: GraphQLString },
     imgUrl: { type: GraphQLString },
     date: { type: GraphQLDate },
-    readLater: {
-      type: GraphQLBoolean
+    forLater: {
+      type: GraphQLBoolean,
+      async resolve(parentValue, args, context) {
+        context.state.user = { id: 1 };
+        if (!context.state.user) return false;
+
+        return await articlesRepo.isForLater({
+          userId: context.state.user.id,
+          articleId: parentValue.id
+        });
+      }
+    },
+    favourite: {
+      type: GraphQLBoolean,
+      async resolve(parentValue, args, context) {
+        context.state.user = { id: 1 };
+        if (!context.state.user) return false;
+
+        return await articlesRepo.isFavourite({
+          userId: context.state.user.id,
+          articleId: parentValue.id
+        });
+      }
     },
     newsletters: {
       type: new GraphQLList(NewsletterType),
