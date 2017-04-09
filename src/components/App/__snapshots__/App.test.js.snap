@@ -1,14 +1,14 @@
 exports[`test renders the whole tree correctly 1`] = `
 <div
-  className="sc-bZQynM bOrPFB">
+  className="sc-gqjmRU hnZXkc">
   <div
-    className="sc-htpNat ghGhCM">
+    className="sc-htoDjs jYopNu">
     <img
       alt="logo"
-      className="sc-bxivhb fCpta"
+      className="sc-dnqmqq eUpCLg"
       src="logo.svg" />
     <a
-      className="sc-EHOje eBbdTR"
+      className="sc-gZMcBi hRBFMN"
       href="http://undefined:4000/connect/twitter"
       target="_blank">
       <p>
@@ -16,33 +16,45 @@ exports[`test renders the whole tree correctly 1`] = `
       </p>
        
       <img
-        className="sc-ifAKCX kEYhHh" />
+        className="sc-iwsKbI bRERnf" />
     </a>
   </div>
   <div
-    className="sc-gzVnrw hxWJUE">
-    <a
-      className="sc-bwzfXH dJuWjI"
-      href="www.mock.com"
-      target="_blank">
+    className="sc-VigVT jXUwyP">
+    <div
+      className="sc-bdVaJa eiCtpY"
+      onClick={[Function]}>
       <div
-        className="sc-bdVaJa YyvBA">
-        <div
-          className="Article-overlay eHUKna">
+        className="sc-htpNat bkCRgV">
+        <a
+          className="sc-bwzfXH dJuWjI"
+          href="www.mock.com"
+          target="_blank">
           <p
-            className="Article-title hbZVTZ">
-            Mock Title
+            className="sc-bxivhb iVCSiy">
+            MOCK TITLE
           </p>
+        </a>
+        <div
+          className="sc-EHOje cMZYen">
+          <img
+            className="sc-bZQynM ggNUa"
+            src="http://www.google.com/s2/favicons?domain=null" />
           <p
-            className="Article-description dcdLcC"
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "Mock Description",
-              }
-            } />
+            className="sc-gzVnrw ilHWvv">
+             
+             
+          </p>
         </div>
+        <p
+          className="sc-ifAKCX fCYjuz"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Mock Description",
+            }
+          } />
       </div>
-    </a>
+    </div>
   </div>
 </div>
 `;

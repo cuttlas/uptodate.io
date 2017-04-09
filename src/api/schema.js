@@ -69,7 +69,6 @@ const ArticleType = new GraphQLObjectType({
     forLater: {
       type: GraphQLBoolean,
       async resolve(parentValue, args, context) {
-        context.state.user = { id: 1 };
         if (!context.state.user) return false;
 
         return await articlesRepo.isForLater({
@@ -81,7 +80,6 @@ const ArticleType = new GraphQLObjectType({
     favourite: {
       type: GraphQLBoolean,
       async resolve(parentValue, args, context) {
-        context.state.user = { id: 1 };
         if (!context.state.user) return false;
 
         return await articlesRepo.isFavourite({

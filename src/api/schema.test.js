@@ -10,11 +10,13 @@ it("should return the 10 first articles with all fields", async () => {
     articles(first: 10) {
       edges {
         node {
-          id
+          id 
           title
           imgUrl
           url
           date
+          favourite
+          forLater
           description
           newsletters {
             id
@@ -25,7 +27,14 @@ it("should return the 10 first articles with all fields", async () => {
     }
   }`;
 
-  const res = await graphql(schema, query);
+  const res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
   const articles = res.data.articles.edges;
 
   expect(articles.length).toEqual(10);
@@ -36,6 +45,8 @@ it("should return the 10 first articles with all fields", async () => {
       url: "http://www.javascript2.com",
       description: "The team at Telerik looks back at their predictions... ",
       date: "2017-01-03T23:00:00.000Z",
+      favourite: false,
+      forLater: false,
       imgUrl: null,
       newsletters: [
         { id: 1, name: "javascriptWeekly" },
@@ -61,7 +72,14 @@ it("should paginate correctly", async () => {
     }
   }`;
 
-  let res = await graphql(schema, query);
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
 
   expect(res.data.articles.pageInfo.hasNextPage).toEqual(true);
   expect(res.data.articles.edges.length).toEqual(6);
@@ -81,7 +99,14 @@ it("should paginate correctly", async () => {
     }
   }`;
 
-  res = await graphql(schema, nextPageQuery);
+  res = await graphql(
+    schema,
+    nextPageQuery,
+    {},
+    {
+      state: {}
+    }
+  );
 
   const articles = res.data.articles.edges;
 

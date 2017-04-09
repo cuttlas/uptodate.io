@@ -21,11 +21,11 @@ it("should create a new user when the user doesn't exists", async () => {
   });
 
   expect(userRepo.find).toHaveBeenCalledWith({
-    nick: "cuttlas"
+    nickname: "cuttlas"
   });
 
   expect(userRepo.insert).toHaveBeenCalledWith({
-    nick: "cuttlas",
+    nickname: "cuttlas",
     twitterId: "1234",
     token: "5678"
   });
@@ -47,7 +47,7 @@ it("should do nothing and redirect when the user exists", async () => {
   });
 
   expect(userRepo.find).toHaveBeenCalledWith({
-    nick: "cuttlas"
+    nickname: "cuttlas"
   });
 
   expect(userRepo.insert).not.toHaveBeenCalled();

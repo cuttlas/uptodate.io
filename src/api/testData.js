@@ -112,6 +112,52 @@ const articleNewsletter = [
   }
 ];
 
+const users = [
+  {
+    id: 1,
+    nickname: "user1",
+    password: "1234"
+  },
+  {
+    id: 2,
+    nickname: "user2",
+    password: "2345"
+  }
+];
+
+const favourites = [
+  {
+    user_id: 1,
+    article_id: 2
+  },
+  {
+    user_id: 1,
+    article_id: 3
+  },
+  {
+    user_id: 2,
+    article_id: 4
+  }
+];
+
+const forLater = [
+  {
+    user_id: 1,
+    article_id: 4
+  },
+  {
+    user_id: 2,
+    article_id: 4
+  },
+  {
+    user_id: 2,
+    article_id: 1
+  }
+];
+
 exports.articles = articles;
 exports.newsletters = newsletters;
 exports.articleNewsletter = articleNewsletter;
+exports.users = users;
+exports.favourites = favourites;
+exports.forLater = forLater;

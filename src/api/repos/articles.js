@@ -2,7 +2,7 @@ const normalizeUrl = require("normalize-url");
 
 const knex = require("../knex");
 
-exports.get = function get({ q }) {
+exports.get = function get({ q } = {}) {
   const query = knex("articles").select();
 
   if (q)
