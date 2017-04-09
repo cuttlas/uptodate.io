@@ -1,16 +1,19 @@
-const articlesRepo = require("./articles");
-const knex = require("../knex");
 const testData = require("../testData");
-const setupDB = require("../setupDb");
 
-beforeEach(() => setupDB.populateDB());
+beforeEach(() => require("../setupDb").populateDB());
+afterEach(async () => {
+  await require("../setupDb").destroyDB();
+  await jest.resetModules();
+});
 
 it("should return all articles when there is no filter", async () => {
+  const articlesRepo = require("./articles");
   const articles = await articlesRepo.get();
   expect(articles).toEqual(testData.articles);
 });
 
 it("should find an article by  url", async () => {
+  const articlesRepo = require("./articles");
   const article = await articlesRepo.find({
     url: "http://www.javascript2.com"
   });
@@ -19,6 +22,7 @@ it("should find an article by  url", async () => {
 });
 
 it("should return undefined when there is no article with that url", async () => {
+  const articlesRepo = require("./articles");
   const article = await articlesRepo.find({
     url: "http://www.waefawefawefawf.com"
   });
@@ -27,6 +31,8 @@ it("should return undefined when there is no article with that url", async () =>
 });
 
 it("should insert an article and an article_newsletter", async () => {
+  const articlesRepo = require("./articles");
+  const knex = require("../knex");
   const article = {
     title: "New Article",
     url: "http://www.newarticle.com",
@@ -50,6 +56,9 @@ it("should insert an article and an article_newsletter", async () => {
 });
 
 it("should update an existing article with extra info from the same newsletter", async () => {
+  const articlesRepo = require("./articles");
+  const knex = require("../knex");
+
   const article1 = {
     title: "New Article",
     date: new Date(2017, 0, 1),
@@ -90,6 +99,9 @@ it("should update an existing article with extra info from the same newsletter",
 });
 
 it("should update an existing article with extra info from different newsletters", async () => {
+  const articlesRepo = require("./articles");
+  const knex = require("../knex");
+
   const article1 = {
     title: "New Article",
     date: new Date(2017, 0, 1),

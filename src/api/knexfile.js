@@ -10,7 +10,10 @@ module.exports = {
   },
   test: {
     client: "mysql",
-    connection: config.mysql
+    connection: config.mysql,
+    pool: {
+      max: 50
+    }
   },
   production: {
     client: "mysql",

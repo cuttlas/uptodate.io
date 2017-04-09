@@ -1,9 +1,14 @@
-const testData = require("./testData");
-const setupDB = require("./setupDb");
-
 beforeEach(async () => {
+  try {
+    await require("./setupDb").populateDB();
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+afterEach(async () => {
+  await require("./setupDb").destroyDB();
   await jest.resetModules();
-  await setupDB.populateDB();
 });
 
 it("should return the 10 first articles with all fields", async () => {
@@ -12,7 +17,7 @@ it("should return the 10 first articles with all fields", async () => {
       edges {
         node {
           id 
-          title
+          title 
           imgUrl
           url
           date
@@ -152,12 +157,12 @@ it("should paginate correctly", async () => {
   expect(articles.find(art => art.node.id == 7)).toEqual({
     node: {
       id: 7,
-      title: "JavaScript's Journey Through 2013"
+      title: "JavaScript's Journey Through 2018"
     }
   });
 });
 
-fit("should filter articles by title and description", async () => {
+it("should filter articles by title and description", async () => {
   const schema = require("./schema");
   const graphql = require("graphql").graphql;
   const query = `{
@@ -183,4 +188,140 @@ fit("should filter articles by title and description", async () => {
     { node: { id: 1 } },
     { node: { id: 4 } }
   ]);
+});
+
+it("should paginate correctly when filtered", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    articles(q: "Telerik2", first: 3) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.articles.edges).toEqual([
+    { node: { id: 3 } },
+    { node: { id: 4 } },
+    { node: { id: 5 } }
+  ]);
+
+  const endCursor = res.data.articles.pageInfo.endCursor;
+  const nextPageQuery = `{
+    articles(q: "Telerik2", first: 2, after: "${endCursor}") {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+        }
+      }
+    } 
+  }`;
+
+  res = await graphql(
+    schema,
+    nextPageQuery,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.articles.edges).toEqual([{ node: { id: 6 } }]);
+  expect(res.data.articles.pageInfo.hasNextPage).toEqual(false);
+});
+
+it("should set the forLater when there is a logged user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    articles {
+      edges {
+        node {
+          id
+          forLater
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.articles.edges.length).toBe(10);
+  expect(res.data.articles.edges[3].node).toEqual({
+    id: 4,
+    forLater: true
+  });
+  expect(res.data.articles.edges[5].node).toEqual({
+    id: 6,
+    forLater: false
+  });
+});
+
+it("should set the favourite field when there is a logged user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    articles {
+      edges {
+        node {
+          id
+          favourite
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.articles.edges.length).toBe(10);
+  expect(res.data.articles.edges[1].node).toEqual({
+    id: 2,
+    favourite: true
+  });
+  expect(res.data.articles.edges[2].node).toEqual({
+    id: 3,
+    favourite: true
+  });
+  expect(res.data.articles.edges[5].node).toEqual({
+    id: 6,
+    favourite: false
+  });
 });

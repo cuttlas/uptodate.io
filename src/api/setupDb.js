@@ -1,5 +1,5 @@
-import knex from "./knex";
-import testData from "./testData";
+const knex = require("./knex");
+const testData = require("./testData");
 
 exports.populateDB = () => {
   return knex("article_newsletter")
@@ -17,6 +17,4 @@ exports.populateDB = () => {
     .then(() => knex("favourites").insert(testData.favourites));
 };
 
-exports.destroyDB = () => {
-  return knex.destroy();
-};
+exports.destroyDB = () => knex.destroy();

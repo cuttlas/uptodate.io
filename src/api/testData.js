@@ -27,7 +27,7 @@ const articles = [
     id: 3,
     title: "JavaScript's Journey Through 2014",
     url: "http://www.javascript3.com",
-    description: "The team at Telerik looks back at their predictions... ",
+    description: "The team at Telerik2a looks back at their predictions... ",
     date: new Date(2016, 12, 4),
     img_url: null,
     author: null
@@ -36,7 +36,7 @@ const articles = [
     id: 4,
     title: "JavaScript's Journey Through 2015",
     url: "http://www.javascript4.com",
-    description: "The team 2012 at Telerik looks back at their predictions... ",
+    description: "The team 2012 at Telerik2a looks back at their predictions... ",
     date: new Date(2016, 12, 4),
     img_url: null,
     author: null
@@ -45,7 +45,7 @@ const articles = [
     id: 5,
     title: "JavaScript's Journey Through 2016",
     url: "http://www.javascript5.com",
-    description: "The team at Telerik looks back at their predictions... ",
+    description: "The team at Telerik2 looks back at their predictions... ",
     date: new Date(2016, 12, 4),
     img_url: null,
     author: null
@@ -54,7 +54,7 @@ const articles = [
     id: 6,
     title: "JavaScript's Journey Through 2017",
     url: "http://www.javascript6.com",
-    description: "The team at Telerik looks back at their predictions... ",
+    description: "The team at Telerik2 looks back at their predictions... ",
     date: new Date(2016, 12, 4),
     img_url: null,
     author: null
