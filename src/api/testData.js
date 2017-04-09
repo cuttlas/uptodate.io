@@ -25,7 +25,7 @@ const articles = [
   },
   {
     id: 3,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2014",
     url: "http://www.javascript3.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -34,16 +34,16 @@ const articles = [
   },
   {
     id: 4,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2015",
     url: "http://www.javascript4.com",
-    description: "The team at Telerik looks back at their predictions... ",
+    description: "The team 2012 at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
     img_url: null,
     author: null
   },
   {
     id: 5,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2016",
     url: "http://www.javascript5.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -52,7 +52,7 @@ const articles = [
   },
   {
     id: 6,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2017",
     url: "http://www.javascript6.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -61,7 +61,7 @@ const articles = [
   },
   {
     id: 7,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2018",
     url: "http://www.javascript7.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -70,7 +70,7 @@ const articles = [
   },
   {
     id: 8,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2019",
     url: "http://www.javascript8.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -79,7 +79,7 @@ const articles = [
   },
   {
     id: 9,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2020",
     url: "http://www.javascript9.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),
@@ -88,7 +88,7 @@ const articles = [
   },
   {
     id: 10,
-    title: "JavaScript's Journey Through 2013",
+    title: "JavaScript's Journey Through 2021",
     url: "http://www.javascript10.com",
     description: "The team at Telerik looks back at their predictions... ",
     date: new Date(2016, 12, 4),

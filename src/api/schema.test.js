@@ -1,9 +1,10 @@
-const schema = require("./schema");
 const testData = require("./testData");
-const graphql = require("graphql").graphql;
 const setupDB = require("./setupDb");
 
-beforeEach(() => setupDB.populateDB());
+beforeEach(async () => {
+  await jest.resetModules();
+  await setupDB.populateDB();
+});
 
 it("should return the 10 first articles with all fields", async () => {
   const query = `{
@@ -27,6 +28,8 @@ it("should return the 10 first articles with all fields", async () => {
     }
   }`;
 
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
   const res = await graphql(
     schema,
     query,
@@ -35,6 +38,7 @@ it("should return the 10 first articles with all fields", async () => {
       state: {}
     }
   );
+
   const articles = res.data.articles.edges;
 
   expect(articles.length).toEqual(10);
@@ -56,7 +60,40 @@ it("should return the 10 first articles with all fields", async () => {
   });
 });
 
+it("should return an nice error message when the db module fails", async () => {
+  const articleRepo = require("./repos/articles");
+  articleRepo.get = jest.fn(() => {
+    throw new Error("unexpected exception");
+  });
+
+  const graphql = require("graphql").graphql;
+  const schema = require("./schema");
+  const query = `{
+    articles {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }`;
+
+  const res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.articles).toBeNull();
+  expect(res.errors[0].message).toEqual("unexpected exception");
+});
+
 it("should paginate correctly", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
   const query = `{
     articles(first: 6) {
       pageInfo {
@@ -69,7 +106,7 @@ it("should paginate correctly", async () => {
           title
         }
       }
-    }
+    } 
   }`;
 
   let res = await graphql(
@@ -118,4 +155,32 @@ it("should paginate correctly", async () => {
       title: "JavaScript's Journey Through 2013"
     }
   });
+});
+
+fit("should filter articles by title and description", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    articles(q: "2012") {
+      edges {
+        node {
+          id
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.articles.edges).toEqual([
+    { node: { id: 1 } },
+    { node: { id: 4 } }
+  ]);
 });

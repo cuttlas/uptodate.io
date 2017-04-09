@@ -18,7 +18,7 @@ it("renders without crashing", () => {
   mount(<App articles={props.articles} fetchArticles={props.fetchArticles} />);
 });
 
-it("renders the whole tree correctly", () => {
+xit("renders the whole tree correctly", () => {
   const props = {
     fetchArticles: jest.fn(),
     articles: [
