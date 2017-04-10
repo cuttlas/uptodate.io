@@ -15,9 +15,9 @@ exports.destroyDB = () => {
   return knex("article_newsletter")
     .del()
     .then(() => knex("newsletters").del())
-    .then(() => knex("articles").del())
     .then(() => knex("for_later").del())
     .then(() => knex("favourites").del())
+    .then(() => knex("articles").del())
     .then(() => knex("users").del())
     .then(() => knex.destroy());
 };

@@ -325,3 +325,171 @@ it("should set the favourite field when there is a logged user", async () => {
     favourite: false
   });
 });
+
+it("should return the logged user when exists", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    loggedUser {
+      id
+      nickname
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1, nickname: "user1" }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser).toEqual({
+    id: 1,
+    nickname: "user1"
+  });
+});
+
+it("should return null when there is no logged user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    loggedUser {
+      id
+      nickname
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.loggedUser).toBeNull();
+});
+
+it("should filter the forLater and favourites fields of the user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    loggedUser {
+      id
+      nickname
+      favourites (q: "2014") {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      forLater (q: "2016"){
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1, nickname: "user1" }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser).toEqual({
+    id: 1,
+    nickname: "user1",
+    favourites: { edges: [{ node: { id: 3 } }] },
+    forLater: { edges: [] }
+  });
+});
+
+it("should paginate the forLater and favourites fields of the user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const query = `{
+    loggedUser {
+      id
+      nickname
+      favourites (first: 1) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      forLater (first: 10){
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    } 
+  }`;
+
+  let res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1, nickname: "user1" }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser.favourites.edges).toEqual([{ node: { id: 2 } }]);
+  expect(res.data.loggedUser.forLater.edges).toEqual([{ node: { id: 4 } }]);
+
+  const nextPageQuery = `{
+    loggedUser {
+      favourites (first: 10, after: "${res.data.loggedUser.favourites.pageInfo.endCursor}") {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    } 
+  }`;
+
+  res = await graphql(
+    schema,
+    nextPageQuery,
+    {},
+    {
+      state: {
+        user: { id: 1, nickname: "user1" }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser.favourites.edges).toEqual([{ node: { id: 3 } }]);
+});

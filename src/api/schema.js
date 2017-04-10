@@ -17,38 +17,6 @@ const articlesRepo = require("./repos/articles");
 const newslettersRepo = require("./repos/newsletters");
 const usersRepo = require("./repos/users");
 
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: () => ({
-    id: { type: GraphQLInt },
-    nickname: { type: GraphQLString },
-    forLater: {
-      type: new GraphQLList(ArticleType),
-      args: {
-        q: { type: GraphQLString }
-      },
-      async resolve(parentValue, args) {
-        return await articlesRepo.getForLater({
-          userId: parentValue.id,
-          q: args.q
-        });
-      }
-    },
-    favourites: {
-      type: new GraphQLList(ArticleType),
-      args: {
-        q: { type: GraphQLString }
-      },
-      async resolve(parentValue, args) {
-        return await articlesRepo.getFavourites({
-          userId: parentValue.id,
-          q: args.q
-        });
-      }
-    }
-  })
-});
-
 const NewsletterType = new GraphQLObjectType({
   name: "Newsletter",
   fields: {
@@ -103,10 +71,48 @@ const { connectionType: ArticleConnection } = gqlUtils.connectionDefinitions({
   nodeType: ArticleType
 });
 
+const UserType = new GraphQLObjectType({
+  name: "User",
+  fields: () => ({
+    id: { type: GraphQLInt },
+    nickname: { type: GraphQLString },
+    forLater: {
+      type: ArticleConnection,
+      args: Object.assign(
+        { q: { type: GraphQLString } },
+        gqlUtils.connectionArgs
+      ),
+      async resolve(parentValue, args) {
+        const data = await articlesRepo.getForLater({
+          userId: parentValue.id,
+          q: args.q
+        });
+
+        return gqlUtils.connectionFromArray(data, args);
+      }
+    },
+    favourites: {
+      type: ArticleConnection,
+      args: Object.assign(
+        { q: { type: GraphQLString } },
+        gqlUtils.connectionArgs
+      ),
+      async resolve(parentValue, args) {
+        const data = await articlesRepo.getFavourites({
+          userId: parentValue.id,
+          q: args.q
+        });
+
+        return gqlUtils.connectionFromArray(data, args);
+      }
+    }
+  })
+});
+
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
-    user: {
+    loggedUser: {
       type: UserType,
       resolve(parentValue, args, context, resolveInfo) {
         return context.state.user;
