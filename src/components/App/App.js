@@ -7,7 +7,7 @@ import Article from "components/Article/Article";
 import Header from "components/Header/Header";
 
 const query = gql`query getArticles ($cursor: String) {
-  user {
+  loggedUser {
     id
     nickname
   }
@@ -23,7 +23,8 @@ const query = gql`query getArticles ($cursor: String) {
         imgUrl
         url
         date
-        readLater
+        forLater
+        favourite
         description
         newsletters {
           id
