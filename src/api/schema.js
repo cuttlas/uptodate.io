@@ -165,6 +165,9 @@ const RootMutation = new GraphQLObjectType({
           });
           return {};
         } catch (e) {
+          if (e.message.indexOf("Duplicate entry") > 0) {
+            return { error: "Article already added to favourites" };
+          }
           return { error: e.message };
         }
       }
@@ -187,6 +190,9 @@ const RootMutation = new GraphQLObjectType({
           });
           return {};
         } catch (e) {
+          if (e.message.indexOf("Duplicate entry") > 0) {
+            return { error: "Article already added to for later" };
+          }
           return { error: e.message };
         }
       }

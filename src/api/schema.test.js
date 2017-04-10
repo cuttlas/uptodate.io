@@ -493,3 +493,198 @@ it("should paginate the forLater and favourites fields of the user", async () =>
 
   expect(res.data.loggedUser.favourites.edges).toEqual([{ node: { id: 3 } }]);
 });
+
+it("should return an error when trying to add a favourite with no user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addFavourite(articleId: 4) {
+      error
+    }
+  }`;
+
+  const res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.addFavourite.error).toEqual("Invalid User");
+});
+
+it("should return an error when trying to add a forLater with no user", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addForLater(articleId: 4) {
+      error
+    }
+  }`;
+
+  const res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {}
+    }
+  );
+
+  expect(res.data.addForLater.error).toEqual("Invalid User");
+});
+
+it("should return an error when trying to add a favourite that already exists", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addFavourite(articleId: 2) {
+      error
+    }
+  }`;
+
+  const res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.addFavourite.error).toEqual(
+    "Article already added to favourites"
+  );
+});
+
+it("should return an error when trying to add a forLater that already exists", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addForLater(articleId: 4) {
+      error
+    }
+  }`;
+
+  const res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.addForLater.error).toEqual(
+    "Article already added to for later"
+  );
+});
+
+it("should add a favourite", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addFavourite(articleId: 4) {
+      error
+    }
+  }`;
+
+  let res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.addFavourite.error).toBeNull();
+
+  const query = `{
+    loggedUser {
+      favourites {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  }`;
+
+  res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser.favourites.edges).toEqual([
+    { node: { id: 2 } },
+    { node: { id: 3 } },
+    { node: { id: 4 } }
+  ]);
+});
+
+it("should add a for later", async () => {
+  const schema = require("./schema");
+  const graphql = require("graphql").graphql;
+  const mutation = `mutation {
+    addForLater(articleId: 3) {
+      error
+    }
+  }`;
+
+  let res = await graphql(
+    schema,
+    mutation,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.addForLater.error).toBeNull();
+
+  const query = `{
+    loggedUser {
+      forLater {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  }`;
+
+  res = await graphql(
+    schema,
+    query,
+    {},
+    {
+      state: {
+        user: { id: 1 }
+      }
+    }
+  );
+
+  expect(res.data.loggedUser.forLater.edges).toEqual([
+    { node: { id: 3 } },
+    { node: { id: 4 } }
+  ]);
+});
