@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import favouriteIcon from "img/favourite.svg";
 
 export const Box = styled.div`
   display: inline-block;
@@ -37,8 +36,10 @@ export const Link = styled.a`
 `;
 
 export const TextOverlay = styled.div`
+  box-sizing: border-box;
   position: absolute;
   width: 100%;
+  padding: 15px;
   height: ${props => props.expanded ? "100%" : "45%"};
   background: rgba(0, 0, 0, .70);
   bottom: 0;
@@ -48,7 +49,6 @@ export const TextOverlay = styled.div`
 
 export const Title = styled.p`
   color: white;
-  padding: 15px 15px 0px 15px;
   margin: 0px;
   font-size: 0.75em;
   transition: height 0.45s ease;
@@ -62,7 +62,6 @@ export const Title = styled.p`
 export const Description = styled.p`
   height: 35%;
   opacity: ${props => props.show ? 1 : 0};
-  padding: 0px 15px 0px 15px;
   font-size: 0.75em;
   text-align: left;
   transition: opacity 1s ease 0.20s;
@@ -76,7 +75,6 @@ export const Description = styled.p`
 `;
 
 export const Host = styled.div`
-  padding-left: 15px;
 `;
 
 export const FavIcon = styled.img`
@@ -94,11 +92,28 @@ export const HostName = styled.p`
   vertical-align: middle;
 `;
 
-export const Favourite = styled.i`
-  padding: 0px 15px 0px 15px;
+export const Actions = styled.div`
+  bottom: 0;
+  width: 100%;
   opacity: ${props => props.show ? 1 : 0};
   transition: opacity 1s ease 0.20s;
   color: white;
-  height: 30px;
-  width: 30px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Action = styled.div`
+  text-align: center;
+
+  &:hover {
+    color: lightblue;
+  }
+  + div {
+    margin-left: 20px;
+  }
+`;
+
+export const ActionLabel = styled.p`
+  font-size: 0.7em;
+  margin: 0px;
 `;

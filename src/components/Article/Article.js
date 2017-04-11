@@ -7,7 +7,9 @@ import {
   Description,
   Host,
   Link,
-  Favourite,
+  Actions,
+  Action,
+  ActionLabel,
   FavIcon,
   HostName
 } from "./styles";
@@ -65,7 +67,20 @@ class Article extends Component {
             show={this.state.expanded}
             dangerouslySetInnerHTML={{ __html: article.description }}
           />
-          <Favourite className="fa fa-star-o" show={this.state.expanded} />
+          <Actions show={this.state.expanded}>
+            {/*<Action>
+              <i className="fa fa-eye" />
+              <ActionLabel> Read Now </ActionLabel>
+            </Action>*/}
+            <Action>
+              <i className="fa fa-star-o" />
+              <ActionLabel> Favourite </ActionLabel>
+            </Action>
+            <Action>
+              <i className="fa fa-bookmark-o" />
+              <ActionLabel> For Later </ActionLabel>
+            </Action>
+          </Actions>
         </TextOverlay>
       </Box>
     );
