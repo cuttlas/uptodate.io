@@ -21,6 +21,7 @@ const query = gql`query getArticles ($cursor: String) {
         id
         title
         imgUrl
+        author
         url
         date
         forLater

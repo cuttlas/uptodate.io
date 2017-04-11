@@ -10,9 +10,11 @@ import {
   Actions,
   Action,
   ActionLabel,
+  ActionIcon,
   FavIcon,
   HostName
 } from "./styles";
+import { truncate } from "utils/utils";
 
 const bgimages = [
   "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/ExspEUkoliksz67w8/yellow-matrix-background_bjcisfg__M0000.jpg",
@@ -41,6 +43,18 @@ class Article extends Component {
     e.stopPropagation();
   };
 
+  onClickTitle = e => {
+    e.stopPropagation();
+  };
+
+  onClickFavourite = e => {
+    e.stopPropagation();
+  };
+
+  onClickForLater = e => {
+    e.stopPropagation();
+  };
+
   render() {
     const { article } = this.props;
     if (!article) return null;
@@ -54,7 +68,7 @@ class Article extends Component {
     return (
       <Box bgImg={bgImg} onClick={this.toggleExpand}>
         <TextOverlay expanded={this.state.expanded}>
-          <Link href={article.url} target="_blank">
+          <Link onClick={this.onClickTitle} href={article.url} target="_blank">
             <Title>
               {article.title.toUpperCase()}
             </Title>
@@ -65,20 +79,22 @@ class Article extends Component {
           </Host>
           <Description
             show={this.state.expanded}
-            dangerouslySetInnerHTML={{ __html: article.description }}
+            dangerouslySetInnerHTML={{
+              __html: truncate(article.description, 200)
+            }}
           />
           <Actions show={this.state.expanded}>
-            {/*<Action>
-              <i className="fa fa-eye" />
-              <ActionLabel> Read Now </ActionLabel>
-            </Action>*/}
             <Action>
-              <i className="fa fa-star-o" />
+              <ActionIcon className="fa fa-eye" />
+              <ActionLabel> Read now </ActionLabel>
+            </Action>
+            <Action onClick={this.onClickFavourite}>
+              <ActionIcon className="fa fa-star-o" />
               <ActionLabel> Favourite </ActionLabel>
             </Action>
-            <Action>
-              <i className="fa fa-bookmark-o" />
-              <ActionLabel> For Later </ActionLabel>
+            <Action onClick={this.onClickForLater}>
+              <ActionIcon className="fa fa-bookmark-o" />
+              <ActionLabel> For later </ActionLabel>
             </Action>
           </Actions>
         </TextOverlay>

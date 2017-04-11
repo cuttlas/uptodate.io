@@ -4,7 +4,7 @@ export const Box = styled.div`
   display: inline-block;
   margin-left: 5px;
   width: 98vw;
-  height: 50vw;
+  height: 60vw;
   position: relative;
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
@@ -19,15 +19,15 @@ export const Box = styled.div`
   }
   @media (min-width:800px)  { 
     width: 32.6vw;
-    height: 25vw;
+    height: 29vw;
   }
   @media (min-width:1100px) { 
     width: 24.5vw;
-    height: 16vw;
+    height: 19vw;
   }
   @media (min-width:1500px) {
     width: 19.6vw;
-    height: 12vw; 
+    height: 16vw; 
   }  
 `;
 
@@ -60,11 +60,14 @@ export const Title = styled.p`
 `;
 
 export const Description = styled.p`
-  height: 35%;
+  margin: 0;
+  height: 40%;
   opacity: ${props => props.show ? 1 : 0};
   font-size: 0.75em;
   text-align: left;
   transition: opacity 1s ease 0.20s;
+  overflow: hidden;
+  text-overflow-multiline: ellipsis;
 
   a {
     color: white;
@@ -72,6 +75,10 @@ export const Description = styled.p`
       color: lightblue;
     }
   }
+`;
+
+export const Author = styled.p`
+  color: gray;
 `;
 
 export const Host = styled.div`
@@ -94,12 +101,15 @@ export const HostName = styled.p`
 
 export const Actions = styled.div`
   bottom: 0;
+  left: 0;
   width: 100%;
   opacity: ${props => props.show ? 1 : 0};
   transition: opacity 1s ease 0.20s;
   color: white;
   display: flex;
-  justify-content: center;
+  justify-content:center;
+  position:absolute; 
+  margin-bottom: 15px;
 `;
 
 export const Action = styled.div`
@@ -107,13 +117,22 @@ export const Action = styled.div`
 
   &:hover {
     color: lightblue;
+    > p {
+      opacity: 1;
+    }
   }
   + div {
-    margin-left: 20px;
+    margin-left: 30px;
   }
 `;
 
 export const ActionLabel = styled.p`
-  font-size: 0.7em;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  font-size: 0.75em;
   margin: 0px;
+`;
+
+export const ActionIcon = styled.i`
+  font-size: 1.8em;
 `;

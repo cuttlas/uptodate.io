@@ -31,6 +31,7 @@ const ArticleType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     title: { type: GraphQLString },
     url: { type: GraphQLString },
+    author: { type: GraphQLString },
     description: { type: GraphQLString },
     imgUrl: { type: GraphQLString },
     date: { type: GraphQLDate },
