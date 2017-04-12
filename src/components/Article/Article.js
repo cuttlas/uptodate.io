@@ -86,7 +86,9 @@ class Article extends Component {
           <Actions show={this.state.expanded}>
             <Action>
               <ActionIcon className="fa fa-eye" />
-              <ActionLabel> Read now </ActionLabel>
+              {url.hostname === "youtube.com"
+                ? <ActionLabel> Watch now </ActionLabel>
+                : <ActionLabel> Read now </ActionLabel>}
             </Action>
             <Action onClick={this.onClickFavourite}>
               <ActionIcon className="fa fa-star-o" />
