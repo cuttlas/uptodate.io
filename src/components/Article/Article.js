@@ -34,7 +34,11 @@ class Article extends Component {
       url: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,
       description: React.PropTypes.string,
-      author: React.PropTypes.string
+      author: React.PropTypes.string,
+      addFavourite: React.PropTypes.func,
+      addForLater: React.PropTypes.func,
+      removeFavourite: React.PropTypes.func,
+      removeForLater: React.PropTypes.func
     })
   };
 
@@ -49,10 +53,22 @@ class Article extends Component {
 
   onClickFavourite = e => {
     e.stopPropagation();
+    this.props.addFavourite(this.props.article.id);
+  };
+
+  onClickUnfavourite = e => {
+    e.stopPropagation();
+    this.props.removeFavourite(this.props.article.id);
   };
 
   onClickForLater = e => {
     e.stopPropagation();
+    this.props.addForLater(this.props.article.id);
+  };
+
+  onClickUnsave = e => {
+    e.stopPropagation();
+    this.props.removeForLater(this.props.article.id);
   };
 
   render() {
@@ -90,14 +106,24 @@ class Article extends Component {
                 ? <ActionLabel> Watch now </ActionLabel>
                 : <ActionLabel> Read now </ActionLabel>}
             </Action>
-            <Action onClick={this.onClickFavourite}>
-              <ActionIcon className="fa fa-star-o" />
-              <ActionLabel> Favourite </ActionLabel>
-            </Action>
-            <Action onClick={this.onClickForLater}>
-              <ActionIcon className="fa fa-bookmark-o" />
-              <ActionLabel> For later </ActionLabel>
-            </Action>
+            {article.favourite
+              ? <Action onClick={this.onClickUnfavourite}>
+                  <ActionIcon className="fa fa-star" />
+                  <ActionLabel> Unfavourite </ActionLabel>
+                </Action>
+              : <Action onClick={this.onClickFavourite}>
+                  <ActionIcon className="fa fa-star-o" />
+                  <ActionLabel> Favourite </ActionLabel>
+                </Action>}
+            {article.forLater
+              ? <Action onClick={this.onClickUnsave}>
+                  <ActionIcon className="fa fa-bookmark" />
+                  <ActionLabel> Unsave </ActionLabel>
+                </Action>
+              : <Action onClick={this.onClickForLater}>
+                  <ActionIcon className="fa fa-bookmark-o" />
+                  <ActionLabel> For later </ActionLabel>
+                </Action>}
           </Actions>
         </TextOverlay>
       </Box>

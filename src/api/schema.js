@@ -149,7 +149,7 @@ const RootMutation = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
     addFavourite: {
-      type: ResponseType,
+      type: ArticleType,
       args: {
         articleId: {
           type: GraphQLInt
@@ -164,7 +164,9 @@ const RootMutation = new GraphQLObjectType({
             userId: user.id,
             articleId: args.articleId
           });
-          return {};
+          return {
+            id: args.articleId
+          };
         } catch (e) {
           if (e.message.indexOf("Duplicate entry") > 0) {
             return { error: "Article already added to favourites" };
