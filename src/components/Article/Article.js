@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { parse as parseUrl } from "url";
+import { truncate } from "utils/utils";
+import { compose } from "react-apollo";
 import {
   Box,
   TextOverlay,
@@ -14,7 +16,12 @@ import {
   FavIcon,
   HostName
 } from "./styles";
-import { truncate } from "utils/utils";
+import {
+  addFavouriteMutation,
+  addForLaterMutation,
+  removeFavouriteMutation,
+  removeForLaterMutation
+} from "mutations";
 
 const bgimages = [
   "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/ExspEUkoliksz67w8/yellow-matrix-background_bjcisfg__M0000.jpg",
@@ -131,4 +138,9 @@ class Article extends Component {
   }
 }
 
-export default Article;
+export default compose(
+  addFavouriteMutation,
+  addForLaterMutation,
+  removeFavouriteMutation,
+  removeForLaterMutation
+)(Article);

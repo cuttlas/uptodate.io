@@ -43,7 +43,10 @@ networkInterface.use([
 ]);
 
 const client = new ApolloClient({
-  networkInterface
+  networkInterface,
+  dataIdFromObject: o => {
+    if (o.id) return `${o.__typename}:${o.id}`;
+  }
 });
 
 ReactDOM.render(

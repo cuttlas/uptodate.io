@@ -176,7 +176,7 @@ const RootMutation = new GraphQLObjectType({
       }
     },
     addForLater: {
-      type: ResponseType,
+      type: ArticleType,
       args: {
         articleId: {
           type: GraphQLInt
@@ -191,7 +191,9 @@ const RootMutation = new GraphQLObjectType({
             userId: user.id,
             articleId: args.articleId
           });
-          return {};
+          return {
+            id: args.articleId
+          };
         } catch (e) {
           if (e.message.indexOf("Duplicate entry") > 0) {
             return { error: "Article already added to for later" };
@@ -201,7 +203,7 @@ const RootMutation = new GraphQLObjectType({
       }
     },
     removeFavourite: {
-      type: ResponseType,
+      type: ArticleType,
       args: {
         articleId: {
           type: GraphQLInt
@@ -216,14 +218,16 @@ const RootMutation = new GraphQLObjectType({
             userId: user.id,
             articleId: args.articleId
           });
-          return {};
+          return {
+            id: args.articleId
+          };
         } catch (e) {
           return { error: e.message };
         }
       }
     },
     removeForLater: {
-      type: ResponseType,
+      type: ArticleType,
       args: {
         articleId: {
           type: GraphQLInt
@@ -238,7 +242,9 @@ const RootMutation = new GraphQLObjectType({
             userId: user.id,
             articleId: args.articleId
           });
-          return {};
+          return {
+            id: args.articleId
+          };
         } catch (e) {
           return { error: e.message };
         }

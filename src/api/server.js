@@ -25,6 +25,10 @@ router.get("/twitter", authHandlers.twitter);
 
 app.use(convert(cors()));
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 app.use(async (context, next) => {
   const token = context.request.header.authorization;
 
@@ -35,6 +39,7 @@ app.use(async (context, next) => {
     }
   }
 
+  // await sleep(5000);
   await next();
 });
 
