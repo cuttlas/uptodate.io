@@ -19,6 +19,7 @@ const listArticles = `
       newsletters {
         id
         name
+        imgUrl
       }
     }
   }

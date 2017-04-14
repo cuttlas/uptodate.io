@@ -23,14 +23,6 @@ import {
   removeForLaterMutation
 } from "mutations";
 
-const bgimages = [
-  "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/ExspEUkoliksz67w8/yellow-matrix-background_bjcisfg__M0000.jpg",
-  "https://static.esea.net/global/images/users/679944.1458605905.jpg",
-  "https://previews.123rf.com/images/mikekiev/mikekiev1109/mikekiev110900016/10628139-binary-stream-Stock-Photo-software-matrix-binary.jpg",
-  "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg",
-  "https://previews.123rf.com/images/iunewind/iunewind1602/iunewind160200027/52370654-Abstract-program-code-Screen-of-source-code-script-Vector-red-background-Stock-Vector.jpg"
-];
-
 class Article extends Component {
   state = {
     expanded: false
@@ -82,7 +74,7 @@ class Article extends Component {
     const { article } = this.props;
     if (!article) return null;
 
-    const bgImg = bgimages[Math.floor(Math.random() * bgimages.length)];
+    const bgImg = article.newsletters[0].imgUrl;
     const url = parseUrl(article.url);
     const favicon = url.hostname === "github.com"
       ? "http://www.iconsdb.com/icons/preview/white/github-10-xxl.png"

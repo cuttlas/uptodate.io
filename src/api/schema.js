@@ -21,7 +21,13 @@ const NewsletterType = new GraphQLObjectType({
   name: "Newsletter",
   fields: {
     id: { type: GraphQLInt },
-    name: { type: GraphQLString }
+    name: { type: GraphQLString },
+    imgUrl: {
+      type: GraphQLString,
+      resolve(parentValue) {
+        return parentValue.img_url;
+      }
+    }
   }
 });
 
@@ -168,6 +174,7 @@ const RootMutation = new GraphQLObjectType({
             id: args.articleId
           };
         } catch (e) {
+          console.log(e);
           if (e.message.indexOf("Duplicate entry") > 0) {
             return { error: "Article already added to favourites" };
           }
@@ -195,6 +202,7 @@ const RootMutation = new GraphQLObjectType({
             id: args.articleId
           };
         } catch (e) {
+          console.log(e);
           if (e.message.indexOf("Duplicate entry") > 0) {
             return { error: "Article already added to for later" };
           }
@@ -222,6 +230,7 @@ const RootMutation = new GraphQLObjectType({
             id: args.articleId
           };
         } catch (e) {
+          console.log(e);
           return { error: e.message };
         }
       }
@@ -246,6 +255,7 @@ const RootMutation = new GraphQLObjectType({
             id: args.articleId
           };
         } catch (e) {
+          console.log(e);
           return { error: e.message };
         }
       }

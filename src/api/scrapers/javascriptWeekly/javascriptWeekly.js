@@ -5,6 +5,7 @@
 const request = require("../request");
 const cheerio = require("cheerio");
 const normalizeUrl = require("normalize-url");
+const emojiStrip = require("emoji-strip");
 
 function sanitizeUrl(url) {
   return normalizeUrl(
@@ -13,7 +14,7 @@ function sanitizeUrl(url) {
 }
 
 function sanitizeText(text) {
-  return text.replace(/\n/g, "");
+  return emojiStrip(text.replace(/\n/g, ""));
 }
 
 module.exports = async function(issue) {
@@ -35,7 +36,7 @@ module.exports = async function(issue) {
       if (!title || !url) throw new Error("Missing tittle or url");
 
       article = {
-        title,
+        title: sanitizeText(title),
         url: sanitizeUrl(url)
       };
     } else if (fontSize === "14px") {

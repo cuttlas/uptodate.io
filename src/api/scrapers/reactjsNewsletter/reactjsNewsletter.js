@@ -5,6 +5,7 @@
 const request = require("../request");
 const cheerio = require("cheerio");
 const normalizeUrl = require("normalize-url");
+const emojiStrip = require("emoji-strip");
 
 function sanitizeUrl(url, issue) {
   return normalizeUrl(
@@ -16,7 +17,7 @@ function sanitizeUrl(url, issue) {
 }
 
 function sanitizeText(text) {
-  return text.replace(/\n/g, "");
+  return emojiStrip(text.replace(/\n/g, ""));
 }
 
 module.exports = async function(issue) {
@@ -35,9 +36,9 @@ module.exports = async function(issue) {
 
     if (title && url) {
       articles.push({
-        title,
+        title: sanitizeText(title),
         url,
-        description
+        description: sanitizeText(description)
       });
     }
   });

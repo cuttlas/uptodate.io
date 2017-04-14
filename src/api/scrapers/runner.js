@@ -30,7 +30,7 @@ const articlesRepo = require("../repos/articles");
         })
       );
 
-      console.log("SUCCESSFULLY COMPLETED");
+      console.log(`Issue ${i} successfully completed`);
     } catch (e) {
       console.error(`Error at issue ${i}.`, e);
       break;

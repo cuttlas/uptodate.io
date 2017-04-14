@@ -5,10 +5,14 @@ const knex = require("../knex");
 exports.get = function get({ q } = {}) {
   const query = knex("articles").select();
 
+  query.whereNotNull("published");
+
   if (q)
     query
       .where("title", "LIKE", `%${q}%`)
       .orWhere("description", "LIKE", `%${q}%`);
+
+  query.orderBy("published", "DESC");
 
   return query;
 };
