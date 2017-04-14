@@ -36,7 +36,7 @@ const main = gql`query getArticles ($cursor: String) {
 
 const favourites = gql`query getFavourites ($cursor: String) {
   loggedUser {
-    favourites {
+    favourites(first: 10, after: $cursor) {
       ${listArticles}
     }
   }
@@ -44,7 +44,7 @@ const favourites = gql`query getFavourites ($cursor: String) {
 
 const forLater = gql`query getForLater ($cursor: String) {
   loggedUser {
-    forLater {
+    forLater(first: 10, after: $cursor) {
       ${listArticles}
     }
   }
@@ -100,6 +100,35 @@ export const favouritesQuery = graphql(favourites, {
                     ...newData.favourites.edges
                   ],
                   pageInfo: newData.favourites.pageInfo
+                }
+              }
+            };
+          }
+        });
+      }
+    };
+  }
+});
+
+export const forLaterQuery = graphql(forLater, {
+  props({ data: { loading, loggedUser, fetchMore } }) {
+    return {
+      articles: loggedUser && loggedUser.forLater.edges.map(edge => edge.node),
+      hasMore: loggedUser && loggedUser.forLater.pageInfo.hasNextPage,
+      loading,
+      fetchArticles: () => {
+        return fetchMore({
+          forLater,
+          variables: {
+            cursor: loggedUser.forLater.pageInfo.endCursor
+          },
+          updateQuery: (oldData, { fetchMoreResult }) => {
+            const newData = fetchMoreResult.data.loggedUser;
+            return {
+              loggedUser: {
+                forLater: {
+                  edges: [...oldData.forLater.edges, ...newData.forLater.edges],
+                  pageInfo: newData.forLater.pageInfo
                 }
               }
             };

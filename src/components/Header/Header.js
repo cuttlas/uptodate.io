@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import config from "config";
 
@@ -43,7 +44,9 @@ const TwitterButton = styled.a`
 function Header() {
   return (
     <Container>
-      <Logo src={logo} alt="logo" />
+      <Link to="/"><Logo src={logo} alt="logo" /></Link>
+      <Link to="/favourites">Your Favourites</Link>
+      <Link to="/forlater">For Later</Link>
       <TwitterButton
         href={`http://${config.host}:${config.port}/connect/twitter`}
         target="_blank"

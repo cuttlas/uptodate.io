@@ -1,40 +1,22 @@
-import React, { Component } from "react";
-import { mainQuery } from "queries";
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Article from "components/Article/Article";
 import Header from "components/Header/Header";
+import Main from "components/Main/Main";
+import Favourites from "components/Favourites/Favourites";
+import ForLater from "components/ForLater/ForLater";
 
-import { Container, InfiniteGrid } from "./styles";
+import { Container } from "./styles";
 
-class App extends Component {
-  static propTypes = {
-    data: React.PropTypes.object
-  };
-
-  render() {
-    const {
-      articles,
-      hasMore,
-      fetchArticles
-    } = this.props;
-
-    return (
+export default function() {
+  return (
+    <Router>
       <Container>
         <Header />
-        <InfiniteGrid
-          loadMore={fetchArticles}
-          hasMore={hasMore}
-          initialLoad={false}
-        >
-          {articles &&
-            articles.map((article, key) => (
-              <Article article={article} key={key} />
-            ))}
-        </InfiniteGrid>
+        <Route exact={true} path="/" component={Main} />
+        <Route path="/favourites" component={Favourites} />
+        <Route path="/forlater" component={ForLater} />
       </Container>
-    );
-  }
+    </Router>
+  );
 }
-
-export { App };
-export default mainQuery(App);
