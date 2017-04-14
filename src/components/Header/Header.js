@@ -41,12 +41,22 @@ const TwitterButton = styled.a`
   text-decoration: none;
 `;
 
+const StyledLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: lightblue;
+  }
+`;
+
 function Header() {
   return (
     <Container>
-      <Link to="/"><Logo src={logo} alt="logo" /></Link>
-      <Link to="/favourites">Your Favourites</Link>
-      <Link to="/forlater">For Later</Link>
+      <StyledLink to="/"><Logo src={logo} alt="logo" /></StyledLink>
+      <StyledLink to="/favourites">
+        YOUR FAVOURITES
+      </StyledLink>
+      <StyledLink to="/forlater">FOR LATER</StyledLink>
       <TwitterButton
         href={`http://${config.host}:${config.port}/connect/twitter`}
         target="_blank"

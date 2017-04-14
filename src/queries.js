@@ -36,6 +36,7 @@ const main = gql`query getArticles ($cursor: String) {
 
 const favourites = gql`query getFavourites ($cursor: String) {
   loggedUser {
+    id
     favourites(first: 10, after: $cursor) {
       ${listArticles}
     }
@@ -44,6 +45,7 @@ const favourites = gql`query getFavourites ($cursor: String) {
 
 const forLater = gql`query getForLater ($cursor: String) {
   loggedUser {
+    id
     forLater(first: 10, after: $cursor) {
       ${listArticles}
     }
@@ -78,6 +80,9 @@ export const mainQuery = graphql(main, {
 });
 
 export const favouritesQuery = graphql(favourites, {
+  options: {
+    fetchPolicy: "network-only"
+  },
   props({ data: { loading, loggedUser, fetchMore } }) {
     return {
       articles: loggedUser &&
@@ -91,15 +96,16 @@ export const favouritesQuery = graphql(favourites, {
             cursor: loggedUser.favourites.pageInfo.endCursor
           },
           updateQuery: (oldData, { fetchMoreResult }) => {
-            const newData = fetchMoreResult.data.loggedUser;
+            const newData = fetchMoreResult.data;
             return {
               loggedUser: {
+                ...oldData.loggedUser,
                 favourites: {
                   edges: [
-                    ...oldData.favourites.edges,
-                    ...newData.favourites.edges
+                    ...oldData.loggedUser.favourites.edges,
+                    ...newData.loggedUser.favourites.edges
                   ],
-                  pageInfo: newData.favourites.pageInfo
+                  pageInfo: newData.loggedUser.favourites.pageInfo
                 }
               }
             };
@@ -111,6 +117,9 @@ export const favouritesQuery = graphql(favourites, {
 });
 
 export const forLaterQuery = graphql(forLater, {
+  options: {
+    fetchPolicy: "network-only"
+  },
   props({ data: { loading, loggedUser, fetchMore } }) {
     return {
       articles: loggedUser && loggedUser.forLater.edges.map(edge => edge.node),
@@ -123,12 +132,16 @@ export const forLaterQuery = graphql(forLater, {
             cursor: loggedUser.forLater.pageInfo.endCursor
           },
           updateQuery: (oldData, { fetchMoreResult }) => {
-            const newData = fetchMoreResult.data.loggedUser;
+            const newData = fetchMoreResult.data;
             return {
               loggedUser: {
+                ...oldData.loggedUser,
                 forLater: {
-                  edges: [...oldData.forLater.edges, ...newData.forLater.edges],
-                  pageInfo: newData.forLater.pageInfo
+                  edges: [
+                    ...oldData.loggedUser.forLater.edges,
+                    ...newData.loggedUser.forLater.edges
+                  ],
+                  pageInfo: newData.loggedUser.forLater.pageInfo
                 }
               }
             };
