@@ -30,7 +30,7 @@ const main = gql`query getArticles ($cursor: String) {
     id
     nickname
   }
-  articles(first: 10, after: $cursor) {
+  articles(first: 50, after: $cursor) {
     ${listArticles}
   }
 }`;
@@ -38,7 +38,7 @@ const main = gql`query getArticles ($cursor: String) {
 const favourites = gql`query getFavourites ($cursor: String) {
   loggedUser {
     id
-    favourites(first: 10, after: $cursor) {
+    favourites(first: 50, after: $cursor) {
       ${listArticles}
     }
   }
@@ -47,7 +47,7 @@ const favourites = gql`query getFavourites ($cursor: String) {
 const forLater = gql`query getForLater ($cursor: String) {
   loggedUser {
     id
-    forLater(first: 10, after: $cursor) {
+    forLater(first: 50, after: $cursor) {
       ${listArticles}
     }
   }

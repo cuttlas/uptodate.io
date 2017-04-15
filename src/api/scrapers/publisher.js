@@ -2,8 +2,9 @@
 
 const knex = require("../knex");
 
-(async function publisher(date = new Date()) {
+module.exports = async function(date = new Date()) {
   try {
+    console.log(date);
     const newsletters = await knex("newsletters")
       .select()
       .orderByRaw("last_published IS NULL DESC, last_published");
@@ -23,7 +24,10 @@ const knex = require("../knex");
 
     const article = articles[0];
 
-    if (!article) return console.log("No article to publish");
+    if (!article) {
+      console.log("No article to publish");
+      return false;
+    }
 
     await knex("articles").where("id", article.id).update("published", date);
     await knex("newsletters")
@@ -31,7 +35,8 @@ const knex = require("../knex");
       .update("last_published", date);
 
     console.log(`Article ${article.id} published`);
+    return true;
   } catch (e) {
     console.log(e);
   }
-})();
+};
