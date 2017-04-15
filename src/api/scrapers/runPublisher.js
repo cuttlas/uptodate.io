@@ -14,6 +14,7 @@ const perDay = process.argv[3];
         finished = true;
         break;
       }
+      date = date.add(1, "second");
     }
     console.log(`Finished day ${date}`);
     date = date.add(1, "day");

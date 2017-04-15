@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import timeAgo from "node-time-ago";
 import { parse as parseUrl } from "url";
 import { truncate } from "utils/utils";
 import { compose } from "react-apollo";
@@ -9,12 +10,16 @@ import {
   Description,
   Host,
   Link,
+  Author,
   Actions,
   Action,
   ActionLabel,
   ActionIcon,
   FavIcon,
-  HostName
+  HostName,
+  Meta,
+  Newsletter,
+  TimeAgo
 } from "./styles";
 import {
   addFavouriteMutation,
@@ -77,7 +82,7 @@ class Article extends Component {
     const bgImg = article.newsletters[0].imgUrl;
     const url = parseUrl(article.url);
     const favicon = url.hostname === "github.com"
-      ? "http://www.iconsdb.com/icons/preview/white/github-10-xxl.png"
+      ? "http://balzer82.github.io/github.png"
       : `http://www.google.com/s2/favicons?domain=${url.hostname}`;
 
     return (
@@ -88,14 +93,23 @@ class Article extends Component {
               {article.title.toUpperCase()}
             </Title>
           </Link>
+          <Meta>
+            <Newsletter>
+              {article.newsletters.map(nl => nl.name).join(", ")}
+            </Newsletter>
+            <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
+          </Meta>
           <Host>
             <FavIcon src={favicon} />
-            <HostName> {url.hostname} </HostName>
+            <HostName>
+              {url.hostname}
+            </HostName>
           </Host>
+          {/*article.author && <Author> {article.author}</Author>*/}
           <Description
             show={this.state.expanded}
             dangerouslySetInnerHTML={{
-              __html: truncate(article.description, 200)
+              __html: truncate(article.description, 300)
             }}
           />
           <Actions show={this.state.expanded}>

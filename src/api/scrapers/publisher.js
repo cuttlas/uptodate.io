@@ -4,7 +4,6 @@ const knex = require("../knex");
 
 module.exports = async function(date = new Date()) {
   try {
-    console.log(date);
     const newsletters = await knex("newsletters")
       .select()
       .orderByRaw("last_published IS NULL DESC, last_published");
@@ -19,8 +18,7 @@ module.exports = async function(date = new Date()) {
         "article_newsletter.article_id"
       )
       .where("article_newsletter.newsletter_id", newsletter.id)
-      .whereNull("published")
-      .limit(1);
+      .whereNull("published");
 
     const article = articles[0];
 

@@ -26,6 +26,7 @@
     "koa-session": "^5.0.0",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "node-time-ago": "^1.0.0",
     "normalize-url": "^1.9.1",
     "pg": "^6.1.2",
     "query-string": "^4.3.2",

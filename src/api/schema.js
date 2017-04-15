@@ -40,7 +40,7 @@ const ArticleType = new GraphQLObjectType({
     author: { type: GraphQLString },
     description: { type: GraphQLString },
     imgUrl: { type: GraphQLString },
-    date: { type: GraphQLDate },
+    published: { type: GraphQLDate },
     forLater: {
       type: GraphQLBoolean,
       async resolve(parentValue, args, context) {

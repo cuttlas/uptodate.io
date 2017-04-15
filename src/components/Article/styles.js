@@ -13,20 +13,20 @@ export const Box = styled.div`
     cursor: pointer;
   }
 
-  @media (min-width:500px)  { 
-    width: 48.9vw;
+  @media (min-width:575px)  { 
+    width: 47.8vw;
     height: 41vw;
   }
-  @media (min-width:800px)  { 
-    width: 32.6vw;
-    height: 29vw;
+  @media (min-width:925px)  { 
+    width: 32.2vw;
+    height: 30vw;
   }
-  @media (min-width:1100px) { 
-    width: 24.5vw;
+  @media (min-width:1300px) { 
+    width: 24.2vw;
     height: 19vw;
   }
-  @media (min-width:1500px) {
-    width: 19.6vw;
+  @media (min-width:1800px) {
+    width: 19.4vw;
     height: 16vw; 
   }  
 `;
@@ -39,8 +39,8 @@ export const TextOverlay = styled.div`
   box-sizing: border-box;
   position: absolute;
   width: 100%;
-  padding: 15px;
-  height: ${props => props.expanded ? "100%" : "45%"};
+  padding: 15px 15px 15px 15px;
+  height: ${props => props.expanded ? "100%" : "40%"};
   background: rgba(0, 0, 0, .70);
   bottom: 0;
   color: white;
@@ -60,7 +60,7 @@ export const Title = styled.p`
 `;
 
 export const Description = styled.p`
-  margin: 0;
+  margin: 0px 0px 10px 0px;
   height: 40%;
   opacity: ${props => props.show ? 1 : 0};
   font-size: 0.75em;
@@ -77,11 +77,24 @@ export const Description = styled.p`
   }
 `;
 
-export const Author = styled.p`
+export const Author = styled.span`
   color: gray;
+  font-size: 0.65em;
+`;
+
+export const Newsletter = styled.span`
+  color: gray;
+  font-size: 0.65em;
 `;
 
 export const Host = styled.div`
+  margin-bottom: 10px;
+`;
+
+export const Meta = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right:10px;
 `;
 
 export const FavIcon = styled.img`
@@ -93,23 +106,25 @@ export const FavIcon = styled.img`
 `;
 
 export const HostName = styled.p`
-  color: gray;
+  margin: 0px;
+  color: #a2cbd8;
   display: inline-block;
   font-size: 0.7em;
   vertical-align: middle;
 `;
 
+export const TimeAgo = styled.span`
+  color: gray;
+  font-size: 0.65em;
+  margin: 0px;
+`;
+
 export const Actions = styled.div`
-  bottom: 0;
-  left: 0;
-  width: 100%;
   opacity: ${props => props.show ? 1 : 0};
   transition: opacity 1s ease 0.20s;
   color: white;
   display: flex;
   justify-content:center;
-  position:absolute; 
-  margin-bottom: 15px;
 `;
 
 export const Action = styled.div`
@@ -134,5 +149,5 @@ export const ActionLabel = styled.p`
 `;
 
 export const ActionIcon = styled.i`
-  font-size: 1.8em;
+  font-size: 2em;
 `;

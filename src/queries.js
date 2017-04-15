@@ -12,10 +12,10 @@ const listArticles = `
       imgUrl
       author
       url
-      date
       forLater
       favourite
       description
+      published
       newsletters {
         id
         name
@@ -25,12 +25,14 @@ const listArticles = `
   }
 `;
 
+const pageSize = 30;
+
 const main = gql`query getArticles ($cursor: String) {
   loggedUser {
     id
     nickname
   }
-  articles(first: 50, after: $cursor) {
+  articles(first: ${pageSize}, after: $cursor) {
     ${listArticles}
   }
 }`;
@@ -38,7 +40,7 @@ const main = gql`query getArticles ($cursor: String) {
 const favourites = gql`query getFavourites ($cursor: String) {
   loggedUser {
     id
-    favourites(first: 50, after: $cursor) {
+    favourites(first: ${pageSize}, after: $cursor) {
       ${listArticles}
     }
   }
@@ -47,7 +49,7 @@ const favourites = gql`query getFavourites ($cursor: String) {
 const forLater = gql`query getForLater ($cursor: String) {
   loggedUser {
     id
-    forLater(first: 50, after: $cursor) {
+    forLater(first: ${pageSize}, after: $cursor) {
       ${listArticles}
     }
   }
