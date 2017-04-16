@@ -5,6 +5,7 @@ import { truncate } from "utils/utils";
 import { compose } from "react-apollo";
 import {
   Box,
+  ExpandIcon,
   TextOverlay,
   Title,
   Description,
@@ -88,6 +89,9 @@ class Article extends Component {
     return (
       <Box bgImg={bgImg} onClick={this.toggleExpand}>
         <TextOverlay expanded={this.state.expanded}>
+          {this.state.expanded
+            ? <ExpandIcon className="fa fa-angle-down" />
+            : <ExpandIcon className="fa fa-angle-up" />}
           <Link onClick={this.onClickTitle} href={article.url} target="_blank">
             <Title>
               {article.title.toUpperCase()}

@@ -3,15 +3,11 @@ import styled from "styled-components";
 export const Box = styled.div`
   display: inline-block;
   margin-left: 5px;
-  width: 98vw;
+  width: 94vw;
   height: 60vw;
   position: relative;
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
-
-  &:hover {
-    cursor: pointer;
-  }
 
   @media (min-width:575px)  { 
     width: 47.8vw;
@@ -31,8 +27,21 @@ export const Box = styled.div`
   }  
 `;
 
+export const ExpandIcon = styled.i`
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: gray;
+  font-size: 1.3em;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const Link = styled.a`
   text-decoration: none;
+  display: block;
+  max-width: 85%;
 `;
 
 export const TextOverlay = styled.div`
@@ -132,6 +141,7 @@ export const Action = styled.div`
 
   &:hover {
     color: lightblue;
+    cursor: pointer;
     > p {
       opacity: 1;
     }

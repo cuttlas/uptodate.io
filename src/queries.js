@@ -27,38 +27,44 @@ const listArticles = `
 
 const pageSize = 30;
 
-const main = gql`query getArticles ($cursor: String) {
+const main = gql`query getArticles ($cursor: String, $q: String) {
   loggedUser {
     id
     nickname
   }
-  articles(first: ${pageSize}, after: $cursor) {
+  articles(first: ${pageSize}, after: $cursor, q: $q) {
     ${listArticles}
   }
 }`;
 
-const favourites = gql`query getFavourites ($cursor: String) {
+const favourites = gql`query getFavourites ($cursor: String, $q: String) {
   loggedUser {
     id
-    favourites(first: ${pageSize}, after: $cursor) {
+    favourites(first: ${pageSize}, after: $cursor, q: $q) {
       ${listArticles}
     }
   }
 }`;
 
-const forLater = gql`query getForLater ($cursor: String) {
+const forLater = gql`query getForLater ($cursor: String, $q: String) {
   loggedUser {
     id
-    forLater(first: ${pageSize}, after: $cursor) {
+    forLater(first: ${pageSize}, after: $cursor, q: $q) {
       ${listArticles}
     }
   }
 }`;
 
 export const mainQuery = graphql(main, {
-  props({ data: { loading, articles, fetchMore } }) {
+  options: ({ search }) => ({
+    variables: {
+      q: search
+    }
+  }),
+  props({ data: { loading, articles, loggedUser, fetchMore } }) {
     return {
       articles: articles && articles.edges.map(edge => edge.node),
+      loggedUser,
       hasMore: articles && articles.pageInfo.hasNextPage,
       loading,
       fetchArticles: () => {
@@ -83,9 +89,12 @@ export const mainQuery = graphql(main, {
 });
 
 export const favouritesQuery = graphql(favourites, {
-  options: {
-    fetchPolicy: "network-only"
-  },
+  options: ({ search }) => ({
+    fetchPolicy: "network-only",
+    variables: {
+      q: search
+    }
+  }),
   props({ data: { loading, loggedUser, fetchMore } }) {
     return {
       articles: loggedUser &&
@@ -120,9 +129,12 @@ export const favouritesQuery = graphql(favourites, {
 });
 
 export const forLaterQuery = graphql(forLater, {
-  options: {
-    fetchPolicy: "network-only"
-  },
+  options: ({ search }) => ({
+    fetchPolicy: "network-only",
+    variables: {
+      q: search
+    }
+  }),
   props({ data: { loading, loggedUser, fetchMore } }) {
     return {
       articles: loggedUser && loggedUser.forLater.edges.map(edge => edge.node),
