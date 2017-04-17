@@ -13,7 +13,7 @@ export function truncate(text, max) {
   }
 
   const lastChar = res[res.length - 1];
-  if (![".", "!", "?"].includes(lastChar)) res = res + ".";
+  if (![".", "!", "?"].includes(lastChar)) res += ".";
 
   if (res.length > max) {
     return `${res.slice(0, max - 3)}...`;

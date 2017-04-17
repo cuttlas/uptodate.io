@@ -11,10 +11,11 @@ import {
   Description,
   Host,
   Link,
-  Author,
+  //Author,
   Actions,
   Action,
   ActionLabel,
+  ActionLink,
   ActionIcon,
   FavIcon,
   HostName,
@@ -118,10 +119,16 @@ class Article extends Component {
           />
           <Actions show={this.state.expanded}>
             <Action>
-              <ActionIcon className="fa fa-eye" />
-              {url.hostname === "youtube.com"
-                ? <ActionLabel> Watch now </ActionLabel>
-                : <ActionLabel> Read now </ActionLabel>}
+              <ActionLink
+                onClick={this.onClickTitle}
+                href={article.url}
+                target="__blank"
+              >
+                <ActionIcon className="fa fa-eye" />
+                {url.hostname === "youtube.com"
+                  ? <ActionLabel> Watch now </ActionLabel>
+                  : <ActionLabel> Read now </ActionLabel>}
+              </ActionLink>
             </Action>
             {article.favourite
               ? <Action onClick={this.onClickUnfavourite}>

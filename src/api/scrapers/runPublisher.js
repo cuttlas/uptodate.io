@@ -21,4 +21,5 @@ const perDay = process.argv[3];
   }
 
   console.log("DONE");
+  process.exit();
 })();

@@ -30,7 +30,10 @@ export const BrandName = styled.span`
 `;
 
 export const SearchInput = styled.input`
+  width: 25%;
   margin-right: auto;
+  padding: 5px;
+  border: solid 1px lightblue;
 `;
 
 export const TO = styled.span`
@@ -58,7 +61,6 @@ export const TwitterButton = styled.a`
   padding: 5px;
   color: white;
   border: 1px solid white;
-  border-radius: 5px;
   font-size: 0.7em;
   text-decoration: none;
   display: flex;
@@ -66,8 +68,12 @@ export const TwitterButton = styled.a`
   align-items: center;
 `;
 
+export const Actions = styled.div`
+  margin: auto;
+`;
+
 export const Action = styled(Link)`
-  margin-right: 30px;
+  margin-right: 10px;
   color: white;
   text-decoration: none;
   &:hover {
@@ -86,11 +92,33 @@ export const Logout = styled.a`
   }
 `;
 
+export const SearchIcon = styled.i`
+  font-size: 1.5em;
+  margin-right: 7px;
+  color: lightblue;
+  display: none;
+
+  @media(min-width: 550px) {
+    display: inline;
+  }
+`;
+
 export const ActionIcon = styled.i`
   margin-right: 5px;
   color: lightblue;
+  font-size: 1.3em;
+
+  @media(min-width: 550px) {
+    font-size: 1em;
+    display: inline;
+  }
 `;
 
 export const ActionName = styled.span`
   font-size: 0.75em;
+  display: none;
+
+  @media(min-width: 550px) {
+    display: inline;
+  }
 `;

@@ -36,4 +36,6 @@ const articlesRepo = require("../repos/articles");
       break;
     }
   }
+
+  process.exit();
 })();

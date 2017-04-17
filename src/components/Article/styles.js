@@ -8,13 +8,14 @@ export const Box = styled.div`
   position: relative;
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
+  border: 1px solid black;
 
   @media (min-width:575px)  { 
     width: 47.8vw;
     height: 41vw;
   }
   @media (min-width:925px)  { 
-    width: 32.2vw;
+    width: 32.6vw;
     height: 30vw;
   }
   @media (min-width:1300px) { 
@@ -58,7 +59,7 @@ export const TextOverlay = styled.div`
 
 export const Title = styled.p`
   color: white;
-  margin: 0px;
+  margin: 0px 0px 5px 0px;
   font-size: 0.75em;
   transition: height 0.45s ease;
 
@@ -93,7 +94,13 @@ export const Author = styled.span`
 
 export const Newsletter = styled.span`
   color: gray;
-  font-size: 0.65em;
+  font-size: 0.7em;
+`;
+
+export const TimeAgo = styled.span`
+  color: gray;
+  font-size: 0.7em;
+  margin: 0px;
 `;
 
 export const Host = styled.div`
@@ -120,12 +127,6 @@ export const HostName = styled.p`
   display: inline-block;
   font-size: 0.7em;
   vertical-align: middle;
-`;
-
-export const TimeAgo = styled.span`
-  color: gray;
-  font-size: 0.65em;
-  margin: 0px;
 `;
 
 export const Actions = styled.div`
@@ -160,4 +161,16 @@ export const ActionLabel = styled.p`
 
 export const ActionIcon = styled.i`
   font-size: 2em;
+`;
+
+export const ActionLink = styled.a`
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: lightblue;
+    cursor: pointer;
+    > p {
+      opacity: 1;
+    }
+  }
 `;

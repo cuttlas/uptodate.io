@@ -2,10 +2,10 @@ import React from "react";
 import { favouritesQuery } from "queries";
 
 import InfiniteGrid from "components/InfiniteGrid/InfiniteGrid";
-import Article from "components/Article/Article";
 
 function Favourites(
   {
+    loading,
     articles,
     hasMore,
     fetchArticles
@@ -15,11 +15,9 @@ function Favourites(
     <InfiniteGrid
       loadMore={fetchArticles}
       hasMore={hasMore}
-      initialLoad={false}
-    >
-      {articles &&
-        articles.map((article, key) => <Article article={article} key={key} />)}
-    </InfiniteGrid>
+      articles={articles}
+      emptyMessage={"You have not added any article to your favourites yet"}
+    />
   );
 }
 

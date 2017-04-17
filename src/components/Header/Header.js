@@ -1,10 +1,9 @@
 import React from "react";
 import config from "config";
-import logo from "img/logo.svg";
 import { remove } from "utils/storage";
-import { Route } from "react-router";
+import { withRouter } from "react-router";
 
-import { mainQuery, favouritesQuery, forLaterQuery } from "queries";
+import { userQuery } from "queries";
 
 import {
   Container,
@@ -14,16 +13,17 @@ import {
   BrandName,
   IO,
   TO,
-  Icon,
   TwitterLogo,
   TwitterButton,
   Logout,
+  Actions,
   Action,
   ActionIcon,
+  SearchIcon,
   ActionName
 } from "./styles";
 
-function Header({ loggedUser, loading, setSearch }) {
+function Header({ loggedUser, loading, history }) {
   const logout = () => {
     remove("token");
     location.reload();
@@ -31,52 +31,30 @@ function Header({ loggedUser, loading, setSearch }) {
 
   const search = e => {
     const value = e.target.value;
-    setSearch(value);
+    history.push(`${location.pathname}?q=${value}`);
   };
+
   return (
     <Container>
       <LogoWrapper to="/">
         <Logo className="fa fa-align-center" />
         <BrandName>Up<TO>To</TO>Date<IO>.io</IO></BrandName>
       </LogoWrapper>
-      <Route
-        path="/favourites"
-        render={() => (
-          <SearchInput
-            placeholder="Search your favourites articles..."
-            onKeyUp={search}
-          />
-        )}
-      />
-      <Route
-        path="/forlater"
-        render={() => (
-          <SearchInput
-            placeholder="Search your saved articles..."
-            onKeyUp={search}
-          />
-        )}
-      />
-      <Route
-        path="/"
-        exact={true}
-        render={() => (
-          <SearchInput placeholder="Search articles..." onKeyUp={search} />
-        )}
-      />
+      <SearchIcon className="fa fa-search" />
+      {!loading && <SearchInput placeholder="Search..." onKeyUp={search} />}
+      {loggedUser &&
+        !loading &&
+        <Actions>
+          <Action to="/favourites">
+            <ActionIcon className="fa fa-star" />
+            <ActionName>Favourites</ActionName>
+          </Action>}
 
-      {!loading &&
-        loggedUser &&
-        <Action to="/favourites">
-          <ActionIcon className="fa fa-star" />
-          <ActionName>Favourites</ActionName>
-        </Action>}
-      {!loading &&
-        loggedUser &&
-        <Action to="/forlater">
-          <ActionIcon className="fa fa-bookmark" />
-          <ActionName>For Later</ActionName>
-        </Action>}
+          <Action to="/forlater">
+            <ActionIcon className="fa fa-bookmark" />
+            <ActionName>For Later</ActionName>
+          </Action>
+        </Actions>}
       {(() => {
         if (!loading) {
           if (loggedUser)
@@ -96,4 +74,4 @@ function Header({ loggedUser, loading, setSearch }) {
   );
 }
 
-export default mainQuery(Header);
+export default userQuery(withRouter(Header));
