@@ -99,23 +99,6 @@ class Article extends Component {
               {article.title.toUpperCase()}
             </Title>
           </Link>
-          <Meta>
-            {article.newsletters.map((nl, key) => {
-              const res = [
-                <Newsletter
-                  onClick={this.onClickTitle}
-                  href={nl.url}
-                  target="_blank"
-                >
-                  {nl.name}
-                </Newsletter>
-              ];
-              if (article.newsletters.length > key + 1)
-                res.push(<NLComma>, </NLComma>);
-              return res;
-            })}
-            <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
-          </Meta>
           {article.author && <Author> {article.author}</Author>}
           <Host>
             <FavIcon src={favicon} />
@@ -138,29 +121,46 @@ class Article extends Component {
               >
                 <ActionIcon className="fa fa-eye" />
                 {url.hostname === "youtube.com"
-                  ? <ActionLabel> Watch now </ActionLabel>
-                  : <ActionLabel> Read now </ActionLabel>}
+                  ? <ActionLabel>Watch now</ActionLabel>
+                  : <ActionLabel>Read now</ActionLabel>}
               </ActionLink>
             </Action>
             {article.favourite
               ? <Action onClick={this.onClickUnfavourite}>
                   <ActionIcon className="fa fa-star" />
-                  <ActionLabel> Unfavourite </ActionLabel>
+                  <ActionLabel>Unfavourite</ActionLabel>
                 </Action>
               : <Action onClick={this.onClickFavourite}>
                   <ActionIcon className="fa fa-star-o" />
-                  <ActionLabel> Favourite </ActionLabel>
+                  <ActionLabel>Favourite</ActionLabel>
                 </Action>}
             {article.forLater
               ? <Action onClick={this.onClickUnsave}>
                   <ActionIcon className="fa fa-bookmark" />
-                  <ActionLabel> Unsave </ActionLabel>
+                  <ActionLabel>Unsave</ActionLabel>
                 </Action>
               : <Action onClick={this.onClickForLater}>
                   <ActionIcon className="fa fa-bookmark-o" />
-                  <ActionLabel> For later </ActionLabel>
+                  <ActionLabel>For later</ActionLabel>
                 </Action>}
           </Actions>
+          <Meta>
+            {article.newsletters.map((nl, key) => {
+              const res = [
+                <Newsletter
+                  onClick={this.onClickTitle}
+                  href={nl.url}
+                  target="_blank"
+                >
+                  {nl.name}
+                </Newsletter>
+              ];
+              if (article.newsletters.length > key + 1)
+                res.push(<NLComma>, </NLComma>);
+              return res;
+            })}
+            <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
+          </Meta>
         </TextOverlay>
       </Box>
     );
