@@ -21,6 +21,7 @@ import {
   HostName,
   Meta,
   Newsletter,
+  NLComma,
   TimeAgo
 } from "./styles";
 import {
@@ -99,9 +100,20 @@ class Article extends Component {
             </Title>
           </Link>
           <Meta>
-            <Newsletter>
-              {article.newsletters.map(nl => nl.name).join(", ")}
-            </Newsletter>
+            {article.newsletters.map((nl, key) => {
+              const res = [
+                <Newsletter
+                  onClick={this.onClickTitle}
+                  href={nl.url}
+                  target="_blank"
+                >
+                  {nl.name}
+                </Newsletter>
+              ];
+              if (article.newsletters.length > key + 1)
+                res.push(<NLComma>, </NLComma>);
+              return res;
+            })}
             <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
           </Meta>
           <Host>

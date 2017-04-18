@@ -22,6 +22,7 @@ const NewsletterType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLInt },
     name: { type: GraphQLString },
+    url: { type: GraphQLString },
     imgUrl: {
       type: GraphQLString,
       resolve(parentValue) {

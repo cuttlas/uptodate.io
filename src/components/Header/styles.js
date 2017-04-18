@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   top: 0px;
-  z-index: 1;
+  z-index: 3;
   position: fixed;
   width: 100%;
   background-color: black;
@@ -20,7 +20,7 @@ export const LogoWrapper = styled(Link)`
 
 export const Logo = styled.i`
   margin-right: 5px;
-  color: lightblue;
+  color: ${props => props.theme.mainColor};
   font-size: 1.2em;
 `;
 
@@ -33,15 +33,15 @@ export const SearchInput = styled.input`
   width: 25%;
   margin-right: auto;
   padding: 5px;
-  border: solid 1px lightblue;
+  border: solid 1px ${props => props.theme.mainColor};
 `;
 
 export const TO = styled.span`
-  color: lightblue;
+  color: ${props => props.theme.mainColor};
 `;
 
 export const IO = styled.span`
-  color: lightblue;
+  color: ${props => props.theme.mainColor};
   font-size: 1.1em;
 `;
 
@@ -77,7 +77,7 @@ export const Action = styled(Link)`
   color: white;
   text-decoration: none;
   &:hover {
-    color: lightblue;
+    color: ${props => props.theme.mainColor};
   }
 `;
 
@@ -87,7 +87,7 @@ export const Logout = styled.a`
   margin-right: 15px;
   &:hover {
     text-decoration: underline;
-    color: lightblue;
+    color: ${props => props.theme.mainColor};
     cursor: pointer;
   }
 `;
@@ -95,7 +95,7 @@ export const Logout = styled.a`
 export const SearchIcon = styled.i`
   font-size: 1.5em;
   margin-right: 7px;
-  color: lightblue;
+  color: ${props => props.theme.mainColor};
   display: none;
 
   @media(min-width: 550px) {
@@ -105,7 +105,7 @@ export const SearchIcon = styled.i`
 
 export const ActionIcon = styled.i`
   margin-right: 5px;
-  color: lightblue;
+  color: ${props => props.theme.mainColor};
   font-size: 1.3em;
 
   @media(min-width: 550px) {

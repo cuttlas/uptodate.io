@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import {
   ApolloClient,
   ApolloProvider,
@@ -50,11 +51,17 @@ const client = new ApolloClient({
   }
 });
 
+const theme = {
+  mainColor: "lightblue"
+};
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router>
-      <App />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

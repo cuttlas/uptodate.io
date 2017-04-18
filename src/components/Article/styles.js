@@ -60,29 +60,28 @@ export const TextOverlay = styled.div`
 export const Title = styled.p`
   color: white;
   margin: 0px 0px 5px 0px;
-  font-size: 0.75em;
+  font-size: 0.85em;
   transition: height 0.45s ease;
 
   &:hover {
-    color: lightblue;
+    color: ${props => props.theme.mainColor};
   }
 
 `;
 
 export const Description = styled.p`
-  margin: 0px 0px 10px 0px;
+  margin: 0px;
   height: 40%;
   opacity: ${props => props.show ? 1 : 0};
-  font-size: 0.75em;
+  font-size: 0.85em;
   text-align: left;
   transition: opacity 1s ease 0.20s;
   overflow: hidden;
-  text-overflow-multiline: ellipsis;
 
   a {
     color: white;
     &:hover {
-      color: lightblue;
+      color: ${props => props.theme.mainColor};
     }
   }
 `;
@@ -92,14 +91,24 @@ export const Author = styled.span`
   font-size: 0.65em;
 `;
 
-export const Newsletter = styled.span`
+export const Newsletter = styled.a`
   color: gray;
-  font-size: 0.7em;
+  font-size: 0.75em;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;  
+    color: ${props => props.theme.mainColor};
+  }
+`;
+
+export const NLComma = styled.span`
+  color: gray;
+  font-size: 0.75em; 
 `;
 
 export const TimeAgo = styled.span`
   color: gray;
-  font-size: 0.7em;
+  font-size: 0.75em;
   margin: 0px;
 `;
 
@@ -109,6 +118,7 @@ export const Host = styled.div`
 
 export const Meta = styled.div`
   position: absolute;
+  z-index: 2;
   bottom: 10px;
   right:10px;
 `;
@@ -140,37 +150,30 @@ export const Actions = styled.div`
 export const Action = styled.div`
   text-align: center;
 
-  &:hover {
-    color: lightblue;
-    cursor: pointer;
-    > p {
-      opacity: 1;
-    }
-  }
   + div {
-    margin-left: 30px;
+    margin-left: 40px;
+  }
+
+  &:hover {
+    color: ${props => props.theme.mainColor};
+    cursor: pointer;
   }
 `;
 
 export const ActionLabel = styled.p`
-  opacity: 0;
-  transition: opacity 0.4s ease;
   font-size: 0.75em;
   margin: 0px;
 `;
 
 export const ActionIcon = styled.i`
-  font-size: 2em;
+  font-size: 1.6em;
 `;
 
 export const ActionLink = styled.a`
   color: white;
   text-decoration: none;
   &:hover {
-    color: lightblue;
+    color: ${props => props.theme.mainColor};
     cursor: pointer;
-    > p {
-      opacity: 1;
-    }
   }
 `;
