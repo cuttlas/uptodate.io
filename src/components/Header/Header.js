@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 
 import { userQuery } from "queries";
 
+import debounce from "debounce";
 import TwitterButton from "components/TwitterButton/TwitterButton";
 
 import {
@@ -22,17 +23,25 @@ import {
   ActionName
 } from "./styles";
 
-function Header({ loggedUser, loading, history }) {
-  const logout = () => {
-    remove("token");
-    location.reload();
-  };
+const logout = location => {
+  remove("token");
+  location.reload();
+};
 
-  const search = e => {
+const search = debounce(
+  (e, location, history) => {
     const value = e.target.value;
     history.push(`${location.pathname}?q=${value}`);
-  };
+  },
+  500
+);
 
+const onChange = (location, history, e) => {
+  e.persist();
+  search(e, location, history);
+};
+
+function Header({ loggedUser, loading, history }) {
   return (
     <Container>
       <LogoWrapper to="/">
@@ -40,7 +49,11 @@ function Header({ loggedUser, loading, history }) {
         <BrandName>Up<TO>To</TO>Date<IO>.io</IO></BrandName>
       </LogoWrapper>
       <SearchIcon className="fa fa-search" />
-      {!loading && <SearchInput placeholder="Search..." onKeyUp={search} />}
+      {!loading &&
+        <SearchInput
+          placeholder="Search..."
+          onKeyUp={onChange.bind(this, location, history)}
+        />}
       {loggedUser &&
         !loading &&
         <Actions>
@@ -56,8 +69,12 @@ function Header({ loggedUser, loading, history }) {
         </Actions>}
       {(() => {
         if (!loading) {
-          if (loggedUser) return <Logout onClick={logout}>Logout</Logout>;
-          else return <TwitterButton />;
+          if (loggedUser)
+            return (
+              <Logout onClick={logout.bind(this, location)}>Logout</Logout>
+            );
+          else
+            return <TwitterButton />;
         }
       })()}
     </Container>
