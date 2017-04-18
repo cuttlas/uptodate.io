@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const Box = styled.div`
   display: inline-block;
-  margin-left: 5px;
+  margin: 0px 3px 0px 3px;
   width: 94vw;
   height: 60vw;
   position: relative;
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
   border: 1px solid black;
+  text-align: left;
 
   @media (min-width:575px)  { 
     width: 47.8vw;
@@ -39,12 +40,6 @@ export const ExpandIcon = styled.i`
   }
 `;
 
-export const Link = styled.a`
-  text-decoration: none;
-  display: block;
-  max-width: 85%;
-`;
-
 export const TextOverlay = styled.div`
   box-sizing: border-box;
   position: absolute;
@@ -57,16 +52,18 @@ export const TextOverlay = styled.div`
   transition: height 0.35s ease;
 `;
 
-export const Title = styled.p`
+export const Title = styled.a`
+  display: block;
+  text-decoration: none;
   color: white;
   margin: 0px 0px 5px 0px;
   font-size: 0.85em;
   transition: height 0.45s ease;
-
+  max-width: 85%;
   &:hover {
     color: ${props => props.theme.mainColor};
   }
-
+  
 `;
 
 export const Description = styled.p`
@@ -191,6 +188,7 @@ export const LoginScreen = styled.div`
 
 export const LoginMessage = styled.span`
   color: white;
+  text-align: center;
   margin-bottom: 15px;
 `;
 

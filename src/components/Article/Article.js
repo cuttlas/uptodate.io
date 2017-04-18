@@ -131,11 +131,15 @@ class Article extends Component {
       this.state.expanded
         ? <ExpandIcon className="fa fa-angle-down" />
         : <ExpandIcon className="fa fa-angle-up" />,
-      <Link onClick={this.onClickTitle} href={article.url} target="_blank">
-        <Title>
-          {article.title.toUpperCase()}
-        </Title>
-      </Link>,
+
+      <Title
+        expanded={this.state.expanded}
+        onClick={this.onClickTitle}
+        href={article.url}
+        target="_blank"
+      >
+        {article.title.toUpperCase()}
+      </Title>,
       article.author && <Author> {article.author}</Author>,
       <Host>
         <FavIcon src={favicon} />
