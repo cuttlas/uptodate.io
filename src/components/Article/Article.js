@@ -201,14 +201,14 @@ class Article extends Component {
     ];
 
     const login = (
-      <LoginScreen>
+      <LoginScreen onClick={this.loginBack}>
         <LoginMessage>
           {this.state.origin === "favourite"
             ? "Log in to save articles to your favourites"
             : "Log in to save articles for later"}
         </LoginMessage>
         <TwitterButton />
-        <LoginBack onClick={this.loginBack}>Go back to the article</LoginBack>
+        <LoginBack>Go back to the article</LoginBack>
       </LoginScreen>
     );
 
