@@ -1,9 +1,10 @@
 import React from "react";
-import config from "config";
 import { remove } from "utils/storage";
 import { withRouter } from "react-router";
 
 import { userQuery } from "queries";
+
+import TwitterButton from "components/TwitterButton/TwitterButton";
 
 import {
   Container,
@@ -13,8 +14,6 @@ import {
   BrandName,
   IO,
   TO,
-  TwitterLogo,
-  TwitterButton,
   Logout,
   Actions,
   Action,
@@ -57,17 +56,8 @@ function Header({ loggedUser, loading, history }) {
         </Actions>}
       {(() => {
         if (!loading) {
-          if (loggedUser)
-            return <Logout onClick={logout}>Logout</Logout>;
-          else
-            return (
-              <TwitterButton
-                href={`http://${config.host}:${config.port}/connect/twitter`}
-                target="_blank"
-              >
-                <p>Log In</p> <TwitterLogo className="fa fa-twitter" />
-              </TwitterButton>
-            );
+          if (loggedUser) return <Logout onClick={logout}>Logout</Logout>;
+          else return <TwitterButton />;
         }
       })()}
     </Container>

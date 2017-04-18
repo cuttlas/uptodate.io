@@ -180,3 +180,26 @@ export const ActionLink = styled.a`
     cursor: pointer;
   }
 `;
+
+export const LoginScreen = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LoginMessage = styled.span`
+  color: white;
+  margin-bottom: 15px;
+`;
+
+export const LoginBack = styled.span`
+  font-size: 0.9em;
+  color: gray;
+  margin-top: 15px;
+  &:hover {
+    cursor: pointer;
+    color: ${props => props.theme.mainColor};
+  }
+`;
