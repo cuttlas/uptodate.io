@@ -50,7 +50,7 @@ export const TextOverlay = styled.div`
   position: absolute;
   width: 100%;
   padding: 15px 15px 15px 15px;
-  height: ${props => props.expanded ? "100%" : "40%"};
+  height: ${props => props.expanded ? "100%" : "50%"};
   background: rgba(0, 0, 0, .70);
   bottom: 0;
   color: white;
@@ -87,8 +87,10 @@ export const Description = styled.p`
 `;
 
 export const Author = styled.span`
+  margin-right: 10px;
   color: gray;
-  font-size: 0.65em;
+  font-size: 0.75em;
+  color: ${props => props.theme.mainColor};
 `;
 
 export const Newsletter = styled.a`
@@ -113,7 +115,8 @@ export const TimeAgo = styled.span`
 `;
 
 export const Host = styled.div`
-  margin-bottom: 10px;
+  margin: 0px 0px 10px 0px;
+  display: inline-block;
 `;
 
 export const Meta = styled.div`
@@ -133,7 +136,7 @@ export const FavIcon = styled.img`
 
 export const HostName = styled.p`
   margin: 0px;
-  color: #a2cbd8;
+  color: ${props => props.theme.mainColor};
   display: inline-block;
   font-size: 0.7em;
   vertical-align: middle;

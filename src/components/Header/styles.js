@@ -27,10 +27,15 @@ export const Logo = styled.i`
 export const BrandName = styled.span`
   color: white;
   font-size: 0.8em;
+    display: none;
+
+  @media(min-width: 550px) {
+    display: inline;
+  }
 `;
 
 export const SearchInput = styled.input`
-  width: 25%;
+  width: 30%;
   margin-right: auto;
   padding: 5px;
   border: solid 1px ${props => props.theme.mainColor};

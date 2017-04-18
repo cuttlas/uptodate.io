@@ -11,7 +11,7 @@ import {
   Description,
   Host,
   Link,
-  //Author,
+  Author,
   Actions,
   Action,
   ActionLabel,
@@ -116,13 +116,13 @@ class Article extends Component {
             })}
             <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
           </Meta>
+          {article.author && <Author> {article.author}</Author>}
           <Host>
             <FavIcon src={favicon} />
             <HostName>
               {url.hostname}
             </HostName>
           </Host>
-          {/*article.author && <Author> {article.author}</Author>*/}
           <Description
             show={this.state.expanded}
             dangerouslySetInnerHTML={{

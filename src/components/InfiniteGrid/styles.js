@@ -7,4 +7,5 @@ export const InfiniteGrid = styled(InfiniteScroll)`
 
 export const EmptyMessage = styled.p`
   text-align: center;
+  font-size: 0.8em;
 `;
