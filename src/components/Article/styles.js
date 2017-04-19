@@ -1,31 +1,38 @@
 import styled from "styled-components";
 
+const between = (min, max, fromVPWidth, toVPWidth) => {
+  const ratio = (max - min) / (toVPWidth - fromVPWidth);
+  const base = min - fromVPWidth * ratio;
+
+  return `calc(${base}px + 100vw * ${ratio})`;
+};
+
 export const Box = styled.div`
   display: inline-block;
   margin: 0px 3px 0px 3px;
-  width: 94vw;
-  height: 60vw;
+  width: calc((100vw - 15px));
+  height: ${between(325, 250, 0, 600)};
   position: relative;
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
   border: 1px solid black;
   text-align: left;
 
-  @media (min-width:575px)  { 
-    width: 47.8vw;
-    height: 41vw;
+  @media (min-width:600px)  { 
+    width: calc((100vw - 25px) / 2);
+    height: ${between(325, 250, 600, 925)};
   }
   @media (min-width:925px)  { 
-    width: 32.6vw;
-    height: 30vw;
+    width: calc((100vw - 25px) / 3);
+    height: ${between(325, 250, 925, 1300)};
   }
   @media (min-width:1300px) { 
-    width: 24.2vw;
-    height: 19vw;
+    width: calc((100vw - 35px) / 4);
+    height: ${between(325, 250, 1300, 1800)};
   }
   @media (min-width:1800px) {
-    width: 19.4vw;
-    height: 16vw; 
+    width: calc((100vw - 45px) / 5);
+    height: ${between(325, 250, 1800, 3000)};
   }  
 `;
 
@@ -45,7 +52,7 @@ export const TextOverlay = styled.div`
   position: absolute;
   width: 100%;
   padding: 15px 15px 15px 15px;
-  height: ${props => props.expanded ? "100%" : "50%"};
+  height: ${props => props.expanded ? "100%" : "45%"};
   background: rgba(0, 0, 0, .70);
   bottom: 0;
   color: white;
