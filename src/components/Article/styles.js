@@ -19,19 +19,19 @@ export const Box = styled.div`
   text-align: left;
 
   @media (min-width:600px)  { 
-    width: calc((100vw - 25px) / 2);
+    width: calc((100vw - 35px) / 2);
     height: ${between(325, 250, 600, 925)};
   }
   @media (min-width:925px)  { 
-    width: calc((100vw - 25px) / 3);
+    width: calc((100vw - 45px) / 3);
     height: ${between(325, 250, 925, 1300)};
   }
   @media (min-width:1300px) { 
-    width: calc((100vw - 35px) / 4);
+    width: calc((100vw - 50px) / 4);
     height: ${between(325, 250, 1300, 1800)};
   }
   @media (min-width:1800px) {
-    width: calc((100vw - 45px) / 5);
+    width: calc((100vw - 65px) / 5);
     height: ${between(325, 250, 1800, 3000)};
   }  
 `;
