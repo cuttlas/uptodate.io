@@ -7,7 +7,7 @@ export const TwitterLogo = styled.i`
 `;
 
 export const TwitterButton = styled.a`
-  height: 15px;
+  height: 25px;
   margin: 0px 10px 0px 10px;
   padding: 5px;
   color: white;

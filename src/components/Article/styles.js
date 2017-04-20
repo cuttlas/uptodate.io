@@ -1,38 +1,60 @@
 import styled from "styled-components";
 
-const between = (min, max, fromVPWidth, toVPWidth) => {
-  const ratio = (max - min) / (toVPWidth - fromVPWidth);
-  const base = min - fromVPWidth * ratio;
+const scrollBarSize = () => {
+  const scrollDiv = document.createElement("div");
+  scrollDiv.className = "scrollbar-measure";
+  document.body.appendChild(scrollDiv);
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  console.log("Scrollbar width: ", scrollbarWidth);
+  return scrollbarWidth;
+};
+
+const between = (from, to, fromVPWidth, toVPWidth) => {
+  const ratio = (to - from) / (toVPWidth - fromVPWidth);
+  const base = from - fromVPWidth * ratio;
 
   return `calc(${base}px + 100vw * ${ratio})`;
 };
 
+const marginLeft = 3;
+const marginRight = 3;
+const margin = marginLeft + marginRight + 2 + scrollBarSize();
+
+const break1 = 550;
+const break2 = 950;
+const break3 = 1350;
+const break4 = 1750;
+
+const maxHeight = 325;
+const minHeight = 275;
+
 export const Box = styled.div`
   display: inline-block;
-  margin: 0px 3px 0px 3px;
-  width: calc((100vw - 15px));
-  height: ${between(325, 250, 0, 600)};
   position: relative;
+  margin: 0px ${marginLeft}px 0px ${marginRight}px;
+  width: calc(100vw - ${margin}px);
+  height: ${between(maxHeight, minHeight, 1, break1)};
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
   border: 1px solid black;
   text-align: left;
 
-  @media (min-width:600px)  { 
-    width: calc((100vw - 35px) / 2);
-    height: ${between(325, 250, 600, 925)};
+  @media (min-width:${break1}px)  { 
+    width: calc((100vw - ${margin * 2}px) / 2);
+    height: ${between(maxHeight, minHeight, break1, break2)};
   }
-  @media (min-width:925px)  { 
-    width: calc((100vw - 45px) / 3);
-    height: ${between(325, 250, 925, 1300)};
+  @media (min-width:${break2}px)  { 
+    width: calc((100vw - ${margin * 3}px) / 3);
+    height: ${between(maxHeight, minHeight, break2, break3)};
   }
-  @media (min-width:1300px) { 
-    width: calc((100vw - 50px) / 4);
-    height: ${between(325, 250, 1300, 1800)};
+  @media (min-width:${break3}px) { 
+    width: calc((100vw - ${margin * 4}px) / 4);
+    height: ${between(maxHeight, minHeight, break3, break4)};
   }
-  @media (min-width:1800px) {
-    width: calc((100vw - 65px) / 5);
-    height: ${between(325, 250, 1800, 3000)};
+  @media (min-width:${break4}px) {
+    width: calc((100vw - ${margin * 5}px) / 5);
+    height: ${between(maxHeight, minHeight, break4, 3000)};
   }  
 `;
 
@@ -134,7 +156,7 @@ export const FavIcon = styled.img`
   display: inline-block;
   height: 10px;
   width: 10px;
-  padding-right: 5px;
+  margin-right: 5px;
   vertical-align: middle;
 `;
 
@@ -158,7 +180,7 @@ export const Action = styled.div`
   text-align: center;
 
   + div {
-    margin-left: 40px;
+    margin-left: 30px;
   }
 
   &:hover {

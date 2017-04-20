@@ -1,5 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll;
+}
+
 body {
-  overflow: scroll;
   background-color: lightblue;
   margin: 0;
   padding: 0;
