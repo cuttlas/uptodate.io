@@ -30,9 +30,9 @@ const articlesRepo = require("../repos/articles");
         })
       );
 
-      console.log(`Issue ${i} successfully completed`);
+      console.log(`Issue ${i} from ${newsletterName} successfully completed`);
     } catch (e) {
-      console.error(`Error at issue ${i}.`, e);
+      console.error(`Error at issue ${i} from ${newsletterName}.`, e);
       break;
     }
   }

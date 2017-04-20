@@ -5,13 +5,13 @@ const config = {
     user: "postgres",
     password: "root",
     port: 5433,
-    database: "weweekly"
+    database: "uptodate"
   },
   mysql: {
     user: "root",
     password: "root",
     port: 3306,
-    database: "weweekly"
+    database: "uptodate"
   }
 };
 

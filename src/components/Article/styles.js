@@ -44,8 +44,8 @@ const break2 = 950;
 const break3 = 1350;
 const break4 = 1750;
 
-const maxHeight = 325;
-const minHeight = 275;
+const maxHeight = 355;
+const minHeight = 270;
 
 export const Box = styled.div`
   display: inline-block;
@@ -99,6 +99,10 @@ export const TextOverlay = styled.div`
   transition: height 0.35s ease;
 `;
 
+export const TitleDescriptionWrapper = styled.div`
+    height: 70%;
+`;
+
 export const Title = styled.a`
   display: block;
   text-decoration: none;
@@ -115,7 +119,6 @@ export const Title = styled.a`
 
 export const Description = styled.p`
   margin: 0px;
-  height: 40%;
   opacity: ${props => props.show ? 1 : 0};
   font-size: 0.85em;
   text-align: left;
@@ -198,7 +201,7 @@ export const Action = styled.div`
   text-align: center;
 
   + div {
-    margin-left: 30px;
+    margin-left: 25px;
   }
 
   &:hover {

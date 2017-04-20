@@ -11,6 +11,7 @@ import {
   Container,
   LogoWrapper,
   Logo,
+  LogoOut,
   SearchInput,
   BrandName,
   IO,
@@ -45,7 +46,10 @@ function Header({ loggedUser, loading, history }) {
   return (
     <Container>
       <LogoWrapper to="/">
-        <Logo className="fa fa-align-center" />
+        <span className="fa-stack">
+          <LogoOut className="fa fa-circle-thin fa-stack-1x" />
+          <Logo className="fa fa-align-center fa-stack-1x" />
+        </span>
         <BrandName>Up<TO>To</TO>Date<IO>.io</IO></BrandName>
       </LogoWrapper>
       <SearchIcon className="fa fa-search" />

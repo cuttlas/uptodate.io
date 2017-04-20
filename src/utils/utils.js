@@ -1,7 +1,7 @@
 export function truncate(text, max) {
   if (!text || !text.length) return "";
 
-  let res = text.trim().replace(/i.e./g, "");
+  let res = text.trim().replace(/<br>/g, "");
 
   while (res.length > max) {
     let tmp = res.split(".");

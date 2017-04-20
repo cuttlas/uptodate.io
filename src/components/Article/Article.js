@@ -9,6 +9,7 @@ import {
   TextOverlay,
   Title,
   Description,
+  TitleDescriptionWrapper,
   Host,
   Link,
   Author,
@@ -127,82 +128,86 @@ class Article extends Component {
       ? "http://balzer82.github.io/github.png"
       : `http://www.google.com/s2/favicons?domain=${url.hostname}`;
 
-    const articleDetails = [
-      this.state.expanded
-        ? <ExpandIcon className="fa fa-angle-down" />
-        : <ExpandIcon className="fa fa-angle-up" />,
+    const articleDetails = (
+      <span>
+        {this.state.expanded
+          ? <ExpandIcon className="fa fa-angle-down" />
+          : <ExpandIcon className="fa fa-angle-up" />}
 
-      <Title
-        expanded={this.state.expanded}
-        onClick={this.onClickTitle}
-        href={article.url}
-        target="_blank"
-      >
-        {article.title.toUpperCase()}
-      </Title>,
-      article.author && <Author> {article.author}</Author>,
-      <Host>
-        <FavIcon src={favicon} />
-        <HostName>
-          {url.hostname}
-        </HostName>
-      </Host>,
-      <Description
-        show={this.state.expanded}
-        dangerouslySetInnerHTML={{
-          __html: truncate(article.description, 300)
-        }}
-      />,
-      <Actions show={this.state.expanded}>
-        <Action>
-          <ActionLink
+        <TitleDescriptionWrapper>
+          <Title
+            expanded={this.state.expanded}
             onClick={this.onClickTitle}
             href={article.url}
-            target="__blank"
+            target="_blank"
           >
-            <ActionIcon className="fa fa-eye" />
-            {url.hostname === "youtube.com"
-              ? <ActionLabel>Watch now</ActionLabel>
-              : <ActionLabel>Read now</ActionLabel>}
-          </ActionLink>
-        </Action>
-        {article.favourite
-          ? <Action onClick={this.onClickUnfavourite}>
-              <ActionIcon className="fa fa-star" />
-              <ActionLabel>Unfavourite</ActionLabel>
-            </Action>
-          : <Action onClick={this.onClickFavourite}>
-              <ActionIcon className="fa fa-star-o" />
-              <ActionLabel>Favourite</ActionLabel>
-            </Action>}
-        {article.forLater
-          ? <Action onClick={this.onClickUnsave}>
-              <ActionIcon className="fa fa-bookmark" />
-              <ActionLabel>Unsave</ActionLabel>
-            </Action>
-          : <Action onClick={this.onClickForLater}>
-              <ActionIcon className="fa fa-bookmark-o" />
-              <ActionLabel>For later</ActionLabel>
-            </Action>}
-      </Actions>,
-      <Meta>
-        {article.newsletters.map((nl, key) => {
-          const res = [
-            <Newsletter
+            {article.title.toUpperCase()}
+          </Title>
+          {article.author && <Author> {article.author}</Author>}
+          <Host>
+            <FavIcon src={favicon} />
+            <HostName>
+              {url.hostname}
+            </HostName>
+          </Host>
+          <Description
+            show={this.state.expanded}
+            dangerouslySetInnerHTML={{
+              __html: truncate(article.description, 275)
+            }}
+          />
+        </TitleDescriptionWrapper>
+        <Actions show={this.state.expanded}>
+          <Action>
+            <ActionLink
               onClick={this.onClickTitle}
-              href={nl.url}
-              target="_blank"
+              href={article.url}
+              target="__blank"
             >
-              {nl.name}
-            </Newsletter>
-          ];
-          if (article.newsletters.length > key + 1)
-            res.push(<NLComma>, </NLComma>);
-          return res;
-        })}
-        <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
-      </Meta>
-    ];
+              <ActionIcon className="fa fa-eye" />
+              {url.hostname === "youtube.com"
+                ? <ActionLabel>Watch now</ActionLabel>
+                : <ActionLabel>Read now</ActionLabel>}
+            </ActionLink>
+          </Action>
+          {article.favourite
+            ? <Action onClick={this.onClickUnfavourite}>
+                <ActionIcon className="fa fa-star" />
+                <ActionLabel>Unfavourite</ActionLabel>
+              </Action>
+            : <Action onClick={this.onClickFavourite}>
+                <ActionIcon className="fa fa-star-o" />
+                <ActionLabel>Favourite</ActionLabel>
+              </Action>}
+          {article.forLater
+            ? <Action onClick={this.onClickUnsave}>
+                <ActionIcon className="fa fa-bookmark" />
+                <ActionLabel>Unsave</ActionLabel>
+              </Action>
+            : <Action onClick={this.onClickForLater}>
+                <ActionIcon className="fa fa-bookmark-o" />
+                <ActionLabel>For later</ActionLabel>
+              </Action>}
+        </Actions>
+        <Meta>
+          {article.newsletters.map((nl, key) => {
+            const res = [
+              <Newsletter
+                onClick={this.onClickTitle}
+                href={nl.url}
+                target="_blank"
+              >
+                {nl.name}
+              </Newsletter>
+            ];
+            if (article.newsletters.length > key + 1)
+              res.push(<NLComma>, </NLComma>);
+            return res;
+          })}
+          <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
+        </Meta>
+      </span>
+    );
 
     const login = (
       <LoginScreen onClick={this.loginBack}>

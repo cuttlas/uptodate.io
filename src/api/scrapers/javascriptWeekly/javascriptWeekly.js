@@ -14,7 +14,7 @@ function sanitizeUrl(url) {
 }
 
 function sanitizeText(text) {
-  return emojiStrip(text.replace(/\n/g, ""));
+  return emojiStrip(text.replace(/\n/g, "").replace(/<br>/g, ""));
 }
 
 module.exports = async function(issue) {
