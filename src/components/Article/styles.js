@@ -1,13 +1,30 @@
 import styled from "styled-components";
 
 const scrollBarSize = () => {
-  const scrollDiv = document.createElement("div");
-  scrollDiv.className = "scrollbar-measure";
-  document.body.appendChild(scrollDiv);
-  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-  console.log("Scrollbar width: ", scrollbarWidth);
-  return scrollbarWidth;
+  var outer = document.createElement("div");
+  outer.style.visibility = "hidden";
+  outer.style.width = "100px";
+  outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+  document.body.appendChild(outer);
+
+  var widthNoScroll = outer.offsetWidth;
+  // force scrollbars
+  outer.style.overflow = "scroll";
+
+  // add innerdiv
+  var inner = document.createElement("div");
+  inner.style.width = "100%";
+  outer.appendChild(inner);
+
+  var widthWithScroll = inner.offsetWidth;
+
+  // remove divs
+  outer.parentNode.removeChild(outer);
+
+  const res = widthNoScroll - widthWithScroll;
+  console.log("Scroll bar width: " + res);
+  return res;
 };
 
 const between = (from, to, fromVPWidth, toVPWidth) => {
@@ -19,7 +36,8 @@ const between = (from, to, fromVPWidth, toVPWidth) => {
 
 const marginLeft = 3;
 const marginRight = 3;
-const margin = marginLeft + marginRight + 2 + scrollBarSize();
+const margin = marginLeft + marginRight + 2;
+const scrollWidth = scrollBarSize();
 
 const break1 = 550;
 const break2 = 950;
@@ -33,7 +51,7 @@ export const Box = styled.div`
   display: inline-block;
   position: relative;
   margin: 0px ${marginLeft}px 0px ${marginRight}px;
-  width: calc(100vw - ${margin}px);
+  width: calc(100vw - ${margin + scrollWidth}px);
   height: ${between(maxHeight, minHeight, 1, break1)};
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
@@ -41,19 +59,19 @@ export const Box = styled.div`
   text-align: left;
 
   @media (min-width:${break1}px)  { 
-    width: calc((100vw - ${margin * 2}px) / 2);
+    width: calc((100vw - ${margin * 2 + scrollWidth}px) / 2);
     height: ${between(maxHeight, minHeight, break1, break2)};
   }
   @media (min-width:${break2}px)  { 
-    width: calc((100vw - ${margin * 3}px) / 3);
+    width: calc((100vw - ${margin * 3 + scrollWidth}px) / 3);
     height: ${between(maxHeight, minHeight, break2, break3)};
   }
   @media (min-width:${break3}px) { 
-    width: calc((100vw - ${margin * 4}px) / 4);
+    width: calc((100vw - ${margin * 4 + scrollWidth}px) / 4);
     height: ${between(maxHeight, minHeight, break3, break4)};
   }
   @media (min-width:${break4}px) {
-    width: calc((100vw - ${margin * 5}px) / 5);
+    width: calc((100vw - ${margin * 5 + scrollWidth}px) / 5);
     height: ${between(maxHeight, minHeight, break4, 3000)};
   }  
 `;
