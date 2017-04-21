@@ -18,11 +18,11 @@ const config = {
 config.oauth = {
   server: {
     protocol: "http",
-    host: `dev.weweekly:${config.port}`
+    host: `dev.uptodate.io:${config.port}`
   },
   twitter: {
-    key: "16khXvKNzv7MRUGZzNDcUBL4h",
-    secret: "zsk2y5Ubd0sdAJkWJ6azL6UiDzdJbJum8BvMz4xvTf9fU1SOu9",
+    key: "vXEmanXdhfsmmcvYQTWCA8aya",
+    secret: "HmSmz903TVnZ2q2F9nNQODFE2rlesynSTn4zKae6jg3LZIEoWE",
     callback: "/twitter"
   }
 };
@@ -34,10 +34,21 @@ switch (env) {
     break;
   case "development":
     config.appHost = "http://localhost:3000";
-    config.host = "dev.weweekly";
+    config.host = "dev.uptodate.io";
     break;
   case "production":
-    config.appHost = "http://weweekly.com";
+    config.appHost = "http://uptodate.io";
+    config.oauth = {
+      server: {
+        protocol: "http",
+        host: `uptodate.io:${config.port}`
+      },
+      twitter: {
+        key: "itAssc1fK8kJKCGidRg7hfTuS",
+        secret: "Cay9ll2BzlwvEcl4DoUe1XUI1bti5AbGIM9BPJZGTCBc0X0kEd",
+        callback: "/twitter"
+      }
+    };
     break;
   default:
 }
