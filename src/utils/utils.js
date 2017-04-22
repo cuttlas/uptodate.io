@@ -1,7 +1,22 @@
+import striptags from "striptags";
+
+function getATags(html) {
+  const aRegex = /<a[^>]*>([\s\S]*?)<\/a>/g;
+  const aMatches = html.match(aRegex);
+
+  return aMatches
+    ? aMatches.map(match => ({
+        value: striptags(match),
+        tag: match
+      }))
+    : [];
+}
+
 export function truncate(text, max) {
   if (!text || !text.length) return "";
+  const aTags = getATags(text);
 
-  let res = text.trim().replace(/<br>/g, "");
+  let res = striptags(text.trim().replace(/<br>/g, ""));
 
   while (res.length > max) {
     let tmp = res.split(".");
@@ -16,8 +31,12 @@ export function truncate(text, max) {
   if (![".", "!", "?"].includes(lastChar)) res += ".";
 
   if (res.length > max) {
-    return `${res.slice(0, max - 3)}...`;
+    res = `${res.slice(0, max - 3)}...`;
   }
+
+  aTags.forEach(aTag => {
+    res = res.replace(aTag.value, aTag.tag);
+  });
 
   return res;
 }
