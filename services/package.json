@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "serverless offline --port 4000",
+    "deploy": "serverless deploy",
     "migrate": "knex migrate:latest --knexfile='db/knexfile.js'; NODE_ENV=test knex migrate:latest --knexfile='db/knexfile.js';",
     "seed": "knex seed:run --knexfile='db/knexfile.js'"
   }

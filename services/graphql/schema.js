@@ -1,9 +1,6 @@
 const graphql = require("graphql");
 const gqlUtils = require("graphql-relay");
-
-const articlesRepo = require("../db/repos/articles");
-const newsletterRepo = require("../db/repos/articles");
-const userRepo = require("../db/repos/articles");
+const knex = require("../db/knex");
 
 const {
   GraphQLObjectType,
@@ -15,6 +12,10 @@ const {
 } = graphql;
 
 const GraphQLDate = require("graphql-date");
+
+const articlesRepo = require("../db/repos/articles");
+const newslettersRepo = require("../db/repos/newsletters");
+const usersRepo = require("../db/repos/users");
 
 const NewsletterType = new GraphQLObjectType({
   name: "Newsletter",
@@ -43,10 +44,10 @@ const ArticleType = new GraphQLObjectType({
     published: { type: GraphQLDate },
     forLater: {
       type: GraphQLBoolean,
-      resolve(parentValue, args, context) {
+      async resolve(parentValue, args, context) {
         if (!context.state.user) return false;
 
-        return articlesRepo.isForLater({
+        return await articlesRepo.isForLater({
           userId: context.state.user.id,
           articleId: parentValue.id
         });
@@ -54,10 +55,10 @@ const ArticleType = new GraphQLObjectType({
     },
     favourite: {
       type: GraphQLBoolean,
-      resolve(parentValue, args, context) {
+      async resolve(parentValue, args, context) {
         if (!context.state.user) return false;
 
-        return articlesRepo.isFavourite({
+        return await articlesRepo.isFavourite({
           userId: context.state.user.id,
           articleId: parentValue.id
         });
@@ -65,8 +66,8 @@ const ArticleType = new GraphQLObjectType({
     },
     newsletters: {
       type: new GraphQLList(NewsletterType),
-      resolve(parentValue, args) {
-        return newslettersRepo.getByArticle({
+      async resolve(parentValue, args) {
+        return await newslettersRepo.getByArticle({
           articleId: parentValue.id
         });
       }
@@ -89,15 +90,13 @@ const UserType = new GraphQLObjectType({
         { q: { type: GraphQLString } },
         gqlUtils.connectionArgs
       ),
-      resolve(parentValue, args) {
-        articlesRepo
-          .getForLater({
-            userId: parentValue.id,
-            q: args.q
-          })
-          .then(data => {
-            return gqlUtils.connectionFromArray(data, args);
-          });
+      async resolve(parentValue, args) {
+        const data = await articlesRepo.getForLater({
+          userId: parentValue.id,
+          q: args.q
+        });
+
+        return gqlUtils.connectionFromArray(data, args);
       }
     },
     favourites: {
@@ -106,15 +105,13 @@ const UserType = new GraphQLObjectType({
         { q: { type: GraphQLString } },
         gqlUtils.connectionArgs
       ),
-      resolve(parentValue, args) {
-        articlesRepo
-          .getFavourites({
-            userId: parentValue.id,
-            q: args.q
-          })
-          .then(data => {
-            return gqlUtils.connectionFromArray(data, args);
-          });
+      async resolve(parentValue, args) {
+        const data = await articlesRepo.getFavourites({
+          userId: parentValue.id,
+          q: args.q
+        });
+
+        return gqlUtils.connectionFromArray(data, args);
       }
     }
   })
@@ -135,15 +132,14 @@ const RootQuery = new GraphQLObjectType({
         { q: { type: GraphQLString } },
         gqlUtils.connectionArgs
       ),
-      resolve(parentValue, args, context, resolveInfo) {
+      async resolve(parentValue, args, context, resolveInfo) {
         const user = context.state.user;
-        articlesRepo
-          .get({
-            q: args.q
-          })
-          .then(data => {
-            return gqlUtils.connectionFromArray(data, args);
-          });
+        const data = await articlesRepo.get({
+          q: args.q
+        });
+        const articles = gqlUtils.connectionFromArray(data, args);
+
+        return articles;
       }
     }
   })
@@ -166,26 +162,25 @@ const RootMutation = new GraphQLObjectType({
           type: GraphQLInt
         }
       },
-      resolve(parentValue, args, context) {
+      async resolve(parentValue, args, context) {
         const user = context.state.user;
         if (!user) return { error: "Invalid User" };
 
-        usersRepo
-          .addFavourite({
+        try {
+          await usersRepo.addFavourite({
             userId: user.id,
             articleId: args.articleId
-          })
-          .then(() => {
-            return {
-              id: args.articleId
-            };
-          })
-          .catch(e => {
-            if (e.message.indexOf("Duplicate entry") > 0) {
-              return { error: "Article already added to favourites" };
-            }
-            return { error: e.message };
           });
+          return {
+            id: args.articleId
+          };
+        } catch (e) {
+          console.log(e);
+          if (e.message.indexOf("Duplicate entry") > 0) {
+            return { error: "Article already added to favourites" };
+          }
+          return { error: e.message };
+        }
       }
     },
     addForLater: {
@@ -195,26 +190,25 @@ const RootMutation = new GraphQLObjectType({
           type: GraphQLInt
         }
       },
-      resolve(parentValue, args, context) {
+      async resolve(parentValue, args, context) {
         const user = context.state.user;
         if (!user) return { error: "Invalid User" };
 
-        usersRepo
-          .addForLater({
+        try {
+          await usersRepo.addForLater({
             userId: user.id,
             articleId: args.articleId
-          })
-          .then(() => {
-            return {
-              id: args.articleId
-            };
-          })
-          .catch(e => {
-            if (e.message.indexOf("Duplicate entry") > 0) {
-              return { error: "Article already added for later" };
-            }
-            return { error: e.message };
           });
+          return {
+            id: args.articleId
+          };
+        } catch (e) {
+          console.log(e);
+          if (e.message.indexOf("Duplicate entry") > 0) {
+            return { error: "Article already added to for later" };
+          }
+          return { error: e.message };
+        }
       }
     },
     removeFavourite: {
@@ -224,23 +218,22 @@ const RootMutation = new GraphQLObjectType({
           type: GraphQLInt
         }
       },
-      resolve(parentValue, args, context) {
+      async resolve(parentValue, args, context) {
         const user = context.state.user;
         if (!user) return { error: "Invalid User" };
 
-        usersRepo
-          .removeFavourite({
+        try {
+          await usersRepo.removeFavourite({
             userId: user.id,
             articleId: args.articleId
-          })
-          .then(() => {
-            return {
-              id: args.articleId
-            };
-          })
-          .catch(e => {
-            return { error: e.message };
           });
+          return {
+            id: args.articleId
+          };
+        } catch (e) {
+          console.log(e);
+          return { error: e.message };
+        }
       }
     },
     removeForLater: {
@@ -254,19 +247,18 @@ const RootMutation = new GraphQLObjectType({
         const user = context.state.user;
         if (!user) return { error: "Invalid User" };
 
-        usersRepo
-          .removeForLater({
+        try {
+          await usersRepo.removeForLater({
             userId: user.id,
             articleId: args.articleId
-          })
-          .then(() => {
-            return {
-              id: args.articleId
-            };
-          })
-          .catch(e => {
-            return { error: e.message };
           });
+          return {
+            id: args.articleId
+          };
+        } catch (e) {
+          console.log(e);
+          return { error: e.message };
+        }
       }
     }
   })
