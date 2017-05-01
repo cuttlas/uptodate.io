@@ -41,9 +41,6 @@
     "url": "^0.11.0"
   },
   "scripts": {
-    "api": "node ./src/api/server",
-    "migrate": "knex migrate:latest --knexfile='src/api/knexfile.js'; NODE_ENV=test knex migrate:latest --knexfile='src/api/knexfile.js';",
-    "seed": "knex seed:run --knexfile='src/api/knexfile.js'",
     "scrap": "node ./src/api/scrapers/runScraper",
     "publish": "node ./src/api/scrapers/runPublisher",
     "reset": "./src/api/scrapers/reset.sh",

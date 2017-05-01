@@ -1,0 +1,16 @@
+{
+  "name": "uptodate-services",
+  "version": "0.1.0",
+  "dependencies": {
+    "graphql": "^0.9.5",
+    "graphql-date": "^1.0.3",
+    "graphql-relay": "^0.5.1",
+    "knex": "^0.13.0",
+    "serverless-offline": "^3.13.5",
+    "serverless-plugin-graphiql": "^0.3.0"
+  },
+  "scripts": {
+    "migrate": "knex migrate:latest --knexfile='db/knexfile.js'; NODE_ENV=test knex migrate:latest --knexfile='db/knexfile.js';",
+    "seed": "knex seed:run --knexfile='db/knexfile.js'"
+  }
+}
