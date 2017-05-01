@@ -1,33 +1,24 @@
-const graphql = require("graphql").graphql;
+const serverlessHttp = require("serverless-http");
+
+const Koa = require("koa");
+const mount = require("koa-mount");
+const convert = require("koa-convert");
+const graphql = require("koa-graphql");
+
 const schema = require("./schema");
 
-const parseJson = str => {
-  try {
-    return JSON.parse(str);
-  } catch (e) {
-    return str;
-  }
-};
+const app = new Koa();
 
-module.exports.graphql = (event, context, cb) => {
-  const payload = parseJson(event.body);
-  const query = payload[Object.keys(payload)[0]];
-
-  graphql(
-    schema,
-    query,
-    {},
-    {
-      state: {}
-    }
+app.use(
+  mount(
+    "/",
+    convert(
+      graphql({
+        schema,
+        graphiql: true
+      })
+    )
   )
-    .then(res => {
-      console.log(res);
-      cb(null, {
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-        statusCode: 200,
-        body: JSON.stringify(res)
-      });
-    })
-    .catch(cb);
-};
+);
+
+module.exports.graphql = serverlessHttp(app);
