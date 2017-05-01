@@ -107,9 +107,3 @@ functions:
 
 plugins:
   - serverless-offline
-  - serverless-babel-plugin
-  - serverless-plugin-graphiql
-
-custom:
-  babelPresets:
-    - latest

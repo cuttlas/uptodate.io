@@ -2,7 +2,6 @@
   "name": "uptodate-services",
   "version": "0.1.0",
   "dependencies": {
-    "babel-preset-latest": "^6.24.1",
     "graphql": "^0.9.5",
     "graphql-date": "^1.0.3",
     "graphql-relay": "^0.5.1",
@@ -11,12 +10,11 @@
     "koa-convert": "^1.2.0",
     "koa-graphql": "^0.7.0",
     "koa-mount": "^3.0.0",
-    "serverless-babel-plugin": "^0.2.0",
     "serverless-http": "^1.4.2",
-    "serverless-offline": "^3.13.5",
-    "serverless-plugin-graphiql": "^0.3.0"
+    "serverless-offline": "^3.13.5"
   },
   "scripts": {
+    "start": "serverless offline --port 4000",
     "migrate": "knex migrate:latest --knexfile='db/knexfile.js'; NODE_ENV=test knex migrate:latest --knexfile='db/knexfile.js';",
     "seed": "knex seed:run --knexfile='db/knexfile.js'"
   }
