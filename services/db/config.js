@@ -13,6 +13,9 @@ switch (env) {
     config.mysql.database = "test";
     break;
   case "production":
+    config.mysql.host = "uptodateio-mysql.cidajczud5hb.us-east-1.rds.amazonaws.com";
+    config.mysql.user = "uptodateio";
+    config.mysql.password = "upt0datei0";
     break;
   default:
 }

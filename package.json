@@ -36,7 +36,7 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "request": "^2.79.0",
-    "striptags": "^3.0.1",
+    "striptags": "2.2.1",
     "styled-components": "2.0.0-7",
     "url": "^0.11.0"
   },
@@ -46,6 +46,7 @@
     "reset": "./src/api/scrapers/reset.sh",
     "start": "NODE_PATH=./src react-scripts start",
     "build": "NODE_PATH=./src react-scripts build",
+    "deploy": "yarn build; aws s3 cp build/ s3://uptodate.io/ --recursive",
     "test": "NODE_PATH=./src react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

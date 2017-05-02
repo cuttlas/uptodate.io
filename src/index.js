@@ -11,6 +11,7 @@ import App from "components/App/App";
 import "./index.css";
 import qs from "query-string";
 import * as storage from "utils/storage";
+import config from "config";
 
 //TAB FROM TWITTER.
 const queryParams = qs.parse(location.search);
@@ -26,7 +27,7 @@ if (queryParams && queryParams.token) {
 }
 
 const networkInterface = createNetworkInterface({
-  uri: "http://localhost:4000/graphql"
+  uri: `${config.host}/graphql`
 });
 
 networkInterface.use([
