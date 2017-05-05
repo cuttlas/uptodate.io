@@ -1,4 +1,4 @@
-const normalizeUrl = require("normalize-url");
+// const normalizeUrl = require("normalize-url");
 
 const knex = require("../knex");
 
@@ -53,7 +53,7 @@ exports.getForLater = function({ userId, q }) {
   return query;
 };
 
-exports.isForLater = async function({ articleId, userId }) {
+exports.isForLater = function({ articleId, userId }) {
   const query = knex("for_later")
     .where({
       article_id: articleId,
@@ -61,11 +61,10 @@ exports.isForLater = async function({ articleId, userId }) {
     })
     .select()
     .limit(1);
-  const res = await query;
-  return res.length > 0;
+  return query.then(res => res.length > 0);
 };
 
-exports.isFavourite = async function({ articleId, userId }) {
+exports.isFavourite = function({ articleId, userId }) {
   const query = knex("favourites")
     .where({
       article_id: articleId,
@@ -73,11 +72,10 @@ exports.isFavourite = async function({ articleId, userId }) {
     })
     .select()
     .limit(1);
-  const res = await query;
-  return res.length > 0;
+  return query.then(res => res.length > 0);
 };
 
-exports.insert = async function insert(newArticle) {
+/* exports.insert = function insert(newArticle) {
   const url = normalizeUrl(newArticle.url);
   const oldArticle = await exports.find({ url });
 
@@ -99,10 +97,6 @@ exports.insert = async function insert(newArticle) {
     };
     await knex("articles").where("id", oldArticle.id).update(update);
 
-    /*
-      We create a newsletter relation if we don't have it already. We may already have it if
-      we are scraping an issue we had already scrapped to obtain more info.
-     */
     const articleNewsletter = await knex("article_newsletter").select().where({
       article_id: oldArticle.id,
       newsletter_id: newArticle.newsletterId
@@ -132,4 +126,4 @@ exports.insert = async function insert(newArticle) {
       newsletter_id: newArticle.newsletterId
     });
   }
-};
+}; */
