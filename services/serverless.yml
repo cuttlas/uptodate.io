@@ -62,6 +62,15 @@ functions:
           path: graphql
           method: post
           cors: true
+  twitterLogin:
+    handler: twitterLogin/handler.login
+    events:
+      - http:
+          path: connect/twitter
+          method: get
+          cors: true
+
+    
 
 
 #    The following are a few example events you can configure

@@ -16,7 +16,7 @@ switch (env) {
     //config.mysql.host = "uptodateio-mysql.cidajczud5hb.us-east-1.rds.amazonaws.com";
     //config.mysql.user = "uptodateio";
     //config.mysql.password = "upt0datei0";
-    config.mysql.host = "ns399575.ip-5-196-67.eu";
+    config.mysql.host = "localhost";
     config.mysql.user = "eventradr";
     config.mysql.password = "eventrad4r";
     break;
