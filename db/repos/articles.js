@@ -1,4 +1,4 @@
-// const normalizeUrl = require("normalize-url");
+const normalizeUrl = require("normalize-url");
 
 const knex = require("../knex");
 
@@ -75,7 +75,7 @@ exports.isFavourite = function({ articleId, userId }) {
   return query.then(res => res.length > 0);
 };
 
-/* exports.insert = function insert(newArticle) {
+exports.insert = async function insert(newArticle) {
   const url = normalizeUrl(newArticle.url);
   const oldArticle = await exports.find({ url });
 
@@ -126,4 +126,4 @@ exports.isFavourite = function({ articleId, userId }) {
       newsletter_id: newArticle.newsletterId
     });
   }
-}; */
+};

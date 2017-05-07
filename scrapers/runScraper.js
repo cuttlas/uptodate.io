@@ -6,8 +6,8 @@ const newsletterName = process.argv[2];
 const from = process.argv[3] || 1;
 const to = process.argv[4] || from;
 const scrapper = require(`./${newsletterName}/${newsletterName}`);
-const newslettersRepo = require("../repos/newsletters");
-const articlesRepo = require("../repos/articles");
+const newslettersRepo = require("../db/repos/newsletters");
+const articlesRepo = require("../db/repos/articles");
 
 (async function scrap() {
   const newsletter = await newslettersRepo.find({

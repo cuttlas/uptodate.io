@@ -1,7 +1,7 @@
-const userRepo = require("../repos/users");
-const config = require("../../config");
+const userRepo = require("../../db/repos/users");
+const config = require("../config");
 
-exports.twitter = async function() {
+module.exports = async function() {
   const nickname = this.query["raw[screen_name]"];
   const twitterId = this.query["raw[user_id]"];
   const token = this.query.access_token;

@@ -1,9 +1,9 @@
 const graphql = require("graphql");
 const gqlUtils = require("graphql-relay");
 
-const articlesRepo = require("../db/repos/articles");
-const newslettersRepo = require("../db/repos/newsletters");
-const userRepo = require("../db/repos/articles");
+const articlesRepo = require("../../db/repos/articles");
+const newslettersRepo = require("../../db/repos/newsletters");
+const usersRepo = require("../../db/repos/users");
 
 const {
   GraphQLObjectType,

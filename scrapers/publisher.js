@@ -1,6 +1,6 @@
 /*It publishes the last non published article from the newsletter with the oldest published date*/
 
-const knex = require("../knex");
+const knex = require("../db/knex");
 
 module.exports = async function(date = new Date()) {
   try {

@@ -6,7 +6,7 @@ switch (env) {
     config.host = "http://dev.uptodate.io:4000";
     break;
   case "production":
-    config.host = "https://veggflyoyd.execute-api.us-east-1.amazonaws.com/production";
+    config.host = "http://ns399575.ip-5-196-67.eu:4000";
     break;
   default:
 }
