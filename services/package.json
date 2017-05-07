@@ -17,12 +17,7 @@
   },
   "scripts": {
     "start": "serverless offline --port 4000",
-    "build": "babel . -d dist",
     "deploy-dev": "serverless deploy",
-    "deploy": "serverless deploy --stage production",
-    "migrate": "knex migrate:latest --knexfile='db/knexfile.js'; NODE_ENV=test knex migrate:latest --knexfile='db/knexfile.js';",
-    "migrate-prod": "NODE_ENV=production knex migrate:latest --knexfile='db/knexfile.js'",
-    "seed": "knex seed:run --knexfile='db/knexfile.js'",
-    "seed-prod": "NODE_ENV=production knex seed:run --knexfile='db/knexfile.js'"
+    "deploy": "serverless deploy --stage production"
   }
 }
