@@ -29,7 +29,7 @@ switch (env) {
     config.oauth = {
       server: {
         protocol: "http",
-        host: `uptodate.io:${config.port}`
+        host: `ns399575.ip-5-196-67.eu:4000`
       },
       twitter: {
         key: "itAssc1fK8kJKCGidRg7hfTuS",
