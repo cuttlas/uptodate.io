@@ -17,7 +17,7 @@ switch (env) {
     //config.mysql.user = "uptodateio";
     //config.mysql.password = "upt0datei0";
     config.mysql.host = "localhost";
-    config.mysql.user = "eventradr";
+    config.mysql.user = "root";
     config.mysql.password = "eventrad4r";
     break;
   default:
