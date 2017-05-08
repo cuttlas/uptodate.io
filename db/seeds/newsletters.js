@@ -16,14 +16,21 @@ exports.seed = function(knex, Promise) {
         {
           id: 2,
           name: "reactjsNewsletter",
-          url: "http://reactjsnewsletter.com/",
+          url: "http://reactjsnewsletter.com",
           img_url: "https://previews.123rf.com/images/mikekiev/mikekiev1109/mikekiev110900016/10628139-binary-stream-Stock-Photo-software-matrix-binary.jpg"
-        }
-        /* {
+        },
+        {
           id: 3,
           name: "cssWeekly",
+          url: "http://css-weekly.com",
           img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
-        } */
+        },
+        {
+          id: 4,
+          name: "frontendFocus",
+          url: "http://frontendfocus.co",
+          img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
+        }
       ]);
     });
 };
