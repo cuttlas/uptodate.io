@@ -30,6 +30,12 @@ exports.seed = function(knex, Promise) {
           name: "frontendFocus",
           url: "http://frontendfocus.co",
           img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
+        },
+        {
+          id: 5,
+          name: "ponyFoo",
+          url: "http://ponyfoo.com",
+          img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
         }
       ]);
     });

@@ -34,7 +34,7 @@ const search = debounce(
     const value = e.target.value;
     history.push(`${location.pathname}?q=${value}`);
   },
-  300
+  700
 );
 
 const onChange = (location, history, e) => {

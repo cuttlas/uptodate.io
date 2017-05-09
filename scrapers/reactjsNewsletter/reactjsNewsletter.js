@@ -17,7 +17,15 @@ function sanitizeUrl(url, issue) {
 }
 
 function sanitizeText(text) {
-  return emojiStrip(text.replace(/\n/g, "").replace(/<br>/g, ""));
+  return emojiStrip(
+    text
+      .replace(/\n/g, "")
+      .replace(/<br>/g, "")
+      .replace(
+        /([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g,
+        ""
+      )
+  );
 }
 
 module.exports = async function(issue) {

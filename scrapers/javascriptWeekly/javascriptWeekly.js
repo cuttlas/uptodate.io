@@ -45,12 +45,12 @@ module.exports = async function(issue) {
       article.author = sanitizeText($(this).text());
 
       // If the article is SPAM. Don't save it.
-      const sponsor = $(this).find("span").first();
+      /* const sponsor = $(this).find("span").first();
       if (
         (sponsor && sponsor.text() === "Sponsor") ||
         sponsor.text() === "Sponsored"
       )
-        article = {};
+        article = {}; */
     }
   });
 

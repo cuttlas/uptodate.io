@@ -26,7 +26,7 @@ const listArticles = `
   }
 `;
 
-const pageSize = 30;
+const pageSize = 25;
 
 const user = gql`query getUser {
   loggedUser {

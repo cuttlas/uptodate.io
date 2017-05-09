@@ -10,7 +10,7 @@ const emojiStrip = require("emoji-strip");
 function sanitizeUrl(url, issue) {
   return normalizeUrl(
     url.replace(
-      `?utm_source=CSS-Weekly&utm_campaign=Issue-${issue}&utm_medium=web`,
+      `?utm_source=ponyfoo+weekly&utm_medium=email&utm_campaign=issue-${issue}`,
       ""
     )
   );
@@ -21,22 +21,34 @@ function sanitizeText(text) {
 }
 
 module.exports = async function(issue) {
-  const html = await request.get(`http://css-weekly.com/issue-${issue}`);
+  const html = await request.get(`http://ponyfoo.com/weekly/${issue}`);
   const $ = cheerio.load(html);
 
   const articles = [];
   let article = {};
 
-  $(".newsletter-article").each(function(i) {
-    const title = $(this).find("a").first().text();
-    const url = $(this).find("a").first().attr("href");
-    const description = $(this).find("p").first().html();
+  $(".wy-link-title").each(function(i) {
+    const title = $(this).text();
+    const url = $(this).attr("href");
+    const description = $(this)
+      .parent()
+      .next()
+      .find(".wy-link-description")
+      .first()
+      .html();
+    const author = $(this)
+      .parent()
+      .next()
+      .find(".wy-link-source")
+      .first()
+      .text();
 
     if (!title || !url) return;
 
     article = {
       title: sanitizeText(title),
-      url: sanitizeUrl(url, issue)
+      url: sanitizeUrl(url, issue),
+      author
     };
 
     if (description) article.description = sanitizeText(description);
