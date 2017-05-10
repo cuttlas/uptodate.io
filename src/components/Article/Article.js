@@ -122,7 +122,7 @@ class Article extends Component {
     const { article } = this.props;
     if (!article) return null;
 
-    const bgImg = article.newsletters[0].imgUrl;
+    const bgImg = article.publishedBy.imgUrl;
     const url = parseUrl(article.url);
     const favicon = url.hostname === "github.com"
       ? "http://balzer82.github.io/github.png"
@@ -193,13 +193,13 @@ class Article extends Component {
 
           <Newsletter
             onClick={this.onClickTitle}
-            href={article.newsletters[0].url}
+            href={article.publishedBy.url}
             target="_blank"
           >
-            {article.newsletters[0].name}
+            {article.publishedBy.name}
           </Newsletter>
 
-          {/*article.newsletters.map((nl, key) => {
+          {/* article.newsletters.map((nl, key) => {
             const res = [
               <Newsletter
                 onClick={this.onClickTitle}

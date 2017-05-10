@@ -7,7 +7,7 @@ const interval = process.argv[2];
   let date = moment();
   let finished = false;
   while (!finished) {
-    const res = await publisher(date.toDate());
+    const res = await publisher(date.toDate(), true);
     if (!res) {
       finished = true;
       break;

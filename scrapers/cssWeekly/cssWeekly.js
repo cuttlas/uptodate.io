@@ -22,6 +22,7 @@ function sanitizeText(text) {
 
 module.exports = async function(issue) {
   const html = await request.get(`http://css-weekly.com/issue-${issue}`);
+  if (!html) return false;
   const $ = cheerio.load(html);
 
   const articles = [];

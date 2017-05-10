@@ -16,10 +16,17 @@ exports.getByArticle = function({ articleId }) {
   return query;
 };
 
-exports.find = function find({ name }) {
-  return knex("newsletters")
-    .select()
-    .where("name", name)
-    .limit(1)
-    .then(res => res && res[0]);
+exports.find = function find({ name, id }) {
+  const query = knex("newsletters").select();
+
+  if (name) query.where("name", name);
+  if (id) query.where("id", id);
+
+  query.limit(1);
+
+  return query.then(res => res && res[0]);
+};
+
+exports.update = function(id, params) {
+  return knex("newsletters").where(id, id).update(params);
 };

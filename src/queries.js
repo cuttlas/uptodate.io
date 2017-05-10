@@ -16,8 +16,7 @@ const listArticles = `
       favourite
       description
       published
-      newsletters {
-        id
+      publishedBy {
         name
         url
         imgUrl

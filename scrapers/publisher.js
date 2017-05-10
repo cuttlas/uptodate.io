@@ -13,11 +13,13 @@ const getArticleToPublish = async newsletter => {
   return articles[0];
 };
 
-module.exports = async function(date = new Date()) {
+module.exports = async function(date = new Date(), reverse = false) {
   try {
     const newsletters = await knex("newsletters")
       .select()
-      .orderByRaw("last_published IS NULL DESC, last_published");
+      .orderByRaw(
+        `last_published IS NULL DESC, last_published ${reverse && "DESC"}`
+      );
 
     let article;
     let newsletter;
@@ -32,7 +34,9 @@ module.exports = async function(date = new Date()) {
       return false;
     }
 
-    await knex("articles").where("id", article.id).update("published", date);
+    await knex("articles")
+      .where("id", article.id)
+      .update({ published: date, published_by: newsletter.id });
     await knex("newsletters")
       .where("id", newsletter.id)
       .update("last_published", date);

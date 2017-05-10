@@ -11,31 +11,36 @@ exports.seed = function(knex, Promise) {
           id: 1,
           name: "javascriptWeekly",
           url: "http://javascriptweekly.com",
-          img_url: "https://static.esea.net/global/images/users/679944.1458605905.jpg"
+          img_url: "green.jpg",
+          priority: 2
         },
         {
           id: 2,
           name: "reactjsNewsletter",
           url: "http://reactjsnewsletter.com",
-          img_url: "https://previews.123rf.com/images/mikekiev/mikekiev1109/mikekiev110900016/10628139-binary-stream-Stock-Photo-software-matrix-binary.jpg"
+          img_url: "matrix.jpg",
+          priority: 3
         },
         {
           id: 3,
           name: "cssWeekly",
           url: "http://css-weekly.com",
-          img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
+          img_url: "gray.jpg",
+          priority: 4
         },
         {
           id: 4,
           name: "frontendFocus",
           url: "http://frontendfocus.co",
-          img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
+          img_url: "blue.jpg",
+          priority: 1
         },
         {
           id: 5,
           name: "ponyFoo",
           url: "http://ponyfoo.com",
-          img_url: "http://melissavandyke.com/wp-content/uploads/2015/09/code.jpg"
+          img_url: "dark-blue.jpg",
+          priority: 5
         }
       ]);
     });

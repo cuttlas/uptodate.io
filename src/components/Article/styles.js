@@ -109,7 +109,6 @@ export const Title = styled.a`
   color: white;
   margin: 0px 0px 5px 0px;
   font-size: 0.85em;
-  transition: height 0.45s ease;
   max-width: 85%;
   &:hover {
     color: ${props => props.theme.mainColor};
@@ -122,7 +121,7 @@ export const Description = styled.p`
   opacity: ${props => props.show ? 1 : 0};
   font-size: 0.85em;
   text-align: left;
-  transition: opacity 1s ease 0.20s;
+  ${props => props.show ? "transition: opacity 1s ease 0.20s" : "transition: opacity 0.25s"};
   overflow: hidden;
 
   a {
@@ -134,7 +133,7 @@ export const Description = styled.p`
 `;
 
 export const Author = styled.span`
-  margin-right: 10px;
+  margin-right: 5px;
   color: gray;
   font-size: 0.75em;
   color: ${props => props.theme.mainColor};
@@ -191,7 +190,7 @@ export const HostName = styled.p`
 
 export const Actions = styled.div`
   opacity: ${props => props.show ? 1 : 0};
-  transition: opacity 1s ease 0.20s;
+  ${props => props.show ? "transition: opacity 1s ease 0.20s" : "transition: opacity 0.25s"};
   color: white;
   display: flex;
   justify-content:center;

@@ -1,4 +1,7 @@
 knex seed:run --knexfile='../db/knexfile.js'
-node ./scrapers/runScraper javascriptWeekly 200 210
-node ./scrapers/runScraper reactjsNewsletter 60 70
-node ./scrapers/runPublisher 2017-02-01 5
+node ./scrapers/runScraper javascriptWeekly 323 333
+node ./scrapers/runScraper reactjsNewsletter 62 72
+node ./scrapers/runScraper ponyFoo 51 61
+node ./scrapers/runScraper frontendFocus 169 179
+node ./scrapers/runScraper cssWeekly 253 263
+node ./scrapers/runPublisher 200

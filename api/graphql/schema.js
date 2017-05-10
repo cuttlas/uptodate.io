@@ -41,6 +41,12 @@ const ArticleType = new GraphQLObjectType({
     description: { type: GraphQLString },
     imgUrl: { type: GraphQLString },
     published: { type: GraphQLDate },
+    publishedBy: {
+      type: NewsletterType,
+      resolve(parentValue, args, context) {
+        return newslettersRepo.find({ id: parentValue.published_by });
+      }
+    },
     forLater: {
       type: GraphQLBoolean,
       resolve(parentValue, args, context) {

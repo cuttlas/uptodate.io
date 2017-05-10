@@ -30,6 +30,12 @@ const articlesRepo = require("../db/repos/articles");
         })
       );
 
+      if (!newsletter.last_issue || newsletter.last_issue < i) {
+        await newsletterRepo.update(newsletter.id, {
+          last_issue: i
+        });
+      }
+
       console.log(`Issue ${i} from ${newsletterName} successfully completed`);
     } catch (e) {
       console.error(`Error at issue ${i} from ${newsletterName}.`, e);
