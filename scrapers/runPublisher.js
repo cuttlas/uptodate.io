@@ -1,23 +1,18 @@
 const publisher = require("./publisher");
 const moment = require("moment");
 
-const initDate = moment(process.argv[2]);
-const perDay = process.argv[3];
+const interval = process.argv[2];
 
 (async function() {
-  let date = initDate;
+  let date = moment();
   let finished = false;
   while (!finished) {
-    for (let i = 0; i < perDay; i++) {
-      const res = await publisher(date.toDate());
-      if (!res) {
-        finished = true;
-        break;
-      }
-      date = date.add(1, "second");
+    const res = await publisher(date.toDate());
+    if (!res) {
+      finished = true;
+      break;
     }
-    console.log(`Finished day ${date}`);
-    date = date.add(1, "day");
+    date = date.subtract(interval, "minutes");
   }
 
   console.log("DONE");

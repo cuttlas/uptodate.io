@@ -2,25 +2,30 @@
 
 const knex = require("../db/knex");
 
+const getArticleToPublish = async newsletter => {
+  const articles = await knex("articles")
+    .select()
+    .join("article_newsletter", "articles.id", "article_newsletter.article_id")
+    .where("article_newsletter.newsletter_id", newsletter.id)
+    .whereNull("published")
+    .orderBy("position");
+
+  return articles[0];
+};
+
 module.exports = async function(date = new Date()) {
   try {
     const newsletters = await knex("newsletters")
       .select()
       .orderByRaw("last_published IS NULL DESC, last_published");
 
-    const newsletter = newsletters[0];
-
-    const articles = await knex("articles")
-      .select()
-      .join(
-        "article_newsletter",
-        "articles.id",
-        "article_newsletter.article_id"
-      )
-      .where("article_newsletter.newsletter_id", newsletter.id)
-      .whereNull("published");
-
-    const article = articles[0];
+    let article;
+    let newsletter;
+    for (let i = 0; i < newsletters.length; i++) {
+      newsletter = newsletters[i];
+      article = await getArticleToPublish(newsletter);
+      if (article) break;
+    }
 
     if (!article) {
       console.log("No article to publish");

@@ -26,6 +26,7 @@ module.exports = async function(issue) {
 
   const articles = [];
   let article = {};
+  let position = 1;
 
   $(".newsletter-article").each(function(i) {
     const title = $(this).find("a").first().text();
@@ -36,8 +37,11 @@ module.exports = async function(issue) {
 
     article = {
       title: sanitizeText(title),
-      url: sanitizeUrl(url, issue)
+      url: sanitizeUrl(url, issue),
+      position
     };
+
+    position++;
 
     if (description) article.description = sanitizeText(description);
     articles.push(article);

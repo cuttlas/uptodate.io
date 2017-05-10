@@ -190,7 +190,16 @@ class Article extends Component {
               </Action>}
         </Actions>
         <Meta>
-          {article.newsletters.map((nl, key) => {
+
+          <Newsletter
+            onClick={this.onClickTitle}
+            href={article.newsletters[0].url}
+            target="_blank"
+          >
+            {article.newsletters[0].name}
+          </Newsletter>
+
+          {/*article.newsletters.map((nl, key) => {
             const res = [
               <Newsletter
                 onClick={this.onClickTitle}
@@ -203,7 +212,7 @@ class Article extends Component {
             if (article.newsletters.length > key + 1)
               res.push(<NLComma>, </NLComma>);
             return res;
-          })}
+          })*/}
           <TimeAgo> - {timeAgo(article.published)}</TimeAgo>
         </Meta>
       </span>

@@ -37,6 +37,8 @@ module.exports = async function(issue) {
   const articles = [];
   let article = {};
 
+  let position = 1;
+
   $(".item--issue").each(function(i) {
     const title = $(this).find(".item__title").first().text();
     const url = $(this).find(".item__title a").first().attr("href");
@@ -46,8 +48,11 @@ module.exports = async function(issue) {
       articles.push({
         title: sanitizeText(title),
         url,
+        position,
         description: sanitizeText(description)
       });
+
+      position++;
     }
   });
 

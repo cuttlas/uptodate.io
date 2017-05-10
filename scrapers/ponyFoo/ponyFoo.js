@@ -26,6 +26,7 @@ module.exports = async function(issue) {
 
   const articles = [];
   let article = {};
+  let position = 1;
 
   $(".wy-link-title").each(function(i) {
     const title = $(this).text();
@@ -48,8 +49,11 @@ module.exports = async function(issue) {
     article = {
       title: sanitizeText(title),
       url: sanitizeUrl(url, issue),
+      position,
       author
     };
+
+    position++;
 
     if (description) article.description = sanitizeText(description);
     articles.push(article);

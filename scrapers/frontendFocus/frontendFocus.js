@@ -23,6 +23,7 @@ module.exports = async function(issue) {
 
   const articles = [];
   let article = {};
+  let position = 1;
 
   $("div").each(function(i) {
     const fontSize = $(this).css("font-size");
@@ -37,8 +38,10 @@ module.exports = async function(issue) {
 
       article = {
         title: sanitizeText(title),
-        url: sanitizeUrl(url)
+        url: sanitizeUrl(url),
+        position
       };
+      position++;
     } else if (fontSize === "14px" || fontSize === "13px") {
       article.description = sanitizeText($(this).html());
     } else if (fontSize === "12px") {

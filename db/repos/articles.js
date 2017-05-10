@@ -89,6 +89,9 @@ exports.insert = async function insert(newArticle) {
         ? newArticle.title
         : oldArticle.title,
       date: newArticle.date || oldArticle.date,
+      position: oldArticle.position < newArticle.position
+        ? oldArticle.position
+        : newArticle.position,
       description: getLength(newArticle.description) >
         getLength(oldArticle.description)
         ? newArticle.description
@@ -116,7 +119,8 @@ exports.insert = async function insert(newArticle) {
         url,
         date: newArticle.date,
         description: newArticle.description,
-        author: newArticle.author
+        author: newArticle.author,
+        position: newArticle.position
       })
       .returning("id");
     const articleId = res[0];
