@@ -20,19 +20,18 @@ export const LogoWrapper = styled(Link)`
 
 export const Logo = styled.i`
   color: ${props => props.theme.mainColor};
-  font-size: 0.85em;
+  font-size: 0.65em;
 `;
 
 export const LogoOut = styled.i`
   color: ${props => props.theme.mainColor};
-  font-size: 1.8em;
+  font-size: 1.5em;
 `;
 
 export const BrandName = styled.span`
   color: white;
-  font-size: 0.8em;
+  font-size: 0.85em;
   display: none;
-  margin-left: 5px;
 
   @media(min-width: 550px) {
     display: inline;

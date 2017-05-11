@@ -7,6 +7,7 @@ import {
   Box,
   ExpandIcon,
   TextOverlay,
+  OpacityOverlay,
   Title,
   Description,
   TitleDescriptionWrapper,

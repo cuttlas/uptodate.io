@@ -55,7 +55,6 @@ export const Box = styled.div`
   height: ${between(maxHeight, minHeight, 1, break1)};
   background: url(${props => props.bgImg}) no-repeat;
   background-size: cover;
-  border: 1px solid black;
   text-align: left;
 
   @media (min-width:${break1}px)  { 
@@ -89,14 +88,15 @@ export const ExpandIcon = styled.i`
 
 export const TextOverlay = styled.div`
   box-sizing: border-box;
+  ${props => !props.expanded && "border-top: 1px solid #1e1e1e"};
   position: absolute;
   width: 100%;
   padding: 15px 15px 15px 15px;
   height: ${props => props.expanded ? "100%" : "45%"};
-  background: rgba(0, 0, 0, .70);
+  background: rgba(0, 0, 0, ${props => props.expanded ? ".65" : "1"});
   bottom: 0;
   color: white;
-  transition: height 0.35s ease;
+  transition: height 0.35s ease, background 0.55s ease, border 0.35s ease;
 `;
 
 export const TitleDescriptionWrapper = styled.div`
@@ -121,7 +121,7 @@ export const Description = styled.p`
   opacity: ${props => props.show ? 1 : 0};
   font-size: 0.85em;
   text-align: left;
-  ${props => props.show ? "transition: opacity 1s ease 0.20s" : "transition: opacity 0.25s"};
+  ${props => props.show ? "transition: opacity 0.6s ease 0.15s" : "transition: opacity 0.25s"};
   overflow: hidden;
 
   a {
@@ -190,7 +190,7 @@ export const HostName = styled.p`
 
 export const Actions = styled.div`
   opacity: ${props => props.show ? 1 : 0};
-  ${props => props.show ? "transition: opacity 1s ease 0.20s" : "transition: opacity 0.25s"};
+  ${props => props.show ? "transition: opacity 0.6s ease 0.15s" : "transition: opacity 0.25s"};
   color: white;
   display: flex;
   justify-content:center;

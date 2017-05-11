@@ -50,7 +50,7 @@ function Header({ loggedUser, loading, history }) {
           <LogoOut className="fa fa-circle-thin fa-stack-1x" />
           <Logo className="fa fa-align-center fa-stack-1x" />
         </span>
-        <BrandName>Up<TO>To</TO>Date<IO>.io</IO></BrandName>
+        <BrandName>up<TO>to</TO>date<IO>.io</IO></BrandName>
       </LogoWrapper>
       <SearchIcon className="fa fa-search" />
       {!loading &&
@@ -64,7 +64,7 @@ function Header({ loggedUser, loading, history }) {
           <Action to="/favourites">
             <ActionIcon className="fa fa-star" />
             <ActionName>Favourites</ActionName>
-          </Action>}
+          </Action>
 
           <Action to="/forlater">
             <ActionIcon className="fa fa-bookmark" />
