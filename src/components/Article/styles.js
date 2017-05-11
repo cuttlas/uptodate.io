@@ -88,7 +88,7 @@ export const ExpandIcon = styled.i`
 
 export const TextOverlay = styled.div`
   box-sizing: border-box;
-  ${props => !props.expanded && "border-top: 1px solid #1e1e1e"};
+  ${props => !props.expanded && "border-top: 1px solid #2d2d2d"};
   position: absolute;
   width: 100%;
   padding: 15px 15px 15px 15px;
