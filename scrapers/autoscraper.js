@@ -7,6 +7,8 @@ const javascriptWeekly = require("./javascriptWeekly/javascriptWeekly");
 const frontendFocus = require("./frontendFocus/frontendFocus");
 const reactjsNewsletter = require("./reactjsNewsletter/reactjsNewsletter");
 
+const publisher = require("./publisher");
+
 const insertArticles = (articles, newsletter) => {
   return Promise.all(
     articles.map(art => {
@@ -15,43 +17,61 @@ const insertArticles = (articles, newsletter) => {
       });
       return articlesRepo.insert(article);
     })
-  ).then(() =>
-    newsletterRepo.update(newsletter.id, {
+  ).then(() => {
+    console.log(
+      `Issue ${newsletter.last_issue + 1} from ${newsletter.name} successfully scrapped`
+    );
+    return newslettersRepo.update(newsletter.id, {
       last_issue: newsletter.last_issue + 1
-    }));
+    });
+  });
 };
 
 const autoscraper = async () => {
-  const newsletters = await newslettersRepo.get();
+  try {
+    const newsletters = await newslettersRepo.get();
 
-  await Promise.all(
-    newsletters.map(nl => {
+    const promises = newsletters.map(nl => {
+      let articles;
       switch (nl.name) {
         case "cssWeekly":
-          const articles = cssWeekly(nl.last_issue + 1);
-          if (articles) return insertArticles(articles, nl);
+          return cssWeekly(nl.last_issue + 1).then(articles => {
+            if (articles) return insertArticles(articles, nl);
+          });
           break;
         case "javascriptWeekly":
-          const articles = javascriptWeekly(nl.last_issue + 1);
-          if (articles) return insertArticles(articles, nl);
+          return javascriptWeekly(nl.last_issue + 1).then(articles => {
+            if (articles) return insertArticles(articles, nl);
+          });
           break;
         case "reactjsNewsletter":
-          const articles = reactjsNewsletter(nl.last_issue + 1);
-          if (articles) return insertArticles(articles, nl);
+          return reactjsNewsletter(nl.last_issue + 1).then(articles => {
+            if (articles) return insertArticles(articles, nl);
+          });
           break;
         case "frontendFocus":
-          const articles = frontendFocus(nl.last_issue + 1);
-          if (articles) return insertArticles(articles, nl);
+          return frontendFocus(nl.last_issue + 1).then(articles => {
+            if (articles) return insertArticles(articles, nl);
+          });
           break;
         case "ponyFoo":
-          const articles = ponyFoo(nl.last_issue + 1);
-          if (articles) return insertArticles(articles, nl);
+          return ponyFoo(nl.last_issue + 1).then(articles => {
+            if (articles) return insertArticles(articles, nl);
+          });
           break;
         default:
           break;
       }
-    })
-  );
+    });
+
+    await promises.reduce((p, fn) => p.then(fn), Promise.resolve());
+    await publisher();
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-setTimeout(autoscraper, 1000 * 60 * 60 * 1);
+const interval = process.env.NODE_ENV === "production"
+  ? 4 * 60 * 60 * 1000
+  : 2000; //4h
+setInterval(autoscraper, interval);

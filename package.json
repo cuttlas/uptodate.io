@@ -44,6 +44,7 @@
   },
   "scripts": {
     "scrap": "node ./scrapers/runScraper",
+    "autoscraper": "node ./scrapers/autoscraper",
     "publish": "node ./scrapers/runPublisher",
     "reset": "./scrapers/reset.sh",
     "start": "NODE_PATH=./src react-scripts start",

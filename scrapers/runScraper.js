@@ -21,6 +21,7 @@ const articlesRepo = require("../db/repos/articles");
 
     try {
       articles = await scrapper(i);
+      if (!articles.length) return console.error("Invalid Issue");
       await Promise.all(
         articles.map(art => {
           const article = Object.assign({}, art, {
@@ -31,7 +32,7 @@ const articlesRepo = require("../db/repos/articles");
       );
 
       if (!newsletter.last_issue || newsletter.last_issue < i) {
-        await newsletterRepo.update(newsletter.id, {
+        await newslettersRepo.update(newsletter.id, {
           last_issue: i
         });
       }

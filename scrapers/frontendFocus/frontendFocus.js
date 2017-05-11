@@ -60,6 +60,7 @@ module.exports = async function(issue) {
 
   // add the last one
   if (article.title) articles.push(article);
+  if (!articles.length) return false;
 
   return articles;
 };

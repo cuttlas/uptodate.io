@@ -11,35 +11,35 @@ exports.seed = function(knex, Promise) {
           id: 1,
           name: "javascriptWeekly",
           url: "http://javascriptweekly.com",
-          img_url: "green.jpg",
+          img_url: "speed-green.jpg",
           priority: 2
         },
         {
           id: 2,
           name: "reactjsNewsletter",
           url: "http://reactjsnewsletter.com",
-          img_url: "matrix.jpg",
+          img_url: "blue.jpg",
           priority: 3
         },
         {
           id: 3,
           name: "cssWeekly",
           url: "http://css-weekly.com",
-          img_url: "gray.jpg",
+          img_url: "speed-orange.jpg",
           priority: 4
         },
         {
           id: 4,
           name: "frontendFocus",
           url: "http://frontendfocus.co",
-          img_url: "blue.jpg",
+          img_url: "green.jpg",
           priority: 1
         },
         {
           id: 5,
           name: "ponyFoo",
           url: "http://ponyfoo.com",
-          img_url: "dark-blue.jpg",
+          img_url: "speed.jpg",
           priority: 5
         }
       ]);

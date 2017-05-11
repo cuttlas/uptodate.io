@@ -28,5 +28,5 @@ exports.find = function find({ name, id }) {
 };
 
 exports.update = function(id, params) {
-  return knex("newsletters").where(id, id).update(params);
+  return knex("newsletters").where("id", id).update(params);
 };

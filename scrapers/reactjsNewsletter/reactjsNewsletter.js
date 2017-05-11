@@ -57,6 +57,8 @@ module.exports = async function(issue) {
     }
   });
 
+  if (!articles.length) return false;
+
   return await Promise.all(
     articles.map(async article => {
       const realUrl = await request.head(article.url);

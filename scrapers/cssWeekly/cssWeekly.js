@@ -48,5 +48,7 @@ module.exports = async function(issue) {
     articles.push(article);
   });
 
+  if (!articles.length) return false;
+
   return articles;
 };
