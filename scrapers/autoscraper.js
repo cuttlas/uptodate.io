@@ -71,7 +71,7 @@ const autoscraper = async () => {
   }
 };
 
-const interval = process.env.NODE_ENV === "production"
-  ? 4 * 60 * 60 * 1000
-  : 2000; //4h
+const interval = process.env.NODE_ENV === "production" ? 200 * 60 * 1000 : 5000;
 setInterval(autoscraper, interval);
+
+autoscraper(); //first execution
