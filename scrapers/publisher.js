@@ -8,7 +8,7 @@ const getArticleToPublish = async newsletter => {
     .join("article_newsletter", "articles.id", "article_newsletter.article_id")
     .where("article_newsletter.newsletter_id", newsletter.id)
     .whereNull("published")
-    .orderBy("id", "DESC");
+    .orderBy("position");
 
   return articles[0];
 };
