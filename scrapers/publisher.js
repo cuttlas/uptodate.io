@@ -8,7 +8,7 @@ const getArticleToPublish = async newsletter => {
     .join("article_newsletter", "articles.id", "article_newsletter.article_id")
     .where("article_newsletter.newsletter_id", newsletter.id)
     .whereNull("published")
-    .orderBy("position")
+    // .orderBy("position")
     .orderBy("id", "DESC");
 
   return articles[0];
@@ -19,16 +19,16 @@ module.exports = async function(date = new Date(), reverse = false) {
     const newsletters = await knex("newsletters")
       .select()
       .orderByRaw(
-        `last_published IS NULL DESC, last_published ${reverse ? "DESC" : "ASC"}`
-      );
+        `last_published IS NULL DESC, last_published ${reverse
+          ? "DESC"
+          : "ASC"}`
+      )
+      .limit(1);
 
     let article;
-    let newsletter;
-    for (let i = 0; i < newsletters.length; i++) {
-      newsletter = newsletters[i];
-      article = await getArticleToPublish(newsletter);
-      if (article) break;
-    }
+    let newsletter = newsletters[0];
+
+    article = await getArticleToPublish(newsletter);
 
     if (!article) {
       console.log("No article to publish");

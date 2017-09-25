@@ -32,8 +32,14 @@ module.exports = async function(issue) {
     if (fontSize === "18px" || fontSize === "16px") {
       if (article.title) articles.push(article);
 
-      const title = $(this).find("a").first().text();
-      const url = $(this).find("a").first().attr("href");
+      const title = $(this)
+        .find("a")
+        .first()
+        .text();
+      const url = $(this)
+        .find("a")
+        .first()
+        .attr("href");
 
       if (!title || !url) throw new Error("Missing tittle or url");
 
@@ -50,12 +56,14 @@ module.exports = async function(issue) {
       article.author = sanitizeText($(this).text());
 
       // If the article is SPAM. Don't save it.
-      /* const sponsor = $(this).find("span").first();
+      const sponsor = $(this)
+        .find("span")
+        .first();
       if (
         (sponsor && sponsor.text() === "Sponsor") ||
         sponsor.text() === "Sponsored"
       )
-        article = {}; */
+        article = {};
     }
   });
 
