@@ -22,3 +22,5 @@ switch (env) {
     break;
   default:
 }
+
+module.exports = config;
