@@ -15,11 +15,19 @@ const insertArticles = (articles, newsletter) => {
       const article = Object.assign({}, art, {
         newsletterId: newsletter.id
       });
-      return articlesRepo.insert(article);
+      return articlesRepo.insert(article).catch(e => {
+        console.log(
+          `Error scrapping Issue ${newsletter.last_issue +
+            1} from ${newsletter.name}`
+        );
+        console.log(e);
+        return Promise.resolve();
+      });
     })
   ).then(() => {
     console.log(
-      `Issue ${newsletter.last_issue + 1} from ${newsletter.name} successfully scrapped`
+      `Issue ${newsletter.last_issue +
+        1} from ${newsletter.name} successfully scrapped`
     );
     return newslettersRepo.update(newsletter.id, {
       last_issue: newsletter.last_issue + 1
