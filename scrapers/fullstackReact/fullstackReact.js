@@ -7,9 +7,9 @@ const cheerio = require("cheerio");
 const normalizeUrl = require("normalize-url");
 const emojiStrip = require("emoji-strip");
 
-function sanitizeUrl(url) {
+function sanitizeUrl(url, issue) {
   return normalizeUrl(
-    url.replace("?utm_source=javascriptweekly&utm_medium=email", "")
+    url.replace(`?utm_source=fullstackreact&utm_medium=email`, "")
   );
 }
 
@@ -18,12 +18,9 @@ function sanitizeText(text) {
 }
 
 module.exports = async function(issue) {
-  const head = await request.head(
-    `http://javascriptweekly.com/issues/${issue}`
+  const html = await request.get(
+    `http://newsletter.fullstackreact.com/issues/${issue}`
   );
-  const lastIssue = head.request.path.replace("/issues/", "");
-  if (lastIssue != issue) return false;
-  const html = await request.get(`http://javascriptweekly.com/issues/${issue}`);
   if (!html) return false;
   const $ = cheerio.load(html);
 
@@ -31,25 +28,17 @@ module.exports = async function(issue) {
   let article = {};
   let position = 1;
 
-  $(".item").each(function(i) {
+  $(".item--link").each(function(i) {
     const title = $(this)
-      .find("a")
+      .find(".item__title a")
       .first()
       .text();
     const url = $(this)
-      .find("a")
+      .find(".item__title a")
       .first()
       .attr("href");
-    const author = $(this)
-      .find(".name")
-      .first()
-      .text();
-
-    $(this)
-      .find(".mainlink")
-      .remove();
     const description = $(this)
-      .find(".desc")
+      .find("p")
       .first()
       .html();
 
@@ -58,14 +47,11 @@ module.exports = async function(issue) {
     article = {
       title: sanitizeText(title),
       url: sanitizeUrl(url),
-      author: sanitizeText(author),
       description: sanitizeText(description)
     };
 
     articles.push(article);
   });
-
-  //console.log(articles);
 
   if (!articles.length) return false;
 

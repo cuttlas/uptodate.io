@@ -6,8 +6,22 @@ const ponyFoo = require("./ponyFoo/ponyFoo");
 const javascriptWeekly = require("./javascriptWeekly/javascriptWeekly");
 const frontendFocus = require("./frontendFocus/frontendFocus");
 const reactjsNewsletter = require("./reactjsNewsletter/reactjsNewsletter");
+const graphqlWeekly = require("./graphqlWeekly/graphqlWeekly");
+const letsReact = require("./letsReact/letsReact");
+const serverlessStatus = require("./serverlessStatus/serverlessStatus");
+const fullstackReact = require("./fullstackReact/fullstackReact");
 
-const publisher = require("./publisher");
+const scrapers = {
+  cssWeekly,
+  ponyFoo,
+  javascriptWeekly,
+  frontendFocus,
+  reactjsNewsletter,
+  graphqlWeekly,
+  letsReact,
+  serverlessStatus,
+  fullstackReact
+};
 
 const insertArticles = (articles, newsletter) => {
   return Promise.all(
@@ -17,8 +31,9 @@ const insertArticles = (articles, newsletter) => {
       });
       return articlesRepo.insert(article).catch(e => {
         console.log(
-          `Error scrapping Issue ${newsletter.last_issue +
-            1} from ${newsletter.name}`
+          `Error scrapping Issue ${newsletter.last_issue + 1} from ${
+            newsletter.name
+          }`
         );
         console.log(e);
         return Promise.resolve();
@@ -26,8 +41,9 @@ const insertArticles = (articles, newsletter) => {
     })
   ).then(() => {
     console.log(
-      `Issue ${newsletter.last_issue +
-        1} from ${newsletter.name} successfully scrapped`
+      `Issue ${newsletter.last_issue + 1} from ${
+        newsletter.name
+      } successfully scrapped`
     );
     return newslettersRepo.update(newsletter.id, {
       last_issue: newsletter.last_issue + 1
@@ -41,39 +57,12 @@ const autoscraper = async () => {
 
     const promises = newsletters.map(nl => {
       let articles;
-      switch (nl.name) {
-        case "cssWeekly":
-          return cssWeekly(nl.last_issue + 1).then(articles => {
-            if (articles) return insertArticles(articles, nl);
-          });
-          break;
-        case "javascriptWeekly":
-          return javascriptWeekly(nl.last_issue + 1).then(articles => {
-            if (articles) return insertArticles(articles, nl);
-          });
-          break;
-        case "reactjsNewsletter":
-          return reactjsNewsletter(nl.last_issue + 1).then(articles => {
-            if (articles) return insertArticles(articles, nl);
-          });
-          break;
-        case "frontendFocus":
-          return frontendFocus(nl.last_issue + 1).then(articles => {
-            if (articles) return insertArticles(articles, nl);
-          });
-          break;
-        case "ponyFoo":
-          return ponyFoo(nl.last_issue + 1).then(articles => {
-            if (articles) return insertArticles(articles, nl);
-          });
-          break;
-        default:
-          break;
-      }
+      return scrapers[nl.name](nl.last_issue + 1).then(articles => {
+        if (articles) return insertArticles(articles, nl);
+      });
     });
 
     await promises.reduce((p, fn) => p.then(fn), Promise.resolve());
-    await publisher();
   } catch (e) {
     console.log(e);
   }

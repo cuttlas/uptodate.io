@@ -31,7 +31,7 @@ exports.seed = function(knex, Promise) {
         {
           id: 4,
           name: "frontendFocus",
-          url: "http://frontendfocus.co",
+          url: "https://frontendfoc.us",
           img_url: "green.jpg",
           priority: 1
         },
@@ -40,6 +40,34 @@ exports.seed = function(knex, Promise) {
           name: "ponyFoo",
           url: "http://ponyfoo.com",
           img_url: "speed.jpg",
+          priority: 5
+        },
+        {
+          id: 6,
+          name: "graphqlWeekly",
+          url: "https://graphqlweekly.com",
+          img_url: "bubbles.jpg",
+          priority: 5
+        },
+        {
+          id: 7,
+          name: "letsReact",
+          url: "http://letsreact.io",
+          img_url: "electric-blue.jpg",
+          priority: 5
+        },
+        {
+          id: 8,
+          name: "serverlessStatus",
+          url: "https://serverless.email",
+          img_url: "multicolor.jpg",
+          priority: 5
+        },
+        {
+          id: 9,
+          name: "fullstackReact",
+          url: "http://newsletter.fullstackreact.com",
+          img_url: "cubes.jpg",
           priority: 5
         }
       ]);

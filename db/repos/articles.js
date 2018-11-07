@@ -5,8 +5,6 @@ const knex = require("../knex");
 exports.get = function get({ q } = {}) {
   const query = knex("articles").select();
 
-  query.whereNotNull("published");
-
   if (q)
     query
       .where("title", "LIKE", `%${q}%`)
@@ -85,25 +83,31 @@ exports.insert = async function insert(newArticle) {
     const getLength = text => (text && text.length) || 0;
 
     const update = {
-      title: getLength(newArticle.title) > getLength(oldArticle.title)
-        ? newArticle.title
-        : oldArticle.title,
+      title:
+        getLength(newArticle.title) > getLength(oldArticle.title)
+          ? newArticle.title
+          : oldArticle.title,
       date: newArticle.date || oldArticle.date,
-      position: oldArticle.position < newArticle.position
-        ? oldArticle.position
-        : newArticle.position,
-      description: getLength(newArticle.description) >
-        getLength(oldArticle.description)
-        ? newArticle.description
-        : oldArticle.description,
+      position:
+        oldArticle.position < newArticle.position
+          ? oldArticle.position
+          : newArticle.position,
+      description:
+        getLength(newArticle.description) > getLength(oldArticle.description)
+          ? newArticle.description
+          : oldArticle.description,
       author: newArticle.author || oldArticle.author
     };
-    await knex("articles").where("id", oldArticle.id).update(update);
+    await knex("articles")
+      .where("id", oldArticle.id)
+      .update(update);
 
-    const articleNewsletter = await knex("article_newsletter").select().where({
-      article_id: oldArticle.id,
-      newsletter_id: newArticle.newsletterId
-    });
+    const articleNewsletter = await knex("article_newsletter")
+      .select()
+      .where({
+        article_id: oldArticle.id,
+        newsletter_id: newArticle.newsletterId
+      });
 
     if (!articleNewsletter.length) {
       await knex("article_newsletter").insert({
@@ -120,7 +124,9 @@ exports.insert = async function insert(newArticle) {
         date: newArticle.date,
         description: newArticle.description,
         author: newArticle.author,
-        position: newArticle.position
+        position: newArticle.position,
+        published: new Date(),
+        published_by: newArticle.newsletterId
       })
       .returning("id");
     const articleId = res[0];

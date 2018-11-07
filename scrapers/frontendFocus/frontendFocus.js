@@ -18,7 +18,10 @@ function sanitizeText(text) {
 }
 
 module.exports = async function(issue) {
-  const html = await request.get(`http://frontendfocus.co/issues/${issue}`);
+  const head = await request.head(`https://frontendfoc.us/issues/${issue}`);
+  const lastIssue = head.request.path.replace("/issues/", "");
+  if (lastIssue != issue) return false;
+  const html = await request.get(`https://frontendfoc.us/issues/${issue}`);
   if (!html) return false;
   const $ = cheerio.load(html);
 
@@ -26,40 +29,40 @@ module.exports = async function(issue) {
   let article = {};
   let position = 1;
 
-  $("div").each(function(i) {
-    const fontSize = $(this).css("font-size");
+  $(".item").each(function(i) {
+    const title = $(this)
+      .find("a")
+      .first()
+      .text();
+    const url = $(this)
+      .find("a")
+      .first()
+      .attr("href");
+    const author = $(this)
+      .find(".name")
+      .first()
+      .text();
 
-    if (fontSize === "18px") {
-      if (article.title) articles.push(article);
+    $(this)
+      .find(".mainlink")
+      .remove();
+    const description = $(this)
+      .find(".desc")
+      .first()
+      .html();
 
-      const title = $(this).find("a").first().text();
-      const url = $(this).find("a").first().attr("href");
+    if (!title || !url) return;
 
-      if (!title || !url) throw new Error("Missing tittle or url");
+    article = {
+      title: sanitizeText(title),
+      url: sanitizeUrl(url),
+      author: sanitizeText(author),
+      description: sanitizeText(description)
+    };
 
-      article = {
-        title: sanitizeText(title),
-        url: sanitizeUrl(url),
-        position
-      };
-      position++;
-    } else if (fontSize === "14px" || fontSize === "13px") {
-      article.description = sanitizeText($(this).html());
-    } else if (fontSize === "12px") {
-      article.author = sanitizeText($(this).text());
-
-      // If the article is SPAM. Don't save it.
-      /* const sponsor = $(this).find("span").first();
-      if (
-        (sponsor && sponsor.text() === "Sponsor") ||
-        sponsor.text() === "Sponsored"
-      )
-        article = {}; */
-    }
+    articles.push(article);
   });
 
-  // add the last one
-  if (article.title) articles.push(article);
   if (!articles.length) return false;
 
   return articles;

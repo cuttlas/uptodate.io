@@ -7,9 +7,9 @@ const cheerio = require("cheerio");
 const normalizeUrl = require("normalize-url");
 const emojiStrip = require("emoji-strip");
 
-function sanitizeUrl(url) {
+function sanitizeUrl(url, issue) {
   return normalizeUrl(
-    url.replace("?utm_source=javascriptweekly&utm_medium=email", "")
+    url.replace(`?utm_source=serverlessstatus&utm_medium=email`, "")
   );
 }
 
@@ -18,12 +18,10 @@ function sanitizeText(text) {
 }
 
 module.exports = async function(issue) {
-  const head = await request.head(
-    `http://javascriptweekly.com/issues/${issue}`
-  );
+  const head = await request.head(`https://serverless.email/issues/${issue}`);
   const lastIssue = head.request.path.replace("/issues/", "");
   if (lastIssue != issue) return false;
-  const html = await request.get(`http://javascriptweekly.com/issues/${issue}`);
+  const html = await request.get(`https://serverless.email/issues/${issue}`);
   if (!html) return false;
   const $ = cheerio.load(html);
 
@@ -64,8 +62,6 @@ module.exports = async function(issue) {
 
     articles.push(article);
   });
-
-  //console.log(articles);
 
   if (!articles.length) return false;
 

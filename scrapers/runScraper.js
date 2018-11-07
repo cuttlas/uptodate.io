@@ -22,14 +22,18 @@ const articlesRepo = require("../db/repos/articles");
     try {
       articles = await scrapper(i);
       if (!articles.length) return console.error("Invalid Issue");
-      await Promise.all(
-        articles.map(art => {
-          const article = Object.assign({}, art, {
-            newsletterId: newsletter.id
-          });
-          return articlesRepo.insert(article);
-        })
-      );
+
+      for (let art of articles) {
+        const article = Object.assign({}, art, {
+          newsletterId: newsletter.id
+        });
+
+        try {
+          await articlesRepo.insert(article);
+        } catch (e) {
+          console.log(e);
+        }
+      }
 
       if (!newsletter.last_issue || newsletter.last_issue < i) {
         await newslettersRepo.update(newsletter.id, {
