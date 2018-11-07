@@ -1,6 +1,19 @@
 knex seed:run --knexfile='./db/knexfile.js'
-node ./scrapers/runScraper javascriptWeekly 343 353
-node ./scrapers/runScraper reactjsNewsletter 75 85
-node ./scrapers/runScraper ponyFoo 71 81
-node ./scrapers/runScraper frontendFocus 298 308
-node ./scrapers/runScraper cssWeekly 273 283
+node ./scrapers/runScraper javascriptWeekly 408
+node ./scrapers/runScraper reactjsNewsletter 135
+node ./scrapers/runScraper ponyFoo 137
+node ./scrapers/runScraper frontendFocus 363
+node ./scrapers/runScraper cssWeekly 336
+node ./scrapers/runScraper graphqlWeekly 116
+node ./scrapers/runScraper fullstackReact 115
+node ./scrapers/runScraper serverlessStatus 74
+node ./scrapers/runScraper letsReact 37
+node ./scrapers/runScraper javascriptWeekly 409
+node ./scrapers/runScraper reactjsNewsletter 136
+node ./scrapers/runScraper ponyFoo 138
+node ./scrapers/runScraper frontendFocus 364
+node ./scrapers/runScraper cssWeekly 337
+node ./scrapers/runScraper graphqlWeekly 117
+node ./scrapers/runScraper fullstackReact 116
+node ./scrapers/runScraper serverlessStatus 75
+node ./scrapers/runScraper letsReact 38
