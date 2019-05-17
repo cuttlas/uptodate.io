@@ -29,13 +29,10 @@ const logout = location => {
   location.reload();
 };
 
-const search = debounce(
-  (e, location, history) => {
-    const value = e.target.value;
-    history.push(`${location.pathname}?q=${value}`);
-  },
-  700
-);
+const search = debounce((e, location, history) => {
+  const value = e.target.value;
+  history.push(`${location.pathname}?q=${value}`);
+}, 700);
 
 const onChange = (location, history, e) => {
   e.persist();
@@ -50,15 +47,18 @@ function Header({ loggedUser, loading, history }) {
           <LogoOut className="fa fa-circle-thin fa-stack-1x" />
           <Logo className="fa fa-align-center fa-stack-1x" />
         </span>
-        <BrandName>up<TO>to</TO>date<IO>.io</IO></BrandName>
+        <BrandName>
+          up<TO>to</TO>date<IO>.io</IO>
+        </BrandName>
       </LogoWrapper>
       <SearchIcon className="fa fa-search" />
-      {!loading &&
+      {!loading && (
         <SearchInput
           placeholder="Search..."
           onKeyUp={onChange.bind(this, location, history)}
-        />}
-      {loggedUser &&
+        />
+      )}
+      {/*loggedUser &&
         !loading &&
         <Actions>
           <Action to="/favourites">
@@ -80,7 +80,7 @@ function Header({ loggedUser, loading, history }) {
           else
             return <TwitterButton />;
         }
-      })()}
+      })()*/}
     </Container>
   );
 }
